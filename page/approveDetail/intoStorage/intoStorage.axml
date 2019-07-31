@@ -1,0 +1,55 @@
+<import src="/util/template/template.axml"/>
+<view class="page">
+  
+  <!-- 退回审批表单 -->
+  <template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+  <!-- 基本表单 -->
+  <form onSubmit="submit">
+    <view class="page-section">
+      <view class="form-row">
+        <view class="form-row-label">标题</view>
+        <view class="form-row-content">
+          <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
+        </view>
+      </view>
+      <view class="form-line" /> 
+      <view class="form-row">
+        <view class="form-row-label">申请人</view>
+        <view class="form-row-content">
+          <input name="applyman" class="input" value="{{tableInfo.ApplyMan}}" disabled="{{true}}" />
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">项目名称</view>
+        <view class="form-row-content">
+          <input name="applyman" class="input" value="{{tableInfo.ProjectName}}" disabled="{{true}}" />
+        </view>
+      </view>
+      <!-- 物料表单 -->
+      <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
+      <!-- 选人组件 -->
+       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData}}"/>
+      <view a:if="{{index==0}}">
+        <view class="page-section">
+          <view class="page-section-title">同意建议</view>
+          <view class="page-section-demo">
+            <textarea name="remark" placeholder="输入 建议" value="{{remark}}" />
+          </view>
+        </view>
+        <button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+        <button type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+      </view>
+      <view a:if="{{index!=0}}">
+        <button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+        <button type="primary" onTap="output" disabled="{{disablePage}}">导出Bom表</button>
+      </view>
+      <view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
+        <button type="primary" onTap="tapReturn" disabled="{{disablePage}}">重新发起</button>
+      </view>
+      <view a:if="{{index==2 && state=='未完成'}}">
+        <button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+        <button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+      </view>
+    </view>
+  </form>
+</view>

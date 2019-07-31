@@ -1,0 +1,23 @@
+<template name="grid">
+    <view class="grid" key="grid">
+        <view a:for="{{list}}" key="{{item.entitle}}" class="grid-item" onTap="{{onItemTap}}" data-index="{{index}}">
+            <view class="grid-item-wrapper">
+                <image src="{{item.icon}}" class="grid-icon" mode="aspectFit" />
+                <text class="grid-text">{{item.title}}</text>
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="menu">
+  <view class="grid" key="grid">
+    <view a:for="{{list}}" a:if="{{item.url}}" key="{{item.flowId}}" class="grid-item" data-index="{{index}}">
+      <navigator url="/page/start/{{item.url}}"> 
+        <view class="grid-item-wrapper">
+          <view class="approval-box-img" style="backgroundPosition:{{item.position}}"></view>
+          <text class="grid-text">{{item.flowName}}</text>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,11 @@
+<import src="/util/template/template.axml"/>
+<view class="page">
+  
+  
+  <!-- 基本表单 -->
+  <form >
+
+      <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
+   
+  </form>
+</view>

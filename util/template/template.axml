@@ -1,0 +1,143 @@
+
+<!-- 选人控件 -->
+<template name="choosePeople">
+  <view style="padding:40rpx 0;clear:left;">
+    <view a:for="{{nodeList}}" a:for-item="node">
+      <view class="tag tag-warning" style="width:160rpx;margin-right:10rpx;"> {{node.NodeName}}</view>
+      <view a:for="{{node.NodePeople}}" a:for-item="p" a:for-index="index" style="display:inline-block;">
+        <view style="display:inline-block;margin-right:10rpx;" 
+          class="tag {{node.ApplyTime?'tag-success':'tag-normal'}} {{node.IsBack?'tag-danger':''}}">{{p}}
+        </view>
+        <view a:if="{{node.NodeName != '抄送'}}" style="display:inline-block;">
+          <text style="">{{node.ApplyTime}}</text>
+          <view a:if="{{(node.ApplyManId == '0907095238746571' || node.ApplyManId == 'manager325') && node.ApplyTime && (DingData.userid == '0907095238746571' || DingData.userid == 'manager325')}}" 
+          data-Id="{{node.Id}}" data-NodeId="{{node.NodeId}}" data-remark="{{node.Remark}}"
+           onTap="changeSuggest" class="tag tag-info" style='margin-left:10px;'>修改意见
+          </view>
+          <text>\n</text>
+          <text style=""> {{node.Remark}}</text>
+        </view>
+      </view>
+      <view a:for="{{node.AddPeople}}" a:for-item="ad" style="display:inline-block;">
+        <view style="display:inline-block;margin-right:10rpx;" class="tag tag-normal">{{ad.name}}</view>
+      </view>
+      <view a:if="{{nodedata.IsNeedChose && nodedata.ChoseNodeId && nodedata.ChoseNodeId.indexOf(node.NodeId) >= 0}}"
+        data-NodeId="{{node.NodeId}}" 
+        onTap="choosePeople" class="tag tag-info">+ 选人
+      </view>
+      <view a:if="{{index < length-1}}" style="font-size:100rpx;line-height:60rpx;color:#409EFF;margin-left:40rpx;padding:10rpx;">﹀</view>
+    </view>
+  </view>
+</template>
+
+<!-- 数据表 -->
+<template name="datatable">
+  <view class="table">
+    <scroll-view class="scroll-view_H" scroll-x="{{true}}" >
+      <view>
+        <view class="cell" style="width:100rpx;" a:if="{{tableOperate}}">
+          <text>操作</text>
+        </view>
+        <view class="cell" style="width:100rpx;" a:if="{{tableOperate2}}">
+          <text>操作2</text>
+        </view>
+        <view class="cell" style="width:200rpx;" a:if="{{selectOperate}}">
+          <text>{{selectOperate}}</text>
+        </view>
+        <view class="cell" a:for="{{items}}" style="width:{{item.width}}rpx;">
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+
+      <view a:for="{{data}}" a:for-item="d">
+        <view class="cell" style="width:100rpx;" a:if="{{tableOperate}}">
+          <text class="button" data-row="{{d}}" data-index="{{index}}">{{tableOperate}}</text>
+        </view>
+        <view class="cell" style="width:100rpx;" a:if="{{tableOperate2}}">
+          <text class="button" data-row="{{d}}" data-index="{{index}}" data-opt2="{{true}}">{{tableOperate2}}</text>
+        </view>
+        <view class="cell" style="width:200rpx;" a:if="{{selectOperate}}">
+          <picker onChange="tableSelect" data-index="{{index}}" value="{{d.index}}" range="{{tableOptions}}" range-key="name">
+              <view class="row">
+                <view class="row-extra">{{tableOptions[d.index].name}}</view>
+                <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+              </view>
+            </picker>
+        </view>
+        <view class="cell" a:for="{{items}}" style="width:{{item.width}}rpx;">
+          <text a:if="{{d[item.prop].indexOf('删除')>=0}}" style="color:red;">{{(d[item.prop] == null || d[item.prop] == undefined)?'-':d[item.prop]}}</text>
+          <text a:else>{{(d[item.prop] == null || d[item.prop] == undefined)?'-':d[item.prop]}}</text>
+        </view>
+      </view>
+      <view a:if="param.total">
+        <text>共{{param.total}}条,第{{param.now}}页  </text><text style="color:red;">  -  提示：向右滑动显示全部信息</text>
+        <button type="primary" size="mini" plain="true" style="float:right;" data-page="{{param.now+1}}"
+            onTap="handleCurrentChange" a:if="{{param.total/5>param.now}}">下一页
+        </button>
+         <button type="primary" size="mini" plain="true" style="float:right;margin-right:10px;" data-page="{{param.now-1}}"
+            onTap="handleCurrentChange" a:if="{{param.now>1}}">上一页
+        </button>
+      </view>
+      <view a:else>
+        <text style="color:red;">  -  提示：向右滑动显示全部信息</text>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<!-- 必填前缀 -->
+<template name="required">
+  <view style="color:red;display:inline-block;">*</view>
+</template>
+
+<!-- 遮罩和列表 -->
+<template name="mask">
+    <view class="modal" a:if="{{!hidden}}" key="modal">
+        <view class="modal-mask" animation="{{animMaskData}}"/>
+    </view>
+</template>
+
+<!-- 退回审批弹窗 -->
+<template name="reBack">
+  <view class="modal" a:if="{{!hidden}}" key="modal">
+      <view class="modal-mask" animation="{{animMaskData}}"/>
+      <view class="modal-container" animation="{{animContentData}}">
+          <view class="modal-close" onTap="onModalCloseTap">×</view>
+          <view class="modal-content">
+            <form onSubmit="returnSubmit">
+              <view class="page-section">
+                <view class="page-section-title">退回建议</view>
+                <view class="page-section-demo">
+                  <textarea name="remark" placeholder="输入退回建议" />
+                </view>
+              </view>
+              <button type="warn" style="margin-bottom:0;" disabled="{{disablePage}}" formType="submit">退回</button>
+            </form>
+          </view>
+      </view>
+  </view>
+</template>
+
+
+<!-- 遮罩和列表 -->
+
+<!-- 修改审批弹窗 -->
+<template name="changeRemark">
+  <view class="modal" a:if="{{!hidden}}" key="modal">
+      <view class="modal-mask" animation="{{animMaskData}}"/>
+      <view class="modal-container" animation="{{animContentData}}">
+          <view class="modal-close" onTap="onModalCloseTap2">×</view>
+          <view class="modal-content">
+            <form onSubmit="changeRemark">
+              <view class="page-section">
+                <view class="page-section-title">修改意见</view>
+                <view class="page-section-demo">
+                  <textarea name="remark" placeholder="输入修改意见" />
+                </view>
+              </view>
+              <button type="warn" style="margin-bottom:0;" disabled="{{disablePage}}" formType="submit">修改</button>
+            </form>
+          </view>
+      </view>
+  </view>
+</template>

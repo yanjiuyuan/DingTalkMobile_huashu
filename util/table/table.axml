@@ -1,0 +1,15 @@
+
+  <view class="table">
+  <scroll-view class="scroll-view_H" scroll-x="{{true}}">
+ 
+ 
+    <slot>
+      <view>default slot  default value</view>
+    </slot>
+    <view class="row">
+      <text>共{{total}}条,第{{now}}</text>
+      <button type="primary" size="mini" plain="true" style="float:right;margin-right:10px;">上一页</button>
+      <button type="primary" size="mini" plain="true" style="float:right;">下一页</button>
+    </view>
+  </scroll-view>
+</view>

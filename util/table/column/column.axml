@@ -1,0 +1,11 @@
+<view class="column">
+  <view class="cell" style="width:{{width}}rpx">
+    <text>{{label}}</text>
+  </view>
+  <view class="cell" a:for="{{tableData}}" style="width:{{width}}rpx">
+    <slot>
+      <text>{{item[prop]}}</text>
+    </slot>
+  </view>
+
+</view>
