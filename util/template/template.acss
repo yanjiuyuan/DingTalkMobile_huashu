@@ -3,7 +3,7 @@
 /*表格类 */
 .table{
   border-top:1px solid;
-  margin-top:20rpx;
+  margin-top:80rpx;
   margin-bottom:20rpx;
 }
 .cell{
@@ -101,10 +101,9 @@
 } */
 
 .modal-close {
-  z-index: 2;
   position: absolute;
-  top: 0rpx;
-  right: 10rpx;
+  top: 34rpx;
+  right: 60rpx;
   color: #888;
   font-size: 80rpx;
   font-weight: 200;
@@ -201,6 +200,9 @@
   display: flex;
   align-items: center;
   padding: 0 30rpx;
+  width: 470rpx;
+  /* border: 1px red solid; */
+  
 }
 
 .row-title {
@@ -220,5 +222,6 @@
 .row-arrow {
   width: 32rpx;
   height: 32rpx;
-  margin-left: 16rpx;
+  /* margin-left: 16rpx; */
+  margin-left:auto;
 }

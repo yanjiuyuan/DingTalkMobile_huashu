@@ -83,7 +83,7 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" placeholder="输入 标题"  />
         </view>
       </view>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label">项目名</view>
         <picker onChange="bindPickerChange" value="{{projectIndex}}" range="{{projectList}}" range-key="ProjectName">
@@ -93,7 +93,7 @@
           </view>
         </picker>
       </view>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
@@ -130,7 +130,7 @@
       <!-- 选人组件 -->
       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       
-      <view class="page-section">
+      <view class="page-section-suggest">
         <view class="page-section-title">建议</view>
           <view class="page-section-demo">
             <textarea name="remark"placeholder="输入 建议" />

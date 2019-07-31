@@ -35,7 +35,7 @@
       <!-- 物料表单 -->
       <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
       <!-- 选人组件 -->
-       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData}}"/>
+       <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData}}"/>
       <view a:if="{{index==0}}">
         <view class="page-section">
           <view class="page-section-title">同意建议</view>

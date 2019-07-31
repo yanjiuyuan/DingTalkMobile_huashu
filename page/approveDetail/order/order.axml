@@ -13,7 +13,7 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label">项目名</view>
         <view class="form-row-content">
@@ -26,7 +26,7 @@
           <input name="title" class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
@@ -40,14 +40,14 @@
         </view>
       </view>
       <button type="primary" onTap="downloadAllFile" disabled="{{disablePage}}">下载所有图纸</button>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row" style="height:auto;">
         <view class="form-row-label">PDF图纸</view>
         <view class="form-row-content">
           <view a:for="{{pdfList}}" a:for-index="i">
             <view style="margin-bottom:-10px"><text>{{item.name}}</text></view>
             <button type="primary" onTap="downloadFile" data-mediaId="{{item.mediaId}}" disabled="{{disablePage}}" style="display:inline;padding:4rpx;margin:0 10rpx;">下载</button>
-            <view class="form-line" />
+            <!-- <view class="form-line" /> -->
           </view>
         </view>
       </view>
@@ -64,7 +64,7 @@
       <!-- 物料表单 -->
       <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
       <!-- 选人组件 -->
-      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">
         <view class="page-section">
           <view class="page-section-title">同意建议</view>

@@ -13,7 +13,7 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
@@ -24,7 +24,7 @@
       <!-- 物料表单 -->
       <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
       <!-- 选人组件 -->
-       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData}}"/>
+       <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData}}"/>
       <view a:if="{{index==0}}">
         <view class="page-section">
           <view class="page-section-title">同意建议</view>

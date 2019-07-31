@@ -50,7 +50,7 @@
           <input name="ResponsibleMan" class="input" value="{{table.ResponsibleMan}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">团队成员</view>
         <view class="form-row-content">
@@ -82,7 +82,7 @@
           <input name="EndTime" class="input" value="{{table.EndTime}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">文件列表</view>
         <view class="form-row-content">
@@ -99,7 +99,7 @@
       </view>
 
       <!-- 选人组件 -->
-      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">
         <view class="page-section">
           <view class="page-section-title">同意建议</view>

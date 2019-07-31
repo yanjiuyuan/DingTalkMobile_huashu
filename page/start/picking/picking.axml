@@ -32,14 +32,14 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" placeholder="输入 标题"  />
         </view>
       </view>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
           <input name="applyman" class="input" disabled="{{true}}" value="{{DingData.nickName}}" />
         </view>
       </view>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label"><template is="required"></template>项目名</view>
         <picker onChange="bindPickerChange" value="{{projectIndex}}" range="{{projectList}}" range-key="ProjectName">
@@ -50,7 +50,7 @@
         </picker>
       </view>
       <!-- 搜索 -->
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <form onSubmit="searchAndAdd2">
         <view class="page-section">
           <view class="form-row">
@@ -74,7 +74,7 @@
           </view>
         </view>
       </form> -->
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <form onSubmit="search">
         <view class="page-section">
           <view class="form-row">
@@ -101,7 +101,7 @@
       <!-- 选人组件 -->
       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       
-      <view class="page-section">
+      <view class="page-section-suggest">
         <view class="page-section-title">建议</view>
           <view class="page-section-demo">
             <textarea name="remark"placeholder="输入 建议" />

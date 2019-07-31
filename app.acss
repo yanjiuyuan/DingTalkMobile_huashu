@@ -2,6 +2,7 @@ page {
   background-color: #F7F7F7;
   border: 1px solid rgba(0,0,0,0);
   box-sizing: border-box;
+
 }
 .button-inline{
   display:inline-block;
@@ -11,10 +12,193 @@ page {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+
+.choosePeople{
+	clear:left;
+	background-color:#fff;
+}
+.choosePeople-view{
+	background-color: #fff;
+	height: 150rpx;
+	border-bottom: 1px solid #F7F7F7;
+	display: flex;
+	align-items: center;
+	justify-content:space-between;
+}
+
+.choosePeople-view-new{
+	background-color: #fff;
+	height: 150rpx;
+	border-bottom: 1px solid #F7F7F7;
+	display: flex;
+	align-items: center;
+	/* justify-content:space-between; */
+}
+
+
+
+
+.choosePeople-title{
+	font-size: 35rpx;
+	font-family: "微软雅黑";
+	padding:20rpx 20rpx;
+}
+.choosePeople-view-left{
+	height: 150rpx;
+	font-family: "微软雅黑";
+	text-align: center;
+	font-size:32rpx;
+	display: flex;
+	flex-direction: row;
+	align-items:center;
+
+}
+.choosePeople-view-text{
+  	font-family: "微软雅黑";
+    /* border: 1px red solid; */
+    /* display: flex;s */
+
+    
+}
+
+.choosePeople-view-text-top{
+  font-size: 30rpx;
+  margin-bottom: 0.2rem;
+
+
+}
+.choosePeople-view-text-right{
+  font-size: 25rpx;
+  /* border: 1px red solid; */
+  position: absolute;
+  right: 20rpx;
+  padding-bottom: 0.5rem;
+  
+  color: #909399;
+}
+.choosePeople-view-text-bottom{
+  color: #909399;
+}
+
+
+.choosePeople-view-left-icon{
+	height: 150rpx;
+	width: 100rpx;
+	/* border: 1px red solid; */
+	text-align: center;
+}
+
+.choosePeople-view-left-icon-top,.choosePeople-view-left-icon-bottom{
+	height: 63rpx;
+	width:2rpx;
+	background-color: #E2E2E2;
+	margin:0 auto;
+}
+.choosePeople-view-left-icon-middle{
+	width: 25rpx;
+	height: 25rpx;
+	border-radius: 50%;
+	background-color: #E2E2E2;
+	margin:0 auto;
+}
+
+.choosePeople-view-left-icon-middle-s{
+	width: 25rpx;
+	height: 25rpx;
+	border-radius: 50%;
+	background-color: #E2E2E2;
+	margin:0 auto;
+	margin-top:63rpx;
+}
+
+.choosePeople-view-left-text{
+	display: flex;
+	flex-direction: column;
+	align-items:flex-start;
+
+}
+
+
+.choosePeople-view-left-text-small{
+		font-size:25rpx;
+		color: #909399;
+		/* margin-top:10rpx; */
+}
+
+
+.choosePeople-view-right{
+	/* width:80rpx;
+	height:120rpx; */
+	/* border: 1px red solid; */
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	flex-wrap: nowrap;
+}
+
+.choosePeople-view-right-item{
+
+	margin: 0 20rpx;
+	height: 80rpx;
+	width: 80rpx;
+	border-radius: 50%;
+	background-color: #4796FA;
+	color: #fff;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+
+}
+.fail{
+  	background-color: #F67474;
+}
+.success{
+    background-color: #67C23A;
+}
+.choosePeople-view-right-plus{
+	margin: 0 20rpx;
+	height: 80rpx;
+	width: 80rpx;
+	border-radius: 50%;
+	border: 1px #4796FA dotted;
+	color: #4796FA;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	font-size: 40rpx;
+	height: 80rpx;
+	width: 80rpx;
+	margin-bottom: 40rpx;
+}
+
+
+.choosePeople-view-right-plus-new{
+	margin: 0 20rpx;
+	height: 80rpx;
+	width: 80rpx;
+	border-radius: 50%;
+	border: 1px #4796FA dotted;
+	color: #4796FA;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	font-size: 40rpx;
+	height: 80rpx;
+	width: 80rpx;
+}
+
+.choosePeople-view-right-text{
+	text-align: center;
+	font-size:23rpx;
+	margin-top:10rpx;
+	color: #909399;
+}
 .tag{
   display:inline-block;
   text-align: center;
   padding:14rpx;
+  
 }
 .tag-normal{
   color:#409EFF;
@@ -32,6 +216,8 @@ page {
   color:#E6A23C;
   border:1px solid #E6A23C;
   background-color: #FDF6E6;
+  width:160rpx;
+  	margin-right:10rpx;
 }
 
 .tag-danger{
@@ -41,7 +227,6 @@ page {
 }
 
 .tag-info{
-  margin: auto 0px;
   color:#909399;
   border:1px solid #909399;
   background-color: #EBF5FF;
@@ -61,8 +246,16 @@ page {
 }
 
 .page-section {
-  background: #fff;
-  margin-bottom: 10rpx;
+  /* background: #fff;
+  margin-bottom: 10rpx; */
+}
+
+.page-section-suggest{
+	font-size: 35rpx;
+	margin-top: 20rpx;
+	background-color: #fff;
+	  font-family: "微软雅黑";
+
 }
 
 .page-section-title {
@@ -93,8 +286,8 @@ page {
 }
 
 button {
-  margin-top:20rpx;
-  margin-bottom:20rpx;
+  	margin-top: 20rpx;
+  	margin-bottom: 20rpx;
 }
 
 .bc_blue {
@@ -113,7 +306,7 @@ button {
   background-color: #00A854;
 }
 
-.form-row {
+/* .form-row {
   display: flex;
   align-items: center;
   padding: 6rpx 10rpx;
@@ -131,7 +324,40 @@ button {
 .form-row-content {
   flex: 1;
   font-size: 34rpx;
+  border: 1px red solid;
+
+} */
+
+
+/* --------修改----------*/
+
+.form-row {
+	min-height: 90rpx;
+  display: flex;
+  align-items: center;
+  padding: 6rpx 10rpx;
+  margin: 20rpx 0;
+  background-color: #fff;
 }
+
+.form-row-label {
+  width: 260rpx;
+  font-size: 34rpx;
+  margin-left: 10rpx;
+  color: #000;
+  background-color: #fff;
+  
+}
+
+
+
+.form-row-content {
+  flex: 1;
+  font-size: 34rpx;
+  text-align: right;
+
+} 
+
 
 .form-line {
   height: 1px;
@@ -140,10 +366,9 @@ button {
 }
 
 .input{
-  background-color:#F5F7FA;
+  background-color:#fff;
   width:95%;
 }
 
-/* .input :disabled{
-  background-color:#909399;
-} */
+
+

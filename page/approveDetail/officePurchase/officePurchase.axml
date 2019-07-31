@@ -14,24 +14,24 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
           <input name="applyman" class="input" value="{{tableInfo.ApplyMan}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <!-- 物料表单 -->
       <text style="font-size:0.6rem;margin:0 2rpx;">总价预计 <text style="color:red">{{totalPrice}}</text> 元</text>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view a:for="{{dataList}}">
         <text style="font-size:0.3rem">部门名称：{{item.name}},请购总价预计 <text style="color:red">{{item.tmpTotalPrice}}</text> 元</text>
         <template is="datatable" data="{{items:tableItems,data:item.value,param:tableParam}}"/>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <!-- 选人组件 -->
-      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">
         <view class="page-section">
           <view class="page-section-title">同意建议</view>

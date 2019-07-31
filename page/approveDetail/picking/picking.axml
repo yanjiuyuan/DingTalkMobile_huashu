@@ -13,7 +13,7 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">

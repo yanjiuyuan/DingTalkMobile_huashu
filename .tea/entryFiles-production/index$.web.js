@@ -1,5 +1,6 @@
 require('@alipay/appx-compiler/lib/sjsEnvInit');
 require('./config$');
+
 require('../../util/table/table');
 require('../../util/table/column/column');
 require('../../node_modules/mini-ddui/es/list/index');

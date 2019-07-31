@@ -13,7 +13,7 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" />
+      <!-- <view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label">项目名</view>
         <view class="form-row-content">
@@ -26,14 +26,14 @@
           <input name="title" class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
           <input name="applyman" class="input" value="{{tableInfo.ApplyMan}}" disabled="{{true}}" />
         </view>
       </view>
-      <view class="form-line" /> 
+      <!-- <view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请部门</view>
         <view class="form-row-content">
@@ -45,7 +45,7 @@
       <template a:if="{{nodeid!=4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
       <template a:if="{{nodeid==4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
       <!-- 选人组件 -->
-      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">
         <view class="page-section">
           <view class="page-section-title">同意建议</view>

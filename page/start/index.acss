@@ -105,7 +105,6 @@
 	height: auto;
 	width: 100%;
 	/* border: 1px red solid; */
-	display: inline-block;
 	background-color: #fff;
 }
 .box-shadow{
