@@ -58,11 +58,18 @@ Page({
         Title: value.title,
         Remark: value.remark
     }
-    if(this.data.imgUrlList.length>0){
+    if(this.data.imgUrlList.length > 0){
       param['ImageUrl'] = this.data.imgUrlList.join(',')
+    }
+    else{
+      dd.alert({
+        content:"请上传图片"
+      })
+      return;
     }
     console.log(param)
     //return
+  
     this.aggreSubmit(param)
   },
   print(){

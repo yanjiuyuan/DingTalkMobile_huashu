@@ -14,7 +14,7 @@
 			</view>
             <view a:if="{{DingData.nickName == '蔡兴桐' || DingData.nickName == '黄浩炜' || DingData.nickName == '詹姆斯' || DingData.nickName == '胡晓辉'  }}"
              onTap="choosePeople" class="tag tag-info">+ 选人</view>
-             <picker onChange="selectUser" value="{{userIndex}}" range="{{userList}}" range-key="NodePeople" a:if="{{DingData.nickName == '蔡兴桐' || DingData.nickName == '黄浩炜' || DingData.nickName == '詹姆斯'}}">
+             <picker onChange="selectUser" value="{{userIndex}}" range="{{userList}}" range-key="NodePeople" a:if="{{DingData.nickName == '蔡兴桐' || DingData.nickName == '黄浩炜' || DingData.nickName == '詹姆斯' || DingData.nickName == '胡晓辉'}}">
               <view class="row">
                 <view class="row-extra">{{userList[userIndex].NodePeople}}-{{userList[userIndex].PeopleId}}</view>
                 <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />

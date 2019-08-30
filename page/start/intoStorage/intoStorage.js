@@ -219,7 +219,8 @@ Page({
       return
     }
     var that = this
-    var value = e.detail.value
+    var value = e.detail.value;
+
     var param = {
         Title: value.title,
         Remark: value.remark,
@@ -244,17 +245,17 @@ Page({
           that.doneSubmit()
       },paramArr)
   },
-  bindPickerChange(e){
-    this.data.nodeList[2].AddPeople = 
-        [{
-            name: this.data.projectList[e.detail.value].ResponsibleMan,
-            userId: this.data.projectList[e.detail.value].ResponsibleManId
-        }]
-    this.setData({
-        projectIndex: e.detail.value,
-        nodeList: this.data.nodeList
-    })
-  },
+  // bindPickerChange(e){
+  //   this.data.nodeList[2].AddPeople = 
+  //       [{
+  //           name: this.data.projectList[e.detail.value].ResponsibleMan,
+  //           userId: this.data.projectList[e.detail.value].ResponsibleManId
+  //       }]
+  //   this.setData({
+  //       projectIndex: e.detail.value,
+  //       nodeList: this.data.nodeList
+  //   })
+  // },
   //弹窗表单相关
   //显示弹窗表单
   chooseItem(e){

@@ -111,6 +111,14 @@ Page({
       },paramArr)
   },
 
+  onReady(){
+    console.log("aaaaaaaaaa");
+    this.setData({
+      ['chooseParam.multiple'] : true
+    })
+
+
+  },
   //提交弹窗表单
   addGood(e){
     var value = e.detail.value

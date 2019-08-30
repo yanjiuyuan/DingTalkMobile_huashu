@@ -112,9 +112,10 @@ Page({
   },
   submit(e) {
     var that = this
-    var value = e.detail.value
+    var value = e.detail.value;
+
     var param = {
-        Title: value.title,
+        Title: newTitle || value.title,
         Remark: value.remark,
         ProjectName: that.data.projectList[that.data.projectIndex].ContractName,
         ProjectId: that.data.projectList[that.data.projectIndex].ContractNo

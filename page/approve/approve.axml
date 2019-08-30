@@ -18,6 +18,8 @@
 		</view>
   </view>
 
+
+ <scroll-view onScrollToLower ="scroll" style="height:{{clientHeight}}px;"  scroll-y="true">
   <list>
     <!-- <view slot="header">{{items[activeItem].name}} 
        <form onSubmit="search" style="width:83%;display:inline-block;">
@@ -41,7 +43,9 @@
 			<view class="icon" a:if="{{item.ApplyMan.length == 2}}">{{item.ApplyMan}}</view>
 			<view class="icon" a:if="{{item.ApplyMan.length == 3}}">{{item.ApplyMan.substring(1)}}</view>
 			<view class="text">
-				<view onTap="toDetial" data-row="{{item}}">{{item.ApplyMan}} 的 {{item.FlowName}} 
+        <view onTap="toDetial" data-row="{{item}}">{{item.ApplyMan}} 的 {{item.FlowName}} 
+            <view class="block tag {{item.IsRead==true ?'tag-success':'tag-danger'}}" a:if ="{{ activeItem == 3 && item.IsRead == true }}">已读</view>
+            <view class="block tag {{item.IsRead==true ?'tag-success':'tag-danger'}}" a:if ="{{ activeItem == 3 && item.IsRead == false }}">未读</view>
 				<view class="tag {{item.State=='已完成'?'tag-success':'tag-danger'}}" 
 				style="float:right;font-size:10px;padding:2rpx;">{{item.State}}</view>
 				</view>
@@ -76,4 +80,5 @@
     </block> -->
     <view slot="footer"></view>
   </list>
+   </scroll-view>
 </view>

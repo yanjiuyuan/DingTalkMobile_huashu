@@ -6,7 +6,7 @@
   
   <!-- 基本表单 -->
   <form onSubmit="submit">
-    <view class="page-section">
+    <view class="page-section-suggest">
       <view class="form-row">
         <view class="form-row-label">标题</view>
         <view class="form-row-content">

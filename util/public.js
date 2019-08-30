@@ -16,7 +16,7 @@ export default {
   data:{
     ...lib.data,
     ...template.data,
-    version: 2.08,
+    version: 2.12,
     DingData:{
       nickName:'',
       departName:'',
@@ -53,35 +53,30 @@ export default {
     menu:[
     {
       flowId: 1,
-      sortId: 1,
       title:'办公用品申请',
       url: 'officesupplies/officesupplies',
       position: '-413px -47px'
     },
     {
       flowId: 24,
-      sortId: 1,
       title:'零部件采购申请',
       url: 'purchase/purchase',
       position: '-414px -137px'
     },
     {
       flowId: 26,
-      sortId: 1,
       title:'成品采购',
       url: 'finishedPurchase/finishedPurchase',
       position: (x + 8 * xTap) + 'px ' + (y + 3 * yTap) + 'px'
     },
     {
         flowId: 27,
-        sortId: 1,
         title:'入库申请',
         url: 'intoStorage/intoStorage',
         position: (x + 3 * xTap) + 'px ' + (y + 4 * yTap) + 'px'
     },
     {
         flowId: 28,
-        sortId: 1,
         title:'领料申请',
         url: 'picking/picking',
         position: (x + 1 * xTap) + 'px ' + (y + 4 * yTap) + 'px'
@@ -95,13 +90,13 @@ export default {
     // ,
     {
         flowId: 67,
-        sortId: 1,
+
         title:'借入申请',
         url: 'borrowThing/borrowThing',
         position: (x + 6 * xTap) + 'px ' + (y + 0 * yTap) + 'px'
     },{
         flowId: 68,
-        sortId: 1,
+
         title:'维修申请',
         url: 'maintain/maintain',
         position: (x + 4 * xTap) + 'px ' + (y + 4 * yTap) + 'px'
@@ -191,7 +186,7 @@ export default {
                           "IsEnable": 1,
                           "FlowId": that.data.flowid + '',
                           "NodeId": node.NodeId + '',
-                          "IsSend": false,
+                          "IsSend": node.IsSend,
                           "State": 0,
                           "OldFileUrl": null,
                           "IsBack": null
@@ -678,7 +673,7 @@ export default {
       if(this.data.flowid == '26'){
         this._getData("ContractManager/Quary" + this.formatQueryStr({pageIndex:1,pageSize:1000}), function(res) {
           for(let r of res){
-            r['text'] = r.ContractName + ' -编号: ' + r.ContractNo
+            r['text'] =  ' 编号: ' + r.ContractNo + "-" + r.ContractName 
           }
           that.setData({
             projectList:res
@@ -953,9 +948,13 @@ export default {
       
       dd.getAuthCode({
         success: (res) => {
-          console.log(res.authCode)
+          console.log(res.authCode);
           lib.func._getData('LoginMobile/Bintang' + lib.func.formatQueryStr({authCode:res.authCode}),function(res){
             app.userInfo = res
+            
+            console.log("sssssssssssssssssssssssss");
+            console.log(res);
+            
             var DingData = {
               nickName:res.name,
               departName:res.dept,
@@ -966,6 +965,37 @@ export default {
             that.setData({ DingData:DingData })
             callBack()
           })
+          // lib.func._getData('LoginMobile/Bintang' + lib.func.formatQueryStr({authCode:res.authCode}),(res) => {
+          //     let result = res;          
+          //     dd.httpRequest({
+          //           url: that.data.dormainName + "DingTalkServers/getUserDetail" +lib.func.formatQueryStr({userid:res.userid}),
+          //           method: 'POST',
+          //           headers:{'Content-Type':'application/json; charset=utf-8','Accept': 'application/json',},
+          //           success: function(res) {
+        
+          //             let name = JSON.parse(res.data).name;
+          //             if(!result.userid){
+          //               dd.alert({
+          //                 content:res.errmsg+',请关掉应用重新打开试试~'
+          //               });
+          //               return
+          //             }
+          //             app.userInfo = result
+          //             var DingData = {
+          //               // nickName:result.name,
+          //               nickName:name || result.name,
+          //               departName:result.dept,
+          //               userid:result.userid
+          //             }
+          //             dd.hideLoading()
+          //             that.setData({ DingData:DingData })
+          //             callBack()
+          //           }
+
+
+          //         }) 
+
+          // })
         },
         // fail: (err) => {
         //   console.log('免登失败')
@@ -982,7 +1012,16 @@ export default {
                 name: this.data.projectList[e.detail.value].ResponsibleMan,
                 userId: this.data.projectList[e.detail.value].ResponsibleManId
             }]
+
+            let newTitle = this.data.projectList[e.detail.value].ProjectId  + "-" + this.data.projectList[e.detail.value].ProjectName;
+            if(newTitle.indexOf("undefined") > -1){
+              newTitle = undefined;
+            }
+            let a = this.data.projectList[e.detail.value].ContractNo + "-" + this.data.projectList[e.detail.value].ContractName;
+
+            console.log(this.data.projectList);
           this.setData({
+            ['tableInfo.Title']:newTitle || a,
             projectIndex: e.detail.value,
             nodeList: this.data.nodeList
           });

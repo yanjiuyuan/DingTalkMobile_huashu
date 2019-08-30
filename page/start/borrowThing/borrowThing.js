@@ -115,7 +115,8 @@ Page({
   },
   submit(e) {
     var that = this
-    var value = e.detail.value
+    var value = e.detail.value;
+
     var param = {
         Title: value.title,
         Remark: value.remark,

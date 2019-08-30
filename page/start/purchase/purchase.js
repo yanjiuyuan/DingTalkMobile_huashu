@@ -110,8 +110,9 @@ Page({
     )
   },
   submit(e) {
-    var value = e.detail.value
-    var param = {
+    var value = e.detail.value;
+    let that = this;
+    var param = { 
         Title: value.title,
         Remark: value.remark,
         ProjectName: this.data.projectList[this.data.projectIndex].ProjectName,

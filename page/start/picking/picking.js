@@ -151,18 +151,18 @@ Page({
       }
     });
   },
-  bindPickerChange(e){
-    this.data.nodeList[1].AddPeople = 
-        [{
-            name: this.data.projectList[e.detail.value].ResponsibleMan,
-            userId: this.data.projectList[e.detail.value].ResponsibleManId
-        }]
-    this.setData({
-      projectIndex: e.detail.value,
-      nodeList: this.data.nodeList
-    });
+  // bindPickerChange(e){
+  //   this.data.nodeList[1].AddPeople = 
+  //       [{
+  //           name: this.data.projectList[e.detail.value].ResponsibleMan,
+  //           userId: this.data.projectList[e.detail.value].ResponsibleManId
+  //       }]
+  //   this.setData({
+  //     projectIndex: e.detail.value,
+  //     nodeList: this.data.nodeList
+  //   });
       
-    },
+  //   },
   searchAndAdd2(e){
     dd.showLoading({
         content: '获取中...'

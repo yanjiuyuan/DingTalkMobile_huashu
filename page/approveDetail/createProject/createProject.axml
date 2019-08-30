@@ -101,8 +101,8 @@
       <!-- 选人组件 -->
       <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">
-        <view class="page-section">
-          <view class="page-section-title">同意建议</view>
+        <view class="page-section-suggest">
+          <view class="page-section-title">建议</view>
           <view class="page-section-demo">
             <textarea name="remark" placeholder="输入 建议" value="{{remark}}" />
           </view>

@@ -6,6 +6,8 @@ Page({
     activeItem:0,
     pageIndex:1,
     pageCount:0,
+    size:5,
+    clientHeight:400,
     items:[
       {
         index:0,
@@ -53,9 +55,19 @@ Page({
     //this.getApproveList(this.data.activeItem)
   },
   onReady() {
+        let that=this;
+        dd.getSystemInfo({
+      success: function(res) {
+        console.log(res);
+          that.setData({
+          clientHeight: res.windowHeight-res.windowHeight*0.14
+        });
+      }
+    })
   },
   changeItem(e)
   {
+    this.data.size = 5;
     var that = this
     let index = e.target.dataset.index
     if(index == this.data.activeItem) return
@@ -85,7 +97,9 @@ Page({
     var that = this
     let param =  {Index:index,
       ApplyManId:that.data.DingData.userid,
-      IsSupportMobile:true}
+      IsSupportMobile:true,
+      ageIndex:1,
+      pageSize:this.data.size,}
     if(keyword) param['Key'] = keyword
     dd.showLoading({content:'获取审批列表中，请稍候~'})
     that._getData('FlowInfoNew/GetFlowStateDetail' + that.formatQueryStr(
@@ -142,5 +156,11 @@ Page({
             url: url + this._formatQueryStr(param)
           })
     }
-  }
+  },
+    scroll(){
+    this.data.size = this.data.size + 5;
+    console.log(this.data.size);
+    this.getApproveList(this.data.activeItem);
+  },
+
 });
