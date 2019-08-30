@@ -30,7 +30,7 @@
 
       <view a:if="{{nodedata.IsNeedChose && nodedata.ChoseNodeId && nodedata.ChoseNodeId.indexOf(node.NodeId) >= 0}}"
         data-NodeId="{{node.NodeId}}" 
-        onTap="choosePeopleOne" class="tag tag-info">+ 选人
+        onTap="choosePeople" class="tag tag-info">+ 选人
       </view>
 
       <view a:if="{{index < length-1}}" style="font-size:100rpx;line-height:60rpx;color:#409EFF;margin-left:40rpx;padding:10rpx;">﹀</view>
@@ -68,7 +68,7 @@
 
       <view a:if="{{nodedata.IsNeedChose && nodedata.ChoseNodeId && nodedata.ChoseNodeId.indexOf(node.NodeId) >= 0}}"
         data-NodeId="{{node.NodeId}}" 
-        onTap="choosePeopleOne" class="tag tag-info">+ 选人
+        onTap="choosePeople" class="tag tag-info">+ 选人
       </view>
 
       <view a:if="{{index < length-1}}" style="font-size:100rpx;line-height:60rpx;color:#409EFF;margin-left:40rpx;padding:10rpx;">﹀</view>
