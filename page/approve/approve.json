@@ -1,9 +1,9 @@
 {
-  "pullRefresh": true,
-  "usingComponents":{
-    "table":"/util/table/table",
-    "column":"/util/table/column/column",
-    "list":"mini-ddui/es/list/index",
-    "list-item":"mini-ddui/es/list/list-item/index"
-  }
+    "pullRefresh": true,
+    "usingComponents": {
+        "table": "/util/table/table",
+        "column": "/util/table/column/column",
+        "list": "mini-ddui/es/list/index",
+        "list-item": "mini-ddui/es/list/list-item/index"
+    }
 }

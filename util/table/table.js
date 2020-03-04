@@ -1,12 +1,12 @@
 Component({
-  mixins: [],
-  data: {},
-  props: {
-    // data:[],
-    // param: []
+    mixins: [],
+    data: {},
+    props: {
+        // data:[],
+        // param: []
     },
-  didMount() {},
-  didUpdate() {},
-  didUnmount() {},
-  methods: {},
+    didMount() {},
+    didUpdate() {},
+    didUnmount() {},
+    methods: {}
 });

@@ -1,130 +1,126 @@
-@import '/util/grid/index.acss';
-@import '/util/template/template.acss';
-
+@import "/util/grid/index.acss";
+@import "/util/template/template.acss";
 .approval-box-img {
     width: 60px;
     height: 60px;
-	background-image:url(image/icon900-540.png);
-    background-repeat:no-repeat;
-    background-position: -54px -54px;
-	/* border: 1px red solid; */
-	/* background-size: 100% 100%; */
-
-
-
-    
+    background-image: url(image/icon900-540-test.png);
+    background-size: 780px 420px;
 }
 
-
+.approval-box-image {
+    width: 40px;
+    height: 40px;
+}
 
 .slogon {
-  text-align: center;
+    text-align: center;
 }
 
 .logo {
-  margin-top: 60rpx;
-  width: 90px;
-  height: 90px;
+    margin-top: 60rpx;
+    width: 90px;
+    height: 90px;
 }
 
 .info {
-	height: 150rpx;
-	background-color: #fff;
-	display: flex;
-	
-  /* margin-top: 30rpx;
+    height: 150rpx;
+    background-color: #fff;
+    display: flex;
+    /* margin-top: 30rpx;
   margin-bottom: 60rpx; */
-
-
 }
 
 .desc {
-  font-size: 25rpx;
-  color: #888;
-  
+    font-size: 25rpx;
+    color: #888;
 }
-.info-img{
-	height: 100rpx;
-	width: 100rpx;
-	background-color: #4796FA;
-	margin-left:25rpx; 
-	position: relative;
-	border-radius: 50%;    
-    top: 50%; /*偏移*/
+
+.info-img {
+    height: 100rpx;
+    width: 100rpx;
+    background-color: #4796fa;
+    margin-left: 25rpx;
+    position: relative;
+    border-radius: 50%;
+    top: 50%;
+    /*偏移*/
     transform: translateY(-50%);
-	
+}
 
+.desc-name {
+    margin-top: 40rpx;
+    margin-left: 20rpx;
+    margin-bottom: 10rpx;
+    font-size: 40rpx;
+    font-family: "微软雅黑";
+    font-weight: bold;
 }
-.desc-name{
-	 margin-top:40rpx;
-	 margin-left:20rpx;
-	margin-bottom: 10rpx;
-	 font-size: 40rpx;
-	 font-family:"微软雅黑";
-	 font-weight: bold;
-}
-.flex{
-	display: flex;
-	width: 200rpx;
-	flex-direction: column;
-	align-items: center;
 
+.flex {
+    display: flex;
+    width: 200rpx;
+    flex-direction: column;
+    align-items: center;
 }
-.sort{
 
-	font-size:0.33rem;
-	background: #fff;
-	margin-top:20rpx;
-	width: 100%;
-	line-height: 100rpx;
-	font-family: "微软雅黑";
-	 position: relative;
-    display: inline-block; 
+.sort {
+    font-size: 0.33rem;
+    background: #fff;
+    margin-top: 20rpx;
+    width: 100%;
+    line-height: 100rpx;
+    font-family: "微软雅黑";
+    position: relative;
+    display: inline-block;
 }
-.sort-name{
-	margin-left:20rpx;
+
+.sort-name {
+    margin-left: 20rpx;
 }
-.sort-open{
-	float: right;
-	margin-right: 20rpx;
-	font-size: 27rpx;
-	color: #888;
+
+.sort-open {
+    float: right;
+    margin-right: 20rpx;
+    font-size: 27rpx;
+    color: #888;
 }
-.dropdown-content{
-	display: none;
+
+.dropdown-content {
+    display: none;
     position: absolute;
+    transition: opacity 1s;
+    opacity: 0.1;
+}
 
-}
-.dropdown-content-show{
-	background-color: #fff;
-}
-/* .sort:hover .dropdown-content{
+.dropdown-content-show {
+    background-color: #fff;
     display: block;
-} */
-.menu{
-	height: auto;
-	width: 100%;
-	/* border: 1px red solid; */
-	background-color: #fff;
-}
-.box-shadow{
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    opacity: 1;
 }
 
+.menu {
+    height: auto;
+    width: 100%;
+    background-color: #fff;
+}
+
+.box-shadow {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
 
 .grid {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-	justify-content:center;
+    justify-content: center;
 }
 
 .grid-item-new {
     width: 21%;
     text-align: center;
-    float:left;
+    float: left;
     padding-top: 28%;
-    margin-left: 3%; 
+    margin-left: 3%;
     margin-bottom: 4%;
     position: relative;
     /* box-shadow: 0 0 8rpx rgba(0, 0, 0, 0.1); */
@@ -144,18 +140,38 @@
     flex-direction: column;
 }
 
-
 .grid-text-new {
     color: #000;
     font-size: 25.3rpx;
     line-height: 1;
+    height: 0.4rem;
     margin-top: 28rpx;
 }
-.info-img-name{
-	text-align: center;
-	color: #fff;
-	line-height: 100rpx;
-	vertical-align: middle;
-	font-family: "微软雅黑";
-	font-size: 32rpx;
+
+.info-img-name {
+    text-align: center;
+    color: #fff;
+    line-height: 100rpx;
+    vertical-align: middle;
+    font-family: "微软雅黑";
+    font-size: 32rpx;
+}
+
+.picker {
+    height: 100prx;
+}
+
+.choose {
+    width: 100rpx;
+    height: 30rpx;
+}
+
+.small-font {
+    font-size: 25rpx;
+    color: rgb(136, 136, 136);
+    margin-left: 20rpx;
+}
+
+.blue {
+    color: #4796fa;
 }

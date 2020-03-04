@@ -1,84 +1,49 @@
-<import src="/util/template/template.axml"/>
+<import src="/util/template/template.axml" />
 <view>
 	<view slot="header" class="header">
 		<form onSubmit="search">
 			<input name="keyword" class="input" placeholder="关键字搜索" type="search" onConfirm="search"></input>
-			<icon type="search" ></icon>
+			<icon type="search"></icon>
 			<button type="primary" size="mini" formType="submit">搜索</button>
 		</form>
 	</view>
-
-
-
-  <view class="top-new">
-	   <view a:for="{{items}}" >
-		   	<view class=" top-item-new {{item.index == activeItem ? 'active':'' }}"  data-index='{{item.index}}' onTap="changeItem">
-			<view class="textApprove-new"> {{item.name}}  </view>
+	<view class="top-new">
+		<view a:for="{{items}}">
+			<view class=" top-item-new {{item.index == activeItem ? 'active':'' }}" data-index='{{item.index}}' onTap="changeItem">
+				<view class="textApprove-new"> {{item.name}}</view>
 			</view>
 		</view>
-  </view>
-
-
- <scroll-view onScrollToLower ="scroll" style="height:{{clientHeight}}px;"  scroll-y="true">
-  <list>
-    <!-- <view slot="header">{{items[activeItem].name}} 
-       <form onSubmit="search" style="width:83%;display:inline-block;">
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-content">
-                <input name="keyword" class="input" placeholder="关键字搜索" style="width:78%;" /> 
-                <button type="primary" size="mini" formType="submit" style="margin:0;">搜索</button>
-              </view>
-            </view>
-          </view>
-        </form>
-    </view> -->
-	<block a:for="{{approveList}}">
-		<list-item onTap="toDetial" data-row="{{item}}"
-			key="item-{{index}}"
-			index="{{index}}"
-			last="{{index === (approveList.length - 1)}}"
-			class="list">
-			<view class="list-line"></view>
-			<view class="icon" a:if="{{item.ApplyMan.length == 2}}">{{item.ApplyMan}}</view>
-			<view class="icon" a:if="{{item.ApplyMan.length == 3}}">{{item.ApplyMan.substring(1)}}</view>
-			<view class="text">
-        <view onTap="toDetial" data-row="{{item}}">{{item.ApplyMan}} 的 {{item.FlowName}} 
-            <view class="block tag {{item.IsRead==true ?'tag-success':'tag-danger'}}" a:if ="{{ activeItem == 3 && item.IsRead == true }}">已读</view>
-            <view class="block tag {{item.IsRead==true ?'tag-success':'tag-danger'}}" a:if ="{{ activeItem == 3 && item.IsRead == false }}">未读</view>
-				<view class="tag {{item.State=='已完成'?'tag-success':'tag-danger'}}" 
-				style="float:right;font-size:10px;padding:2rpx;">{{item.State}}</view>
-				</view>
-				<view class="text-font" onTap="toDetial" data-row="{{item}}">标题:{{item.Title}}</view>
-				<view class="text-font" onTap="toDetial" data-row="{{item}}">流水号:{{item.TaskId}}</view>
-				<view class="text-font" onTap="toDetial" data-row="{{item}}">申请时间:{{item.ApplyTime}}</view>
-			</view>
-		</list-item>
-	</block>
-	<block a:if="{{approveList.length == 0}}" >
-	<view class="DataIsNull">
-		<image mode="scaleToFill" src="/image/ApprovalForm.png"/>
-		<text>暂无审批单</text>
 	</view>
-	</block>
-
-    <!-- <block a:for="{{approveList}}">
-      <list-item onTap="toDetial" data-row="{{item}}"
-        key="item-{{index}}"
-        index="{{index}}"
-        last="{{index === (approveList.length - 1)}}"
-      >
-	  <view class="icon"><</view>
-        <view onTap="toDetial" data-row="{{item}}">{{item.ApplyMan}} 的 {{item.FlowName}} 
-          <view class="tag {{item.State=='已完成'?'tag-success':'tag-danger'}}" 
-          style="float:right;font-size:12px;padding:2rpx;">{{item.State}}</view>
-        </view>
-        <view class="am-list-brief" onTap="toDetial" data-row="{{item}}">标题:{{item.Title}}</view>
-        <view class="am-list-brief" onTap="toDetial" data-row="{{item}}">流水号:{{item.TaskId}}</view>
-        <view class="am-list-brief" onTap="toDetial" data-row="{{item}}">申请时间:{{item.ApplyTime}}</view>
-      </list-item>
-    </block> -->
-    <view slot="footer"></view>
-  </list>
-   </scroll-view>
+	<scroll-view onScrollToLower="scroll" style="height:{{clientHeight}}px;" scroll-y="true">
+		<list>
+			<block a:for="{{approveList}}">
+				<list-item onTap="toDetial" data-row="{{item}}" key="item-{{index}}" index="{{index}}" last="{{index === (approveList.length - 1)}}" class="list">
+					<view class="list-line"></view>
+					<view class="icon" a:if="{{item.ApplyMan.length == 2}}">{{item.ApplyMan}}</view>
+					<view class="icon" a:if="{{item.ApplyMan.length >= 3}}">{{item.ApplyMan.substring(1)}}</view>
+					<view class="text">
+						<view onTap="toDetial" data-row="{{item}}">{{item.ApplyMan}} 的 {{item.FlowName}}
+							<view class="block tag {{item.IsRead==true ?'tag-success ':'tag-danger '}}" style="border-radius: 5px;" a:if="{{ activeItem == 3 && item.IsRead == true }}">已读</view>
+							<view class="block tag {{item.IsRead==true ?'tag-success ':'tag-danger '}}" style="border-radius: 5px;" a:if="{{ activeItem == 3 && item.IsRead == false }}">未读</view>
+							<view class="tag {{item.FlowState == '已完成' ? 'tag-success tag-success-new':'tag-danger tag-danger-new'}}" style="float:right;font-size:10px;padding:2rpx;">{{item.FlowState}}
+							</view>
+						</view>
+						<view class="text-font" onTap="toDetial" data-row="{{item}}" a:if="{{item.Title.length < 18}}">标题:{{item.Title}}</view>
+						<view class="text-font" onTap="toDetial" data-row="{{item}}" a:if="{{item.Title.length >= 18}}">标题:{{item.Title.slice(0,23)}}...</view>
+						<view class="text-font" onTap="toDetial" data-row="{{item}}">流水号:{{item.TaskId}}</view>
+						<view class="text-font" onTap="toDetial" data-row="{{item}}">申请时间:{{item.ApplyTime}}</view>
+						<view class="text-font" onTap="toDetial" data-row="{{item}}">最后处理时间:{{item.CurrentTime}}</view>
+					</view>
+				</list-item>
+			</block>
+			<block a:if="{{approveList.length == 0}}">
+				<view class="DataIsNull">
+					<image mode="scaleToFill" src="/image/ApprovalForm.png" />
+					<text>暂无审批单</text>
+				</view>
+			</block>
+			<view slot="footer"></view>
+		</list>
+	</scroll-view>
+	<!--<scroll-view scroll-y="{{true}}" style="height: 100%;" onScrollToUpper="upper" onScrollToLower="lower" onScroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}"><view id="blue" class="scroll-view-item bc_blue"></view><view id="red" class="scroll-view-item bc_red"></view><view id="yellow" class="scroll-view-item bc_yellow"></view><view id="green" class="scroll-view-item bc_green"></view></scroll-view> -->
 </view>
