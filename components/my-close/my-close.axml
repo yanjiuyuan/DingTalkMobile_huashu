@@ -1,0 +1,3 @@
+<!-- 删除标志 -->
+<view class="close" style="height: {{size}}rpx;width: {{size}}rpx; background-color: #{{backgroundColor}}; line-height:{{size}}rpx " >
+</view>

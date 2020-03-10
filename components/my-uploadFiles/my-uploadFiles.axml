@@ -1,0 +1,29 @@
+<!-- 上传文件 -->
+<view class="files">
+	<view class="files-title">
+			{{title}}
+	</view>
+	<view class="margin-left" a:for="{{fileList}}">
+		<view class="cube">
+			<image mode="scaleToFill" src="/components/my-uploadFiles/file.png" style="width:90rpx;height:90rpx" />
+		</view>
+		<view class="cube-right">
+			<view class="cube-name">
+				<text a:if="{{item.fileName.length<= 13}}">{{item.fileName}}</text>
+				<text a:if="{{item.fileName.length > 13}}">{{item.fileName.substring(0,13) + "..."}}</text>
+			</view>
+			<view class="cube-size">
+				{{(item.fileSize/1000).toFixed(2) +"kb"}}
+			</view>
+		</view>
+		<view class="preview" onTap="preview" data-item="{{item}}"> 
+			预览
+		</view>
+		<view class="closes" onTap="delete" data-fileId="{{item.fileId}}">
+			<my-close size="35" backgroundColor="000"></my-close>
+		</view>
+	</view>
+	<view class="add" onTap="uploadFiles">
+		<view class="cross"></view>
+	</view>
+</view>

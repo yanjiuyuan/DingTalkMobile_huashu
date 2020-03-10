@@ -1,0 +1,18 @@
+<view a:if="{{typeof rangeKey == 'object'}}">
+	<picker value="{{index}}" range="{{range}}" onChange="bindPickerChange">
+		<view class="row">
+			<view class="row-title"></view>
+			<view class="row-extra">{{range[index]}}</view>
+			<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+		</view>
+	</picker>
+</view>
+<view a:if="{{typeof rangeKey == 'string'}}">
+	<picker value="{{index}}" range="{{range}}" onChange="bindPickerChange" range-key="{{rangeKey}}">
+		<view class="row">
+			<view class="row-title"></view>
+			<view class="row-extra">{{range[index][rangeKey]}}</view>
+			<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+		</view>
+	</picker>
+</view>

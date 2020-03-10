@@ -1,0 +1,94 @@
+* {
+	font-family: "微软雅黑";
+}
+
+.image-files {
+	background-color: #fff;
+	min-height: 1.5rem;
+	margin: 0.2rem 0;
+	padding: 0.06rem;
+	font-size: 0.34rem;
+}
+
+.image-files-title {
+	margin-left: 0.1rem;
+	height: 0.9rem;
+	line-height: 0.9rem;
+}
+
+.adds {
+	margin-left: 0.35rem;
+	margin-bottom: 0.2rem;
+	height: 90rpx;
+	width: 90rpx;
+	background: #F7F7F7;
+	text-align: center;
+}
+
+.image-cross {
+	background: #cdcdcd;
+	height: 50rpx;
+	position: relative;
+	width: 5rpx;
+	left: 0.425rem;
+	top: 0.2rem;
+}
+
+.image-cross:after {
+	background: #cdcdcd;
+	content: "";
+	height: 5rpx;
+	left: -22.5rpx;
+	position: absolute;
+	top: 22.5rpx;
+	width: 50rpx;
+}
+
+.image-margin-left {
+	margin-left: 0.35rem;
+	margin-bottom: 0.35rem;
+	margin-right: 0.2rem;
+}
+
+.image-cube {
+	height: 90rpx;
+	width: 90rpx;
+	box-sizing: border-box;
+}
+
+.cube-name {
+	font-family: "微软雅黑";
+	font-size: 0.34rem;
+	width: 4rem;
+}
+
+.picture {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+/* .picture::after {
+	flex: auto;
+	content: "";
+} */
+
+.image-close {
+	color: #fff;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 1px;
+	display: inline-block;
+	height: 30rpx;
+	width: 30rpx;
+	background-color: #000;
+	line-height: 30rpx;
+	position: relative;
+	top: -115rpx;
+	right: -73rpx;
+}
+
+.image-close::before {
+	content: "\2715";
+}

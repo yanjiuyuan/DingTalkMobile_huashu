@@ -1,0 +1,134 @@
+@import '/util/template/template.acss';
+.margin {
+    margin-left: 2rem;
+}
+
+.radio-margin {
+    margin: 0 20rpx;
+}
+
+.checkbox-margin {
+    margin: 0 0 0 8rpx;
+}
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+}
+
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    opacity: 0;
+}
+
+.modal-container-s {
+    width: 90%;
+    height: auto;
+    background-color: #F7F7F7;
+    /* position: absolute;
+	left: 50%;
+	margin-top: 10%; */
+    position: fixed;
+    left: 50%;
+    z-index: 1000;
+    margin-top: 15%;
+    margin-left: -45%;
+    border-radius: 20rpx;
+}
+
+.form-row-s {
+    font-family: "微软雅黑";
+    min-height: 0.7rem;
+    display: flex;
+    width: 90%;
+    border-radius: 10rpx;
+    align-items: center;
+    padding: 0.06rem .01rem;
+    margin: 0.2rem auto;
+    background-color: #fff;
+    font-size: 20rpx;
+}
+
+.form-row-label-s {
+    widows: 2.6rem;
+    font-size: 25rpx;
+    margin-left: 0.2rem;
+    color: #000;
+    background-color: #fff;
+    width: 1.8rem;
+}
+
+.input-s {
+    background-color: #fff;
+    width: 95%;
+    font-size: 25rpx;
+}
+
+.title {
+    margin: 30rpx 0;
+    text-align: center;
+}
+
+.buttonView {
+    text-align: center;
+}
+
+.buttons {
+    margin: 20rpx 20rpx;
+    border-radius: 10px;
+}
+
+.margin {
+    margin-left: 1.6rem;
+}
+
+.radio-margin {
+    margin: 0 20rpx;
+    font-size: 25rpx;
+}
+
+.ViewButton {
+    padding: 0.1rem;
+    font-size: 25rpx;
+    border-radius: 10px;
+    color: #fff;
+    display: inline-block;
+    background-color: #3296FA;
+    margin-right: 10rpx;
+}
+
+.size {
+    font-size: 25rpx;
+}
+
+.checkbox-margin {
+    margin: 0 0 0 8rpx;
+}
+
+.row-s {
+    display: flex;
+    align-items: center;
+    padding: 0 0.3rem;
+}
+
+.btn-view {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+}
+
+.radio-group-margin {
+    margin: 1.8rem;
+}

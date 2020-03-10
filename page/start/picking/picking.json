@@ -1,6 +1,7 @@
 {
-  "usingComponents":{
-    "table":"/util/table/table",
-    "column":"/util/table/column/column"
-  }
+    "usingComponents": {
+        "table": "/util/table/table",
+        "column": "/util/table/column/column",
+        "my-picker": "/components/my-picker/my-picker"
+    }
 }

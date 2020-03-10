@@ -1,0 +1,11 @@
+.close {
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 1px;
+  display: inline-block;
+}
+
+.close::before {
+  content: "\2715";
+}

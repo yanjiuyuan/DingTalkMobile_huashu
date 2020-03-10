@@ -1,0 +1,58 @@
+<import src="/util/template/template.axml"/>
+<view class="modal" a:if="{{!hidden}}" key="modal">
+  <view class="modal-mask" animation="{{animMaskData}}"/>
+  <view class="modal-container-s" animation="{{animContentData}}">
+    <view class="modal-content">
+      <form onSubmit="confirm">
+        <view class="page-section">
+          <view class="title">{{title}}</view>
+          <scroll-view scroll-y="{{true}}" style="max-height:361px">
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                <template is="required"></template>角色名称</view>
+              <view class="form-row-content">
+                <input name="RoleName" class="input-s" placeholder="角色名称" value="{{tableInfo.RoleName}}" />
+              </view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                <template is="required"></template>权限成员</view>
+              <view class="form-row-content">
+                <textarea auto-height="true" style="min-height:70rpx;padding:0;font-size:25rpx" maxlength="-1" style="resize: none;" class="input" disabled="{{true}}" value="{{permissionMember}}"></textarea>
+              </view>
+              <view onTap="choosePeoples" class="ViewButton">选人</view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">是否启用</view>
+              <radio-group class="radio-group margin" name="IsEnable" onChange="radioChangeTwo">
+                <label class="radio radio-margin" a:for="{{SecondArray}}">
+                  <radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+                </label>
+              </radio-group>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">启用成员</view>
+              <checkbox-group onChange="onChangeThird" class="size" name="roles">
+                <label class="checkbox checkbox-margin" a:for="{{thirdNeedArray}}">
+                  <checkbox value="{{item}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+                  <text class="checkbox-text">{{item.value}}</text>
+                </label>
+              </checkbox-group>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">描述信息</view>
+              <view class="form-row-content">
+                <textarea style="min-height:90rpx;padding:0; font-size:25rpx;" auto-height="true" maxlength="20" name="Remark" class="input" value="{{tableInfo.Remark || '空'}}" />
+              </view>
+            </view>
+            </view>
+          </scroll-view>
+          <view class="buttonView">
+            <button size="mini" type="primary" class="buttons" form-type="submit">确定</button>
+            <button size="mini" type="primary" class="buttons" onTap="cancel">取消</button>
+          </view>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>

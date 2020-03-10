@@ -48,7 +48,7 @@ const promptConf = {
     AddSuccess: "添加成功",
     DeleteSuccess: "删除成功",
     Confirm: "确认",
-    Cancel: "取消"
+    Cancel: "取消",
 };
 
 // module.exports = {
@@ -56,5 +56,5 @@ const promptConf = {
 // }
 
 export default {
-    promptConf: promptConf
+    promptConf: promptConf,
 };

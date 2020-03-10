@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "my-close": "/components/my-close/my-close"
+  }
+}

@@ -1,0 +1,22 @@
+<!-- 上传图片 -->
+<import src="/util/template/template.axml"/>
+<view class="image-files">
+  <!-- 标题 -->
+  <view class="image-files-title">
+    <template a:if="{{isFill}}" is="required"></template>	{{title}}
+  </view>
+  <!-- 图片 -->
+  <view class="picture">
+    <view class="image-margin-left" a:for="{{image}}" a:for-index="idx">
+      <view class="image-cube">
+        <image onTap="previewImg" style="width: 90rpx; height:90rpx" data-url="{{item}}" src="{{item}}" />
+        <view class="image-close" onTap="deletePhoto" data-url="{{item}}" data-index="{{idx}}">
+        </view>
+      </view>
+    </view>
+    <!-- 添加按钮 -->
+    <view class="adds">
+      <view class="image-cross" onTap="uploadPictures"></view>
+    </view>
+  </view>
+</view>
