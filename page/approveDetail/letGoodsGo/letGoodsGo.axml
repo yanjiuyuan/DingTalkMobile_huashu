@@ -1,0 +1,92 @@
+<!-- 物资放行条 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 退回审批表单 -->
+	<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+	<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<view class="form-row">
+				<view class="form-row-label">单位名称</view>
+				<view class="form-row-content">
+					<input class="input" name="Company" value="{{table.Company}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<!--<view class="form-line" />  -->
+			<view class="form-row">
+				<view class="form-row-label">车牌号</view>
+				<view class="form-row-content">
+					<input class="input" name="CarNo" value="{{table.CarNo}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">联系方式</view>
+				<view class="form-row-content">
+					<input name="Tel" class="input" value="{{table.Tel}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">物品名称</view>
+				<view class="form-row-content">
+					<input name="Name" class="input" value="{{table.Name}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">数量</view>
+				<view class="form-row-content">
+					<input name="Count" class="input" value="{{table.Count}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">单位</view>
+				<view class="form-row-content">
+					<input name="Unit" class="input" value="{{table.Unit}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">放行理由</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="Cause" maxlength="100" class="input" value="{{table.Cause}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">放行日期</view>
+				<view class="form-row-content">
+					<input class="input" name="Date" value="{{table.Date}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row" style="height:auto;">
+				<view class="form-row-label">相关图片</view>
+				<view class="form-row-content">
+					<view>
+						<image a:for="{{imageList}}" onTap="previewImg" mode="aspectFit" style="width: 180rpx; height:180rpx;" data-url="{{item}}" src="{{item}}" />
+					</view>
+				</view>
+			</view>
+			<!--<view class="form-line" />  -->
+			<!-- 选人组件 -->
+			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+			<view a:if="{{index==0}}">
+				<template is="suggest"/>
+				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+			</view>
+			<view a:if="{{ index!= 0 && state == '已完成' }}">
+				<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+			</view>
+			<view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
+				<button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成'}}">
+				<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+				<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+			</view>
+		</view>
+	</form>
+</view>

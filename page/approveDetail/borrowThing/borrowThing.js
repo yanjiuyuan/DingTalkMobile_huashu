@@ -1,11 +1,12 @@
 import pub from '/util/public';
+import promptConf from "/util/promptConf.js";
 Page({
   ...pub.func,
   ...pub.func.dowith,
   data: {
     ...pub.data,
     hidden: true,
-    tableItems: [
+    tableItems2: [
       {
         prop: 'Supplier',
         label: '供应商',
@@ -64,34 +65,13 @@ Page({
     ],
   },
   submit(e) {
-    var that = this
-    var value = e.detail.value
-    var param = {
+    let that = this
+    let value = e.detail.value
+    let param = {
         Title: value.title,
         Remark: value.remark
     }
     this.aggreSubmit(param)
   },
-  print(){
-    this._postData('Borrow/PrintPDF',
-      function(res){
-        dd.alert({content:'获取成功'})
-      },
-      {
-        UserId: this.data.DingData.userid,
-        TaskId: this.data.taskid
-      }
-    )
-  },
-  output(){
-    this._postData('Borrow/PrintExcel',
-      function(res){
-        dd.alert({content:'获取成功'})
-      },
-      {
-        UserId: this.data.DingData.userid,
-        TaskId: this.data.taskid
-      }
-    )
-  },
+
 });

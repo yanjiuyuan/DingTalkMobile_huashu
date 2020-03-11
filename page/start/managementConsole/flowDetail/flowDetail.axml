@@ -1,0 +1,100 @@
+<import src="/util/template/template.axml" />
+<view class="page">
+	<form onSubmit="submit">
+		<view class="page-section" style="margin-bottom:140rpx;">
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>流程id</view>
+				<view class="form-row-content">
+					<input name="flowId" class="input" value="{{tableInfo.FlowId}}" placeholder="输入流程id" disabled="{{true}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>流程名称</view>
+				<view class="form-row-content">
+					<input name="FlowName" class="input" value="{{tableInfo.FlowName}}" placeholder="流程名称" maxlength="8" />
+				</view>
+			</view>
+			<!--<view class="form-row"><view class="form-row-label" style="width:2.7rem"><template is="required"></template>移动端流程名称</view><view class="form-row-content"><input name="FlowNameMobile" class="input" value="{{tableInfo.FlowNameMobile}}" placeholder="移动端流程名称" maxlength="6" /></view></view> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>PC页面路径</view>
+				<view class="form-row-content">
+					<textarea name="PcUrl" class="input" auto-height="true" style="min-height:90rpx;padding:0;" value="{{tableInfo.PcUrl}}" placeholder="空" maxlength="-1" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">移动端页面路径</view>
+				<view class="form-row-content">
+					<textarea name="PhoneUrl" class="input" auto-height="true" style="min-height:90rpx;padding:0;" value="{{tableInfo.PhoneUrl}}" placeholder="空" maxlength="-1" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">是否启用</view>
+				<radio-group class="radio-group margin" name="IsEnable" onChange="radioChangeOne">
+					<label class="radio radio-margin" a:for="{{IsEnableArray}}">
+						<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+					</label>
+				</radio-group>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">是否是流程</view>
+				<radio-group class="radio-group margin" name="IsFlow" onChange="radioChangeThree">
+					<label class="radio radio-margin" a:for="{{IsFlowArray}}">
+						<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+					</label>
+				</radio-group>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">支持手机端推送</view>
+				<radio-group class="radio-group margin" name="IsSupportMobile" onChange="radioChangeTwo">
+					<label class="radio radio-margin" a:for="{{IsSupportMobileArray}}">
+						<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+					</label>
+				</radio-group>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+				权限成员
+				</view>
+				<view class="form-row-content">
+					<textarea disabled="{{true}}" style="min-height:90rpx;padding:0;" auto-height="true" maxlength="-1" name="ApplyMan" class="input" value="{{tableInfo.ApplyMan}}"/>
+				</view>
+				<view onTap="choosePeople" class="tag tag-info">+ 选人</view>
+			</view>
+			<view a:if="{{tableInfo.IsFlow}}" class="form-row" onTap="setNodeInfo">
+				<view class="form-row-label">节点配置</view>
+				<view class="form-row-content">
+					<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+				</view>
+			</view>
+			<view class="form-row" a:if="{{tableInfo.IsSupportMobile}}">
+				<view class="form-row-label">
+					移动端通知路径
+				</view>
+				<view class="form-row-content">
+					<textarea name="ApproveUrl" class="input" auto-height="true" style="min-height:90rpx;padding:0;" value="{{tableInfo.ApproveUrl}}" placeholder="空" maxlength="-1" />
+				</view>
+			</view>
+			<!-- 图标选择 -->
+			<view class="form-row" style="margin:0.2rem 0 0 0;">
+				<view class="form-row-label">
+					图标选择
+				</view>
+			</view>
+			<view style="background-color:#fff;padding-bottom:0.2rem">
+				<!-- 显示全部 -->
+				<view class="show-all">
+					<view a:for="{{background}}" class="image-view {{index == current ? 'border':''}}">
+						<image mode="scaleToFill" class="icons-size-s" data-index="{{index}}" onTap="choose" src="{{item.url}}"/>
+					</view>
+				</view>
+			</view>
+			<!-- ssssssssssssssssssssssssssssssss -->
+		</view>
+		<view class="btn-view">
+			<button size="default" class="btn" form-type="submit" type="primary">修改</button>
+		</view>
+	</form>
+</view>

@@ -1,0 +1,72 @@
+<!-- 跨部门协作 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<!-- 标题 -->
+			<template is ="title" data="{{tableInfo}}"/>
+			<!-- 申请人 -->
+			<template is ="applyman" data="{{DingData}}"/>
+			<!--<view class="form-row"><view class="form-row-label"><template is="required"></template>申请部门</view><view class="form-row-content"><input class="input" disabled="{{true}}" value="{{DingData.departName}}"/></view></view> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请部门</view>
+				<view class="form-row-content">
+					<my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>协作部门</view>
+				<my-picker onChange="bindDeptChange" index="{{departIndex}}" range="{{DeptNames}}" value="{{table.CooperateDept}}" ></my-picker>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>协作人</view>
+				<view class="form-row-content">
+					<textarea disabled="{{true}}" style="min-height:90rpx;padding:0;" auto-height="true" maxlength="-1" name="OtherEngineers" class="input" value="{{table.CooperateMan}}" placeholder=""/>
+				</view>
+				<view onTap="choosePeopleOne" class="tag tag-info">+ 选人</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>协作内容</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="CooperateContent" class="input" data-name="CooperateContent" onInput="inputToTable" value="{{table.CooperateContent}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>开始时间</view>
+				<view class="form-row-content">
+					<input name="PlanBeginTime" class="input" placeholder="开始时间" onFocus="selectStartDate" value="{{table.PlanBeginTime}}" disabled="{{true}}"/>
+				</view>
+				<view onTap="selectStartDate" class="tag tag-info">+ 选择</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>结束时间</view>
+				<view class="form-row-content">
+					<input name="PlanEndTime" class="input" placeholder="结束时间" onFocus="selectEndDate" value="{{ table.PlanEndTime}}" disabled="{{true}}"/>
+				</view>
+				<view onTap="selectEndDate" class="tag tag-info">+ 选择</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>计划天数</view>
+				<view class="form-row-content">
+					<input name="PlanDays" class="input" value="{{table.PlanDays}}" disabled="{{true}}"/>
+				</view>
+			</view>
+			<!-- 选人组件 -->
+			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+		</view>
+		<template is="suggest" data="{{table}}"/>
+		<!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+		<!-- 临时保存 -->
+		<template is="temporaryPreservation"/>
+	</form>
+</view>
+<!--<button type="primary" onTap="processOn" disabled="{{disablePage}}">流程图</button> -->

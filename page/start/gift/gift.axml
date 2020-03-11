@@ -1,0 +1,71 @@
+<!-- 礼品招待领用 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<view class="modal" a:if="{{!hidden}}" key="modal">
+		<view class="modal-mask" animation="{{animMaskData}}"/>
+		<view class="modal-container" animation="{{animContentData}}">
+			<view class="modal-content">
+				<form onSubmit="addGood">
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">
+								<template is="required"></template>礼品数量</view>
+							<view class="form-row-content">
+								<input name="GiftCount" class="input" placeholder="礼品数量" />
+							</view>
+						</view>
+					</view>
+					<view class="buttons">
+						<button type="primary" class="button-size" formType="submit">添加</button>
+						<button type="warn" class="button-size" onTap="onModalCloseTap">取消</button>
+					</view>
+				</form>
+			</view>
+		</view>
+	</view>
+	<form onSubmit="submit">
+		<view class="page-section">
+			<!-- 标题 -->
+			<template is ="title" data="{{tableInfo}}"/>
+			<!-- 申请人 -->
+			<template is ="applyman" data="{{DingData}}"/>
+			<!-- 选择部门 -->
+			<!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请部门</view>
+				<view class="form-row-content">
+					<my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+				</view>
+			</view>
+			<!-- 关键字搜索 -->
+			<form onSubmit="search">
+				<view class="page-section">
+					<view class="form-row">
+						<view class="form-row-label">关键字</view>
+						<view class="form-row-content">
+							<input name="keyWord" class="input" placeholder="请输入" />
+						</view>
+						<button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
+					</view>
+				</view>
+			</form>
+			<view onTap="chooseItem">
+				<text>礼品列表</text>
+				<template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
+			</view>
+			<view onTap="deleteItem">
+				<!-- 已选表单 -->
+				<text>已选礼品</text>
+				<template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2}}"/>
+			</view>
+			<!-- 选人组件 -->
+			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+			<template is="suggest" data="{{table}}"/>
+		</view>
+		<!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+		<!-- 临时保存 -->
+		<template is="temporaryPreservation"/>
+	</form>
+</view>

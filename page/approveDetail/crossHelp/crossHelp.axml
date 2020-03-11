@@ -1,0 +1,116 @@
+<!-- 跨部门协作 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 退回审批表单 -->
+	<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+	<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<view class="form-row">
+				<view class="form-row-label">协作部门</view>
+				<view class="form-row-content">
+					<input class="input" name="CooperateDept" value="{{table.CooperateDept}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">协作人</view>
+				<view class="form-row-content">
+					<textarea maxlength="-1" style="min-height:90rpx;padding:0;" auto-height="true" name="CooperateMan" class="input" value="{{table.CooperateMan}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">协作内容</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="CooperateContent" class="input" value="{{table.CooperateContent}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">协作开始时间</view>
+				<view class="form-row-content">
+					<input class="input" name="PlanBeginTime" value="{{table.PlanBeginTime}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">协作结束时间</view>
+				<view class="form-row-content">
+					<input class="input" name="PlanEndTime" value="{{table.PlanEndTime}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">计划天数</view>
+				<view class="form-row-content">
+					<input class="input" name="PlanDays" value="{{table.PlanDays}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view a:if="{{(nodeid == 4 && index == 0) || nodeid > 4}}">
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>实际开始时间</view>
+					<view class="form-row-content">
+						<input name="FactBeginTime" class="input" placeholder="实际开始时间" value="{{table.FactBeginTime}}" disabled="{{true}}"/>
+					</view>
+					<view onTap="selectStartDate" class="tag tag-info" a:if='{{nodeid == 4 && index == 0}}'>+ 选择</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>实际结束时间</view>
+					<view class="form-row-content">
+						<input name="FactEndTime" class="input" placeholder="实际结束时间" value="{{table.FactEndTime}}" disabled="{{true}}"/>
+					</view>
+					<view onTap="selectEndDate" class="tag tag-info" a:if='{{nodeid == 4 && index == 0}}'>+ 选择</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>实际天数</view>
+					<view class="form-row-content">
+						<input name="FactDays" class="input" value="{{table.FactDays}}" disabled="{{true}}"/>
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>实际协作人</view>
+					<view class="form-row-content">
+						<textarea maxlength="-1" style="min-height:90rpx;padding:0;" auto-height="true" name="FactCooperateMan" class="input" disabled="{{true}}" value="{{table.FactCooperateMan}}"/>
+					</view>
+					<view onTap="choosePeoples" class="tag tag-info" a:if="{{nodeid == 4}}">+ 选人</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>实际协作内容</view>
+					<view class="form-row-content">
+						<textarea auto-height="true" name="FactCooperateContent" class="input" value="{{table.FactCooperateContent}}" disabled="{{nodeid !=4}}" />
+					</view>
+				</view>
+			</view>
+			<view class="form-row" style="height:100%;" a:if ="{{fileList.length > 0 }}">
+				<view class="form-row-label">相关文件</view>
+				<view class="form-row-content">
+					<view a:for="{{fileList}}">
+						<text>{{item.name}}</text>
+						<button type="primary" data-mediaId="{{item.mediaId}}" onTap="downloadFile" disabled="{{disablePage}}" style="display:inline;padding:4rpx;margin:0 10rpx;">下载</button>
+					</view>
+				</view>
+			</view>
+			<!-- 选人组件 -->
+			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+			<view a:if="{{index==0}}">
+				<template is="suggest"/>
+				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+			</view>
+			<view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
+				<button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成'}}">
+				<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+				<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+			</view>
+		</view>
+	</form>
+</view>

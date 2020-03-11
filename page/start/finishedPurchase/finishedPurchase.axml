@@ -4,72 +4,76 @@
   <view class="modal" a:if="{{!hidden}}" key="modal">
     <view class="modal-mask" animation="{{animMaskData}}"/>
     <view class="modal-container" animation="{{animContentData}}">
-      <view class="modal-close" onTap="onModalCloseTap">×</view>
       <view class="modal-content">
         <form onSubmit="addGood">
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">
-                <template is="required"></template>单位</view>
-              <view class="form-row-content">
-                <input name="Unit" class="input" placeholder="单位" />
+          <scroll-view scroll-y="{{true}}" style="max-height:7rem">
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label">
+                  <template is="required"></template>单位</view>
+                <view class="form-row-content">
+                  <input name="Unit" class="input" placeholder="单位" />
+                </view>
               </view>
             </view>
-          </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">单价</view>
-              <view class="form-row-content">
-                <input name="Price" class="input" placeholder="单价" />
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label">单价</view>
+                <view class="form-row-content">
+                  <input name="Price" class="input" placeholder="单价" />
+                </view>
               </view>
             </view>
-          </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">
-                <template is="required"></template>数量</view>
-              <view class="form-row-content">
-                <input name="Count" class="input" placeholder="数量" />
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label">
+                  <template is="required"></template>数量</view>
+                <view class="form-row-content">
+                  <input name="Count" class="input" placeholder="数量" />
+                </view>
               </view>
             </view>
-          </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">
-                <template is="required"></template>需用日期</view>
-              <view class="form-row-content">
-                <input name="UrgentDate" class="input" placeholder="需用日期" onFocus="selectDate" value="{{dateStr}}" onTap="selectDate"/>
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label">
+                  <template is="required"></template>需用日期</view>
+                <view class="form-row-content">
+                  <input name="UrgentDate" class="input" placeholder="需用日期" onFocus="selectDate" value="{{dateStr}}" onTap="selectDate"/>
+                </view>
               </view>
             </view>
-          </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">送货地点</view>
-              <radio-group name="SendPosition" class="radio-group" onChange="radioChange">
-                <label class="radio" a:for="{{SendPosition}}">
-                  <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.name}}
-                </label>
-              </radio-group>
-            </view>
-          </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">
-                <template is="required"></template>用途</view>
-              <view class="form-row-content">
-                <input name="Purpose" class="input" placeholder="用途" />
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label" style="width:4.6rem">送货地点</view>
+                <radio-group name="SendPosition" class="radio-group" onChange="radioChange">
+                  <label class="radio" a:for="{{SendPosition}}">
+                    <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.name}}
+                  </label>
+                </radio-group>
               </view>
             </view>
-          </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">备注</view>
-              <view class="form-row-content">
-                <input name="Mark" class="input" placeholder="备注" />
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label">
+                  <template is="required"></template>用途</view>
+                <view class="form-row-content">
+                  <input name="Purpose" class="input" placeholder="用途" />
+                </view>
               </view>
             </view>
+            <view class="page-section">
+              <view class="form-row">
+                <view class="form-row-label">备注</view>
+                <view class="form-row-content">
+                  <input name="Mark" class="input" placeholder="备注" />
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+          <view class="buttons">
+            <button type="primary" class="button-size" formType="submit">添加</button>
+            <button type="warn" class="button-size" onTap="onModalCloseTap">取消</button>
           </view>
-          <button type="primary" style="margin-bottom:0;" formType="submit">添加</button>
         </form>
       </view>
     </view>
@@ -90,7 +94,7 @@
         </view>
       </view>
       <view class="form-row">
-        <view class="form-row-label">合同名</view>
+        <view class="form-row-label">合同名称</view>
         <picker onChange="bindPickerChange" value="{{projectIndex}}" range="{{projectList}}" range-key="text">
           <view class="row">
             <view class="row-extra">{{projectList[projectIndex].text}}</view>
@@ -124,7 +128,9 @@
       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <template is="suggest" data="{{table}}"/>
     </view>
-    <button type="primary" formType="submit" disabled="{{disablePage}}">提交申请</button>
-    <!--<button onTap="saveTempData">临时保存</button> -->
+    <!-- 提交按钮 -->
+    <template is ="submitButton" data="{{disablePage:disablePage}}"/>
+    <!-- 临时保存 -->
+    <template is="temporaryPreservation"/>
   </form>
 </view>

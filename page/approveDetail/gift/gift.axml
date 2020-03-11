@@ -1,0 +1,34 @@
+<!-- 礼品 -->
+<import src="/util/template/template.axml"/>
+<!-- 退回审批表单 -->
+<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+<view class="page">
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2}}"/>
+			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+			<view a:if="{{index==0}}">
+				<template is="suggest"/>
+				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<button a:if="{{nodeInfo.IsBack}}" type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+			</view>
+			<view a:if="{{ index!= 0 && state == '已完成' }}">
+				<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+			</view>
+			<view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
+				<button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成'}}">
+				<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+				<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+			</view>
+		</view>
+	</form>
+</view>

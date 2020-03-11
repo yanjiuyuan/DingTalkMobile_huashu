@@ -1,62 +1,56 @@
+<!-- 立项申请 -->
 <import src="/util/template/template.axml"/>
 <view class="page">
-  
-  
   <!-- 基本表单 -->
   <form onSubmit="submit">
     <view class="page-section">
+      <!-- 标题 -->
+      <template is ="title" data="{{tableInfo}}"/>
+      <!-- 申请人 -->
+      <template is ="applyman" data="{{DingData}}"/>
+      <!-- 选择部门 -->
+      <!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>标题</view>
+        <view class="form-row-label">
+          <template is="required"></template>申请部门</view>
         <view class="form-row-content">
-          <input name="Title" class="input" value="{{tableInfo.Title}}" placeholder="输入 标题"  />
+          <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
         </view>
       </view>
-      <view class="form-line" />
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>申请人</view>
-        <view class="form-row-content">
-          <input name="ApplyMan" class="input" disabled="{{true}}" value="{{DingData.nickName}}"/>
-        </view>
-      </view>
-       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>项目名称</view>
+        <view class="form-row-label">
+          <template is="required"></template>项目名称</view>
         <view class="form-row-content">
           <input name="ProjectName" class="input"/>
         </view>
       </view>
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>状态</view>
+        <view class="form-row-label">
+          <template is="required"></template>状态</view>
         <view class="form-row-content">
           <picker onChange="changeState" value="{{stateIndex}}" range="{{States}}">
             <view class="row">
+              <view class="row-title"></view>
               <view class="row-extra">{{States[stateIndex]}}</view>
               <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
             </view>
           </picker>
         </view>
       </view>
-      <!-- <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>公司</view>
-        <view class="form-row-content">
-         <picker onChange="changeCompany" value="{{companyIndex}}" range="{{CompanyNames}}">
-            <view class="row">
-              <view class="row-extra">{{CompanyNames[companyIndex]}}</view>
-              <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
-            </view>
-          </picker>
-        </view>
-      </view> -->
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>协作单位</view>
+        <view class="form-row-label">
+          <template is="required"></template>协作单位</view>
         <view class="form-row-content">
-          <input name="Customer" class="input"/>
+          <input name="Customer" class="input" placeholder="没有填“无”"/>
         </view>
       </view>
       <view class="form-row">
-        <view class="form-row-label">承担部门</view>
+        <view class="form-row-label">
+          <template is="required"></template>承担部门</view>
         <view class="form-row-content">
-         <picker onChange="changeDept" value="{{deptIndex}}" range="{{DeptNames}}">
+          <picker onChange="changeDept" value="{{deptIndex}}" range="{{DeptNames}}">
             <view class="row">
+              <view class="row-title"></view>
               <view class="row-extra">{{DeptNames[deptIndex]}}</view>
               <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
             </view>
@@ -64,66 +58,64 @@
         </view>
       </view>
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>项目类型</view>
+        <view class="form-row-label">
+          <template is="required"></template>项目类型</view>
         <view class="form-row-content">
           <picker onChange="changeType" value="{{typeIndex}}" range="{{ProjectTypes}}">
             <view class="row">
+              <view class="row-title"></view>
               <view class="row-extra">{{ProjectTypes[typeIndex]}}</view>
               <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
             </view>
           </picker>
         </view>
       </view>
-      <view class="form-line" />
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>项目负责人</view>
+        <view class="form-row-label">
+          <template is="required"></template>项目负责人</view>
         <view class="form-row-content">
           <input name="ResponsibleMan" class="input" disabled="{{true}}" value="{{DingData.nickName}}"/>
         </view>
-        <!-- <view onTap="chooseMan" class="tag tag-info">+ 选人</view> -->
       </view>
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>项目组成员</view>
+        <view class="form-row-label">
+          <template is="required"></template>项目组成员</view>
         <view class="form-row-content">
-          <textarea auto-height="true" name="TeamMembers" class="input" disabled="{{true}}" value="{{tableInfo.TeamMembers}}"/>
+          <textarea style="min-height:90rpx;padding:0;" auto-height="true" maxlength="-1" name="TeamMembers" class="input" disabled="{{true}}" value="{{tableInfo.TeamMembers}}"/>
         </view>
         <view onTap="chooseMans" class="tag tag-info">+ 选人</view>
       </view>
-      
-      <view class="form-line" />
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>开始时间</view>
+        <view class="form-row-label">
+          <template is="required"></template>开始时间</view>
         <view class="form-row-content">
-          <input name="StartTime" class="input" placeholder="开始时间" onFocus="selectStartDateTime"
-          value="{{startDateStr}}"/>
+          <input name="StartTime" class="input" placeholder="开始时间" onFocus="selectStartDateTime" disabled="true" value="{{startDateStr}}"/>
         </view>
+        <view onTap="selectStartDateTime" class="tag tag-info">+ 选择</view>
       </view>
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>结束时间</view>
+        <view class="form-row-label">
+          <template is="required"></template>返回时间</view>
         <view class="form-row-content">
-          <input name="EndTime" class="input" placeholder="结束时间" onFocus="selectEndDateTime"
-          value="{{endDateStr}}"/>
+          <input name="EndTime" class="input" placeholder="结束时间" onFocus="selectEndDateTime" disabled="true" value="{{endDateStr}}"/>
         </view>
+        <view onTap="selectEndDateTime" class="tag tag-info">+ 选择</view>
       </view>
-      <view class="form-line" />
       <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>立项文件上传</view>
+        <view class="form-row-label">
+          <template is="required"></template>立项文件上传</view>
         <view class="form-row-content">
           <input name="ResponsibleMan" class="input" disabled="{{true}}" value="{{tableInfo.ResponsibleMan}}"/>
         </view>
         <view onTap="upLoadFile" class="tag tag-info">+ 添加</view>
       </view>
-      <view class="form-row">
-        <view class="form-row-label">备注</view>
-        <view class="form-row-content">
-          <textarea auto-height="true" name="remark" class="input"/>
-        </view>
-      </view>
-      <!-- 选人组件 -->
+      <my-uploadfiles spaceId="670048396" title="立项文件" onGetArray="getArray" />
       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="suggest" data="{{table}}"/>
     </view>
-    
-    <button type="primary" formType="submit" disabled="{{disablePage}}">提交申请</button>
+    <!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+    <!-- 临时保存 -->
+    <template is="temporaryPreservation"/>
   </form>
-
 </view>

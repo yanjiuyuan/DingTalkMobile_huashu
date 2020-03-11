@@ -1,0 +1,262 @@
+<import src="/util/template/template.axml" />
+<!--<template is="mask" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/> -->
+<view class="top">
+	<view>节点信息</view>
+</view>
+<view style="margin-bottom:140rpx;">
+	<view a:for="{{nodeList}}">
+		<view class="box">
+			<view class="text" onTap="editor" data-NodeId="{{item.NodeId}}">{{item.NodeName}}</view>
+			<view class="people" a:if="{{item.NodeName != '结束'}}">
+				<view a:if="{{item.NodePeople}}" class="peoples">
+					<view a:if="{{item.NodePeople.length > 2}}">
+						<text class="people-item">多人</text>
+					</view>
+					<view a:if="{{item.NodePeople.length <= 2}}" class="peoples">
+						<view a:for="{{item.NodePeople}}">
+							<text class="people-item">{{item}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view onTap="choosePeople" data-NodeName="{{item.NodeName}}" data-NodeId="{{item.NodeId}}" data-PeopleId="{{item.PeopleId}}" a:if="{{item.NodeName != '结束'}}">选人</view>
+			<view class="delete" onTap="delete" data-NodeId="{{item.NodeId}}" a:if="{{item.NodeName != '结束'}}"></view>
+		</view>
+		<view class="line" a:if="{{item.NodeName != '结束'}}"></view>
+		<view class="circular" onTap="add" data-NodeId="{{item.NodeId}}" a:if="{{item.NodeName != '结束'}}">
+				+
+		</view>
+		<view class="line" a:if="{{item.NodeName != '结束'}}"></view>
+	</view>
+</view>
+<view class="btn-view">
+	<button size="default" class="btn" onTap="save" type="primary">保存当前配置</button>
+</view>
+<!-- 添加 -->
+<view class="modal" a:if="{{!hidden}}" key="modal">
+	<view class="modal-mask" animation="{{animMaskData}}"/>
+	<view class="modal-container-s" animation="{{animContentData}}">
+		<view class="modal-content">
+			<form onSubmit="submit">
+				<view class="page-section">
+					<view class="title">添加节点</view>
+					<scroll-view scroll-y="{{true}}" style="max-height:361px">
+						<view class="form-row-s">
+							<view class="form-row-label-s">
+								<template is="required"></template>节点名称</view>
+							<view class="form-row-content">
+								<input name="NodeName" class="input-s" placeholder="节点名称" />
+							</view>
+						</view>
+						<view class="form-row-s">
+							<view class="form-row-label-s">是否抄送</view>
+							<radio-group class="radio-group margin" name="IsSend" onChange="radioChangeTwo">
+								<label class="radio radio-margin" a:for="{{SecondArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						<view class="form-row-s">
+							<view class="form-row-label-s">
+								<!--<template is="required"></template> -->
+								审批人配置
+							</view>
+							<view class="form-row-content">
+								<textarea auto-height="true" style="min-height:70rpx;padding:0;font-size:25rpx" maxlength="-1" style="resize: none;" name="NodePeople" class="input" disabled="{{true}}" value="{{Approver}}"></textarea>
+							</view>
+							<view onTap="choosePeoples" class="ViewButton">选人</view>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false}}">
+							<view class="form-row-label-s">是否可退回</view>
+							<radio-group class="radio-group margin" name="IsBack" onChange="radioChangeOne">
+								<label class="radio radio-margin" a:for="{{FirstArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						<view class="form-row-s" a:if="{{ IsSend == false && IsBack == true}}">
+							<view class="form-row-label-s">退回节点</view>
+							<view class="form-row-content">
+								<input name="BackNodeId" class="input-s" placeholder="退回节点" />
+							</view>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false}}">
+							<view class="form-row-label-s">是否需要选人</view>
+							<radio-group class="radio-group margin" name="IsNeedChose" onChange="radioChangeThree">
+								<label class="radio radio-margin" a:for="{{thirdArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						<view class="form-row-s" a:if="{{ IsSend == false && show == true}}">
+							<view class="form-row-label-s">需要选择节点</view>
+							<checkbox-group onChange="onChanges" class="size" name="ChoseNodeId">
+								<label class="checkbox checkbox-margin" a:for="{{needChoose}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}">
+							<view class="form-row-label-s">需要多选的节点</view>
+							<checkbox-group onChange="onChangeFisrt" class="size" name="IsSelectMore">
+								<label class="checkbox checkbox-margin" a:for="{{firstNeedArray}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}">
+							<view class="form-row-label-s">必选的节点</view>
+							<checkbox-group onChange="onChangeSecond" class="size" name="IsMandatory">
+								<label class="checkbox checkbox-margin" a:for="{{secondNeedArray}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}">
+							<view class="form-row-label-s">角色选人节点</view>
+							<checkbox-group onChange="onChangeThird" class="size">
+								<label class="checkbox checkbox-margin" a:for="{{thirdNeedArray}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}" a:for="{{choosePeopleArray}}" a:for-index="index" a:for-item="item">
+							<view class="form-row-label-s">节点{{item.index}}选人角色</view>
+							<view class="form-row-content">
+								<picker name="RoleNames" onChange="change" data-item="{{item}}" value="{{item.roleIndex}}" range="{{roleList}}">
+									<view class="row-s">
+										<view class="row-title"></view>
+										<view class="row-extra">{{roleList[item.roleIndex]}}</view>
+										<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+									</view>
+								</picker>
+							</view>
+						</view>
+					</scroll-view>
+					<view class="buttonView">
+						<button size="mini" type="primary" class="buttonss" form-type="submit" data>确定</button>
+						<button size="mini" type="primary" class="buttonss" onTap="cancel">取消</button>
+					</view>
+				</view>
+			</form>
+		</view>
+	</view>
+</view>
+<!-- 编辑 -->
+<view class="modal" a:if="{{hidden2}}" key="modal">
+	<view class="modal-mask" animation="{{animMaskData}}"/>
+	<view class="modal-container-s" animation="{{animContentData}}">
+		<view class="modal-content">
+			<form onSubmit="editorSubmit">
+				<view class="page-section">
+					<view class="title">编辑节点</view>
+					<scroll-view scroll-y="{{true}}" style="max-height:361px">
+						<view class="form-row-s">
+							<view class="form-row-label-s">
+								<template is="required"></template>节点名称</view>
+							<view class="form-row-content">
+								<input name="NodeName" class="input-s" placeholder="节点名称" value="{{nodeInfo.NodeName}}"/>
+							</view>
+						</view>
+						<view class="form-row-s">
+							<view class="form-row-label-s">是否抄送</view>
+							<radio-group class="radio-group margin" name="IsSend" onChange="radioChangeTwo">
+								<label class="radio radio-margin" a:for="{{editorSecondArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						<view class="form-row-s">
+							<view class="form-row-label-s">
+								<!--<template is="required"></template> -->
+								审批人配置
+							</view>
+							<view class="form-row-content">
+								<textarea auto-height="true" style="min-height:70rpx;padding:0;font-size:25rpx" maxlength="-1" style="resize: none;" name="NodePeople" class="input" disabled="{{true}}" value="{{Approver}}"></textarea>
+							</view>
+							<view onTap="choosePeoples" class="ViewButton">选人</view>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false}}">
+							<view class="form-row-label-s">是否可退回</view>
+							<radio-group class="radio-group margin" name="IsBack" onChange="radioChangeOne">
+								<label class="radio radio-margin" a:for="{{editorFirstArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						<view class="form-row-s" a:if="{{ IsSend == false && IsBack == true}}">
+							<view class="form-row-label-s">退回节点</view>
+							<view class="form-row-content">
+								<input name="BackNodeId" class="input-s" placeholder="退回节点" value="{{nodeInfo.BackNodeId}}" />
+							</view>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false}}">
+							<view class="form-row-label-s">是否需要选人</view>
+							<radio-group class="radio-group margin" name="IsNeedChose" onChange="radioChangeThree">
+								<label class="radio radio-margin" a:for="{{editorThirdArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						<view class="form-row-s" a:if="{{ IsSend == false && show == true}}">
+							<view class="form-row-label-s">需要选择节点</view>
+							<checkbox-group onChange="onChanges" class="size" name="ChoseNodeId">
+								<label class="checkbox checkbox-margin" a:for="{{needChoose}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}">
+							<view class="form-row-label-s">需要多选的节点</view>
+							<checkbox-group onChange="onChangeFisrt" class="size" name="IsSelectMore">
+								<label class="checkbox checkbox-margin" a:for="{{firstNeedArray}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}">
+							<view class="form-row-label-s">必选的节点</view>
+							<checkbox-group onChange="onChangeSecond" class="size" name="IsMandatory">
+								<label class="checkbox checkbox-margin" a:for="{{secondNeedArray}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}">
+							<view class="form-row-label-s">角色选人节点</view>
+							<checkbox-group onChange="onChangeThird" class="size">
+								<label class="checkbox checkbox-margin" a:for="{{thirdNeedArray}}">
+									<checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.disabled}}" />
+									<text class="checkbox-text">{{item.value}}</text>
+								</label>
+							</checkbox-group>
+						</view>
+						<view class="form-row-s" a:if="{{IsSend == false && show == true}}" a:for="{{choosePeopleArray}}" a:for-index="index" a:for-item="item">
+							<view class="form-row-label-s">节点{{item.index}}选人角色</view>
+							<view class="form-row-content">
+								<picker name="RoleNames" onChange="change" data-item="{{item}}" value="{{item.roleIndex}}" range="{{roleList}}">
+									<view class="row-s">
+										<view class="row-title"></view>
+										<view class="row-extra">{{roleList[item.roleIndex]}}</view>
+										<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+									</view>
+								</picker>
+							</view>
+						</view>
+					</scroll-view>
+					<view class="buttonView">
+						<button size="mini" type="primary" class="buttonss" form-type="submit">确定</button>
+						<button size="mini" type="primary" class="buttonss" onTap="cancel2">取消</button>
+					</view>
+				</view>
+			</form>
+		</view>
+	</view>
+</view>

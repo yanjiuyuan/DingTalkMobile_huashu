@@ -1,71 +1,47 @@
 <import src="/util/template/template.axml"/>
 <view class="page">
-  
   <!-- 退回审批表单 -->
   <template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
-  
   <!-- 基本表单 -->
   <form onSubmit="submit">
     <view class="page-section">
+      <template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+      <template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+      <template is="department" data="{{department:tableInfo.Dept}}"/>
       <view class="form-row">
-        <view class="form-row-label">标题</view>
-        <view class="form-row-content">
-          <textarea name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <!-- <view class="form-line" /> -->
-      <view class="form-row">
-        <view class="form-row-label">项目名</view>
+        <view class="form-row-label">合同名称</view>
         <view class="form-row-content">
           <input name="title" class="input" value="{{tableInfo.ProjectName}}" disabled="{{true}}" />
         </view>
       </view>
       <view class="form-row">
-        <view class="form-row-label">项目编号</view>
+        <view class="form-row-label">合同编号</view>
         <view class="form-row-content">
           <input name="title" class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" />
         </view>
       </view>
-      <!-- <view class="form-line" />  -->
-      <view class="form-row">
-        <view class="form-row-label">申请人</view>
-        <view class="form-row-content">
-          <input name="applyman" class="input" value="{{tableInfo.ApplyMan}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <!-- <view class="form-line" />  -->
-      <view class="form-row">
-        <view class="form-row-label">申请部门</view>
-        <view class="form-row-content">
-          <input name="applyman" class="input" value="{{tableInfo.Dept}}" disabled="{{true}}" />
-        </view>
-      </view>
-
       <!-- 物料表单 -->
-      <template a:if="{{nodeid!=4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
-      <template a:if="{{nodeid==4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
+      <template a:if="{{nodeid!= 4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
+      <template a:if="{{nodeid== 4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
       <!-- 选人组件 -->
       <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">
-        <view class="page-section-suggest">
-          <view class="page-section-title">建议</view>
-          <view class="page-section-demo">
-            <textarea name="remark" placeholder="输入 建议" value="{{remark}}" />
-          </view>
-        </view>
+        <template is="suggest"/>
         <button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
-        <button type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+        <button a:if="{{nodeInfo.IsBack}}" type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
       </view>
-      <view a:if="{{index!=0}}">
+      <view a:if="{{ index!= 0 && state == '已完成' }}">
         <button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
-        <button type="primary" onTap="output" disabled="{{disablePage}}">导出Bom表</button>
       </view>
+      <button type="primary" onTap="output" disabled="{{disablePage}}">导出Bom表</button>
       <view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
-        <button type="primary" onTap="tapReturn" disabled="{{disablePage}}">重新发起</button>
+        <button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
       </view>
       <view a:if="{{index==2 && state=='未完成'}}">
-        <button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
         <button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+      </view>
+      <view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+        <button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
       </view>
     </view>
   </form>

@@ -1,0 +1,128 @@
+<!-- 车辆管理 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+  <form onSubmit="search">
+    <view class="page-section">
+      <view class="form-row">
+        <view class="form-row-label">关键字</view>
+        <view class="form-row-content">
+          <input name="keyWord" class="input" placeholder="请输入搜索关键字" maxlength="14" />
+        </view>
+      </view>
+    </view>
+    <view class="buttons">
+      <button class="button-size" type="primary" formType="submit" disabled="{{disablePage}}">搜索</button>
+      <button class="button-size" type="primary" onTap="addCar" disabled="{{disablePage}}">添加车辆</button>
+    </view>
+  </form> 
+  <view onTap="chooseItem">
+    <text>车辆列表</text>
+    <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate,tableOperate2:tableOperate2}}"/>
+  </view>
+  <form onSubmit="secondSearch">
+    <view class="form-row">
+      <view class="form-row-label">关键字</view>
+      <view class="form-row-content">
+        <input name="key" class="input" placeholder="请输入搜索关键字" maxlength="14" />
+      </view>
+    </view>
+    <view class="form-row">
+      <view class="form-row-label">
+        <template is="required"></template>开始时间</view>
+      <view class="form-row-content">
+        <input name="startTime" class="input" placeholder="开始时间" disabled="true" value="{{startDates}}"/>
+      </view>
+      <view onTap="selectStartDateTime" class="tag tag-info">+ 选择</view>
+    </view>
+    <view class="form-row">
+      <view class="form-row-label">
+        <template is="required"></template>结束时间</view>
+      <view class="form-row-content">
+        <input name="endTime" class="input" placeholder="结束时间" disabled="true" value="{{endDates}}"/>
+      </view>
+      <view onTap="selectEndDateTime" class="tag tag-info">+ 选择</view>
+    </view>
+    <view class="form-row">
+      <view class="form-row-label">
+        <template is="required"></template>用车类型</view>
+      <picker onChange="bindPickerChange" value="{{carIndex}}" range="{{typeArray}}">
+        <view class="row">
+          <view class="row-title"></view>
+          <view class="row-extra">{{typeArray[carIndex]}}</view>
+          <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+        </view>
+      </picker>
+    </view>
+    <view class="buttons">
+      <button class="button-size" type="primary" formType="submit" data-IsSend="{{false}}">搜索</button>
+      <button class="button-size" type="primary" formType="submit" data-IsSend="{{true}}" disabled="{{disablePages}}">打印表单</button>
+    </view>
+  </form>
+  <view a:if="{{tableData2}}" onTap="chooseItems">
+    <text>车辆列表</text>
+    <template is="datatable" data="{{items:items,data:tableData2,param:tableParam2}}"/>
+  </view>
+</view>
+<!-- 隐藏表单 -->
+<view class="modal" a:if="{{!hidden}}" key="modal">
+  <view class="modal-mask" animation="{{animMaskData}}"/>
+  <view class="modal-container-s" animation="{{animContentData}}">
+    <view class="modal-content">
+      <form onSubmit="confirm">
+        <view class="page-section">
+          <view class="title">编辑车辆</view>
+          <scroll-view scroll-y="{{true}}" style="max-height:361px">
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                <template is="required"></template>名称</view>
+              <view class="form-row-content">
+                <input name="Name" class="input-s" placeholder="名称" value="{{row.Name}}" />
+              </view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                <template is="required"></template>品牌</view>
+              <view class="form-row-content">
+                <input name="Type" class="input-s" placeholder="品牌" value="{{row.Type}}" />
+              </view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                <template is="required"></template>车牌号</view>
+              <view class="form-row-content">
+                <input name="CarNumber" class="input-s" placeholder="车牌号" value="{{row.CarNumber}}" />
+              </view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                颜色
+              </view>
+              <view class="form-row-content">
+                <input name="Color" class="input-s" placeholder="颜色" value="{{row.Color}}" />
+              </view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+                <template is="required"></template>每公里单价</view>
+              <view class="form-row-content">
+                <input name="UnitPricePerKilometre" class="input-s" placeholder="每公里单价(元)" value="{{row.UnitPricePerKilometre}}" />
+              </view>
+            </view>
+            <view class="form-row-s">
+              <view class="form-row-label-s">
+               备注
+              </view>
+              <view class="form-row-content">
+                <input name="Remark" class="input-s" placeholder="备注" value="{{row.Remark}}" />
+              </view>
+            </view>
+          </scroll-view>
+          <view class="buttonView">
+            <button size="mini" type="primary" class="buttonss" form-type="submit">确定</button>
+            <button size="mini" type="primary" class="buttonss" onTap="cancel">取消</button>
+          </view>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>

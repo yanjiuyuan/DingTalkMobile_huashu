@@ -1,5 +1,8 @@
 {
-    "usingComponents": {
-        "my-picker": "/components/my-picker/my-picker"
-    }
+  "usingComponents":{
+    "table":"/util/table/table",
+    "column":"/util/table/column/column",
+	"my-picker": "/components/my-picker/my-picker"
+
+  }
 }

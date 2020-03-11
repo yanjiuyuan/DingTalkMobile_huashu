@@ -1,0 +1,127 @@
+<!-- 私车 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 退回审批表单 -->
+	<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+	<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<view class="form-row">
+				<view class="form-row-label">标题</view>
+				<view class="form-row-content">
+					<input name="Title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">申请人</view>
+				<view class="form-row-content">
+					<input class="input" value="{{tableInfo.ApplyMan}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<view class="page-section">
+				<view class="form-row">
+					<view class="form-row-label">驾驶员</view>
+					<view class="form-row-content">
+						<input name="DrivingMan" class="input" value="{{table.DrivingMan}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">同行人</view>
+					<view class="form-row-content">
+						<textarea auto-height="true" style="min-height:90rpx;padding:0;" maxlength="-1" name="PeerNumber" class="input" value="{{table.PeerNumber}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">车牌号</view>
+					<view class="form-row-content">
+						<input name="CarNumber" class="input" value="{{table.CarNumber}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">用车事由</view>
+					<view class="form-row-content">
+						<textarea auto-height="true" name="MainContent" class="input" value="{{table.MainContent}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">计划行车路线</view>
+					<view class="form-row-content">
+						<textarea maxlength="140" auto-height="true" name="PlantTravelWay" class="input" value="{{table.PlantTravelWay}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view a:if="{{(nodeid == 3 && index == 0) || nodeid > 3}}">
+					<view class="form-row">
+						<view class="form-row-label">实际行车路线</view>
+						<view class="form-row-content">
+							<textarea maxlength="140" auto-height="true" name="FactTravelWay" class="input" value="{{table.FactTravelWay}}" disabled="{{!((nodeid == 3 || nodeid == 4) && index == 0)}}" />
+						</view>
+					</view>
+					<view class="form-row">
+						<view class="form-row-label">
+							<template is="required"></template>起始公里数</view>
+						<view class="form-row-content">
+							<input name="StartKilometres" onInput="startKilometres" class="input" value="{{table.StartKilometres}}" type="number" disabled="{{!((nodeid == 3 || nodeid == 4) && index == 0)}}"/>
+						</view>
+					</view>
+					<view class="form-row">
+						<view class="form-row-label">
+							<template is="required"></template>结束公里数</view>
+						<view class="form-row-content">
+							<input name="EndKilometres" onInput="endKilometres" class="input" value="{{table.EndKilometres}}" type="number" disabled="{{!((nodeid == 3 || nodeid == 4) && index == 0)}}" />
+						</view>
+					</view>
+					<view class="form-row">
+						<view class="form-row-label">使用公里数</view>
+						<view class="form-row-content">
+							<input name="UseKilometres" class="input" value="{{table.UseKilometres}}" disabled="{{true}}" />
+						</view>
+					</view>
+					<view class="form-row" style="height:auto;">
+						<view class="form-row-label" style="width:2.9rem">
+							<template is="required"></template>上传照片（2张）</view>
+						<view class="form-row-content">
+							<view a:for="{{imageList}}" a:for-index="idx">
+								<image onTap="previewImg" style="width: 180rpx; height:180rpx;margin-right:2rpx;" data-url="{{item}}" src="{{item}}" />
+								<button a:if="{{(nodeid == 3 && index == 0)}}" size="mini" type="primary" data-url="{{item}}" data-index="{{idx}}" onTap="deletePhoto">删除</button>
+							</view>
+							<view a:if="{{(nodeid == 3 && index == 0)}}" onTap="uploadImg" class="tag tag-info">+ 选择照片</view>
+						</view>
+					</view>
+				</view>
+				<view class="page-section">
+					<view class="form-row">
+						<view class="form-row-label">开始时间</view>
+						<view class="form-row-content">
+							<input name="StartTime" class="input" value="{{table.StartTime}}" disabled="{{true}}" />
+						</view>
+					</view>
+					<view class="form-row">
+						<view class="form-row-label">返回时间</view>
+						<view class="form-row-content">
+							<input name="EndTime" class="input" value="{{table.EndTime}}" disabled="{{true}}" />
+						</view>
+					</view>
+					<!-- 选人组件 -->
+					<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+					<view a:if="{{index==0}}">
+						<template is="suggest"/>
+						<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+						<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+					</view>
+					<view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
+						<button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
+					</view>
+					<view a:if="{{ index!= 0 && state == '已完成' }}">
+						<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+					</view>
+					<view a:if="{{index==2 && state=='未完成'}}">
+						<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+					</view>
+					<view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+						<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+					</view>
+				</view>
+				</form>
+			</view>

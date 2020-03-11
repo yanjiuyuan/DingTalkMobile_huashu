@@ -1,72 +1,100 @@
-import pub from '/util/public';
+import pub from "/util/public";
+import promptConf from "/util/promptConf.js";
 Page({
-  ...pub.func,
-  ...pub.func.dowith,
-  data: {
-    ...pub.data,
-    IsReview:true,
-    copyMans: [],
-    table:{},
-  },
-  submit(e) {
-    var value = e.detail.value
-    var param = {
-        Remark: value.remark
-    }
-    this.data.table.IsReview = this.data.IsReview
-    this.data.table.ProjectId = value.ProjectId
-    if(this.data.nodeid == 3 || this.data.nodeid == 1){
-      if (!this.data.table.ProjectId) {
-        console.log(this.data.table)
-        dd.alert({content:"项目编号不能为空"})
-        return
-      }
-      //if(this.data.nodeid == 1) this.data.nodeList[5].AddPeople = this.data.copyMans
-      console.log(this.data.nodeList)
-      this.setData({disablePage:true})
-      this._postData("CreateProject/Modify",
-        (res) => {
-          this.requestData("POST","Project/AddProject?IsPower=true"  ,(res) => {
-            this.aggreSubmit(param)
-         }, this.data.table)
+    ...pub.func,
+    ...pub.func.dowith,
+    data: {
+        ...pub.data,
+        copyMans: [],
+        table: {}
+    },
+    submit(e) {
+        let value = e.detail.value;
+        let param = {
+            Remark: value.remark
+        };
 
-        },this.data.table
-      )
-    }else{
-      this.aggreSubmit(param)
+        console.log(value);
+        console.log(this.data.table);
+
+        if (this.data.nodeid == 2) {
+            this.data.table.IsReview = value.IsReview;
+        }
+        this.data.table.ProjectId = value.ProjectId;
+        if (this.data.nodeid == 3 || this.data.nodeid == 2) {
+            if (this.data.nodeid == 3 && !this.data.table.ProjectId) {
+                console.log(this.data.table);
+                dd.alert({
+                    content: "项目编号不能为空，请输入！",
+                    buttonText: promptConf.promptConf.Confirm
+                });
+                return;
+            }
+            if (this.data.nodeid == 3 && !this.data.reg4.test(value.ProjectId)) {
+                dd.alert({
+                    content: "请规范填写项目编号",
+                    buttonText: promptConf.promptConf.Confirm
+                });
+                return;
+            }
+            this.data.table.CompanyName = "泉州华中科技大学智能制造研究院";
+
+            this._postData(
+                "CreateProject/Modify",
+                res => {
+                    if (this.data.nodeid != 3) {
+                        this.aggreSubmit(param);
+                        return;
+                    }
+                    this.data.table.ApplyManId = this.data.DingData.userid;
+                    this.data.table.ApplyMan = this.data.DingData.nickName;
+                    this._postData(
+                        "ProjectNew/AddProject",
+                        res => {
+                            this.aggreSubmit(param);
+                        },
+                        [this.data.table]
+                    );
+                },
+                this.data.table
+            );
+        } else {
+            this.aggreSubmit(param);
+        }
+    },
+    //下载文件
+    downloadServerFile(e) {
+        dd.downloadFile({
+            url: e.target.dataset.url,
+            success({ filePath }) {
+                dd.previewImage({
+                    urls: [filePath]
+                });
+            },
+            fail(res) {
+                dd.alert({
+                    content: res.errorMessage || res.error
+                });
+            }
+        });
+    },
+    radioChange: function(e) {
+        this.data.IsReview = e.detail.value;
+    },
+    onReady() {
+        let that = this;
+
+        this._getData("CreateProject/Read" + this.formatQueryStr({ TaskId: this.data.taskid }), res => {
+            if (that.data.nodeid > 2) {
+                that.data.IsReview = res.IsReview == true ? "是" : "否";
+            }
+            console.log(that.data.nodeid);
+            console.log(that.data.index == 2 && that.data.state == "未完成" && that.data.nodeid == 0);
+
+            this.setData({
+                table: res,
+                IsReview: that.data.IsReview
+            });
+        });
     }
-  },
-  print(){
-    var that = this
-    this._postData('CreateProject/GetPrintPDF',
-      (res) => {
-         dd.alert({content:"获取成功，请在钉钉PC端查收"})
-      },
-      {
-        UserId: that.data.DingData.userid,
-        TaskId: that.data.taskid,
-        IsPublic: true
-      }
-    )
-  },
-  radioChange: function(e) {
-    this.data.IsReview = e.detail.value
-  },
-  onReady(){
-     this._getData("CreateProject/Read" + this.formatQueryStr({TaskId:this.data.taskid}),
-      (res) => {
-        this.setData({
-          table: res
-        })
-        // let roleName = ''
-        // if (res.CompanyName == '泉州华中科技大学智能制造研究院') {
-        //     roleName = '研究院项目抄送人员'
-        // } else { roleName = '华数项目抄送人员' }
-        // if (this.data.nodeid == 1)
-        //  this.requestData("GET","Role/GetRoleInfo"  ,(res) => {
-        //    this.data.copyMans = res.data           
-        //  }, {RoleName:'研究院项目抄送人员'})
-      }
-    )
-  },
 });

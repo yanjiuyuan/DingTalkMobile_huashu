@@ -1,0 +1,9 @@
+@import "/util/template/template.acss";
+.btn_s {
+    display: flex;
+    justify-content: space-around;
+}
+.button-inline-new {
+    width: 3rem;
+    border-radius: 0.4rem;
+}

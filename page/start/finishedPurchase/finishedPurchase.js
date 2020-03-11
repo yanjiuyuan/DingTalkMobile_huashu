@@ -239,7 +239,5 @@ Page({
             localStorage.removeItem("purchase");
         }
     },
-    onShow() {
-        //this.loadTempData()
-    },
+    onReady() {},
 });

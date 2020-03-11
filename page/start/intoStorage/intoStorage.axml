@@ -1,87 +1,102 @@
+<!-- 入库申请 -->
 <import src="/util/template/template.axml"/>
 <view class="page">
-  <!-- 待编辑物料表单 -->
-  <view class="modal" a:if="{{!hidden}}" key="modal">
-    <view class="modal-mask" animation="{{animMaskData}}"/>
-    <view class="modal-container" animation="{{animContentData}}">
-      <view class="modal-close" onTap="onModalCloseTap">×</view>
-      <view class="modal-content">
-        <form onSubmit="addGood">
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">
-                <template is="required"></template>数量</view>
-              <view class="form-row-content">
-                <input name="fQty" class="input" placeholder="数量" />
-              </view>
-            </view>
-          </view>
-          <button a:if="{{!ifedit}}" type="primary" style="margin-bottom:0;" formType="submit">添加</button>
-          <button a:if="{{ifedit}}" type="primary" style="margin-bottom:0;" formType="submit">编辑</button>
-        </form>
-      </view>
-    </view>
-  </view>
-  <!-- 基本表单 -->
-  <form onSubmit="submit">
-    <view class="page-section">
-      <template is ="titleOfObject" data="{{tableInfo}}"/>
-      <!-- 申请人 -->
-      <template is ="applyman" data="{{DingData}}"/>
-      <!-- 选择部门 -->
-      <!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
-      <view class="form-row">
-        <view class="form-row-label">
-          <template is="required"></template>申请部门</view>
-        <view class="form-row-content">
-          <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">
-          <template is="required"></template>项目名称</view>
-        <!--<picker onChange="bindPickerChange" value="{{projectIndex}}" range="{{projectList}}" range-key="ProjectName"><view class="row"><view class="row-extra">{{projectList[projectIndex].ProjectName}}</view><image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" /></view></picker> -->
-        <my-picker onChange="bindPickerChange" index="{{projectIndex}}" range="{{projectList}}" value="{{tableInfo.ProjectName}}" rangeKey="ProjectName"></my-picker>
-      </view>
-      <!-- 搜索 -->
-      <!--<view class="form-line" /><form onSubmit="searchAndAdd"><view class="page-section"><view class="form-row"><view class="form-row-label">供应商添加</view><view class="form-row-content"><input name="keyWord" class="input" placeholder="供应商" /></view><button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">添加</button></view></view></form><view class="form-line" /> -->
-      <form onSubmit="search">
-        <view class="page-section">
-          <view class="form-row">
-            <view class="form-row-label">关键字搜索</view>
-            <view class="form-row-content">
-              <input name="keyWord" class="input" placeholder="关键字" />
-            </view>
-            <button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
-          </view>
-        </view>
-      </form>
-      <form onSubmit="searchByNo">
-        <view class="page-section">
-          <view class="form-row">
-            <view class="form-row-label">采购单编号搜索</view>
-            <view class="form-row-content">
-              <input name="no" class="input" placeholder="购单编号" />
-            </view>
-            <button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
-          </view>
-        </view>
-      </form>
-      <!-- 物料表单 -->
-      <view onTap="chooseItem">
-        <text>物料表单</text>
-        <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
-      </view>
-      <!-- 已选物料表单 -->
-      <view onTap="deleteItem">
-        <text>已选物料表单</text>
-        <template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2,tableOperate2:tableOperate3}}"/>
-      </view>
-      <!-- 选人组件 -->
-      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
-      <template is="suggest" data="{{table}}"/>
-    </view>
-    <button type="primary" formType="submit" disabled="{{disablePage}}">提交申请</button>
-    <!--<template is ="submitButton" data="{{disablePage:disablePage}}"/> -->
-  </form>
+	<!-- 待编辑物料表单 -->
+	<view class="modal" a:if="{{!hidden}}" key="modal">
+		<view class="modal-mask" animation="{{animMaskData}}"/>
+		<view class="modal-container" animation="{{animContentData}}">
+			<view class="modal-content">
+				<form onSubmit="addGood">
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">
+								<template is="required"></template>数量</view>
+							<view class="form-row-content">
+								<input name="fQty" class="input" placeholder="数量" />
+							</view>
+						</view>
+					</view>
+					<view class="buttons">
+						<button a:if="{{!ifedit}}" type="primary" class="button-size" formType="submit">添加</button>
+						<button a:if="{{ifedit}}" type="primary" class="button-size" formType="submit">编辑</button>
+						<button type="warn" class="button-size" onTap="onModalCloseTap">取消</button>
+					</view>
+				</form>
+			</view>
+		</view>
+	</view>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<!-- 标题 -->
+			<template is ="titleOfObject" data="{{tableInfo}}"/>
+			<!-- 申请人 -->
+			<template is ="applyman" data="{{DingData}}"/>
+			<!-- 选择部门 -->
+			<!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请部门</view>
+				<view class="form-row-content">
+					<my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>项目名称</view>
+				<!--<picker onChange="bindPickerChange" value="{{projectIndex}}" range="{{projectList}}" range-key="ProjectName"><view class="row"><view class="row-extra">{{projectList[projectIndex].ProjectName}}</view><image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" /></view></picker> -->
+				<my-picker onChange="bindPickerChange" index="{{projectIndex}}" range="{{projectList}}" value="{{tableInfo.ProjectName}}" rangeKey="ProjectName"></my-picker>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label" style="width:2.5rem">搜索类型</view>
+				<radio-group class="radio-group" name="codeType" onChange="radioChange">
+					<label a:for="{{[{name:'采购单编号',checked:true,label:'1'},{name:'关键字',checked:false,label:'2'}]}}">
+						<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+					</label>
+				</radio-group>
+				<view style="color:red">切换清空数据！</view>
+			</view>
+			<!-- 搜索 -->
+			<form onSubmit="search" a:if="{{!searchShow}}">
+				<view class="page-section">
+					<view class="form-row">
+						<view class="form-row-label">关键字搜索</view>
+						<view class="form-row-content">
+							<input name="keyWord" class="input" placeholder="关键字" />
+						</view>
+						<button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
+					</view>
+				</view>
+			</form>
+			<form onSubmit="searchByNo" a:if="{{searchShow}}">
+				<view class="page-section">
+					<view class="form-row">
+						<view class="form-row-label">采购单编号搜索</view>
+						<view class="form-row-content">
+							<input name="no" class="input" placeholder="采购单编号" />
+						</view>
+						<button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
+					</view>
+				</view>
+			</form>
+			<!-- 物料表单 -->
+			<view onTap="chooseItem" a:if="{{!searchShow}}">
+				<text>物料表单</text>
+				<template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
+			</view>
+			<!-- 已选物料表单 -->
+			<view onTap="deleteItem">
+				<text>已选物料表单</text>
+				<template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2,tableOperate2:tableOperate3}}"/>
+			</view>
+			<!-- 选人组件 -->
+			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+			<template is="suggest" data="{{table}}"/>
+		</view>
+		<!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+		<!-- 临时保存 -->
+		<template is="temporaryPreservation"/>
+	</form>
 </view>
+<!--<button type="primary" onTap="processOn" disabled="{{disablePage}}">流程图</button> -->

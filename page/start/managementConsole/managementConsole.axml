@@ -1,0 +1,110 @@
+<!-- 管理控制台 -->
+<import src="/util/template/template.axml" />
+<view class="top">
+	<view class="top-left" onTap="increase">
+		<view class="top-icon">
+			<image mode="scaleToFill" class="top-icon-image" src="/image/add-48.png"/>
+		</view>
+    新增分组
+	</view>
+	<view class="vertical-line"></view>
+	<view class="top-right" onTap="sort">
+		<view class="top-icon">
+			<image mode="scaleToFill" class="top-icon-image" src="/image/sort.png"/>
+		</view>排序功能
+	</view>
+</view>
+<view>
+	<text class="text">设置可见范围时，若不选任何人和任何部门，则为全员可见(包含新加入的员工)</text>
+</view>
+<view>
+	<view a:for="{{sort}}" a:for-item="m" class="sort">
+		<view onTap="showOrClose" data-index="{{index}}">
+			<text class="sort-name"> {{m.SORT_NAME}}
+				<image data-item="{{m}}" onTap="modifyName" mode="scaleToFill" class="modify" src="/image/modify.png" />
+			</text>
+			<text class="sort-open">
+				<image onTap="delete" data-item="{{m}}" mode="scaleToFill" class="dustbin" src="/image/dustbin.png" />
+			</text>
+		</view>
+		<view class="">
+			<view class="menu">
+				<view a:for="{{menu}}" a:if="{{ item.SORT_ID == m.Sort_ID}}" class="grid-item-new" data-index="{{index}}">
+					<view class="grid-item-wrapper-new">
+						<view class="approval-box-img" onTap="toChange" data-sort="{{m}}" data-item="{{item}}" style="backgroundPosition:{{item.Position}}">
+							<view a:if="{{item.FlowName != '流程管理'}}" class="delete-icon" catchTap="deleteItem" data-item = "{{item}}">
+								<view class="delete-icon-line">
+								</view>
+							</view>
+						</view>
+						<text class="grid-text-new">{{item.FlowName.indexOf('申请') > 0 && item.FlowName.length > 6  ? item.FlowName.replace('申请',""):item.FlowName}}</text>
+						<!--<text class="grid-text-new">{{item.FlowName.indexOf('申请')>0?item.FlowName.substring(0,item.FlowName.indexOf('申请')):item.FlowName}}</text> -->
+					</view>
+				</view>
+			</view>
+			<view class="menu" onTap="addShortcut" data-title="{{m.SORT_NAME}}" data-item="{{m}}">
+				<view class="grid-item-new" data-index="{{index}}">
+					<view class="grid-item-wrapper-new">
+						<view class="adds">
+							<image mode="scaleToFill" class="icon-add" src="/image/add.png"/>
+						</view>
+						<text class="grid-text-new blue">添加</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+<!--<template is="inputConfirm" data="{{ifName:ifName,title:title,animContentData:animContentData,animMaskData:animMaskData}}" /><template is="inputConfirm" data="{{ifName:hidden,title:title_1,animContentData:animContentData,animMaskData:animMaskData}}" /> -->
+<!-- 新增分组 -->
+<view class="modal" a:if="{{ifName}}" key="modal">
+	<view class="modal-mask" animation="{{animMaskData}}"/>
+	<view class="modal-container-s" animation="{{animContentData}}">
+		<view class="modal-content">
+			<form onSubmit="confirm">
+				<view class="page-section">
+					<view class="title">编辑类别</view>
+					<scroll-view scroll-y="{{true}}" style="max-height:361px">
+						<view class="form-row-s">
+							<view class="form-row-label-s">
+								<template is="required"></template>类别Id</view>
+							<view class="form-row-content">
+								<input name="Sort_ID" class="input-s" placeholder="类别Id" value="{{tableInfo.Sort_ID}}" />
+							</view>
+						</view>
+						<view class="form-row-s">
+							<view class="form-row-label-s">
+								<template is="required"></template>类别名称</view>
+							<view class="form-row-content">
+								<input name="SORT_NAME" class="input-s" placeholder="类别名称" value="{{tableInfo.SORT_NAME}}" />
+							</view>
+						</view>
+						<view class="form-row-s" a:if="{{editor}}">
+							<view class="form-row-label-s" style="width:2.5rem">
+								权限成员（默认全部）
+							</view>
+							<view class="form-row-content">
+								<textarea auto-height="true" name="ApplyMan" style="min-height:70rpx;padding:0;font-size:25rpx" maxlength="-1" style="resize: none;" class="input" disabled="{{true}}" value="{{tableInfo.ApplyMan}}"></textarea>
+							</view>
+							<view onTap="choosePeoples" class="ViewButton">选人</view>
+						</view>
+						<view class="form-row-s">
+							<view class="form-row-label-s">是否启用</view>
+							<radio-group class="radio-group margin" name="IsEnable" onChange="radioChangeTwo">
+								<label class="radio radio-margin" a:for="{{SecondArray}}">
+									<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+								</label>
+							</radio-group>
+						</view>
+						</view>
+					</scroll-view>
+					<view class="buttonView">
+						<button a:if="{{!editor}}" size="mini" type="primary" class="buttonss" form-type="submit">确定</button>
+						<button a:if="{{editor}}" size="mini" type="primary" class="buttonss" form-type="submit">编辑</button>
+						<button size="mini" type="primary" class="buttonss" onTap="cancel">取消</button>
+					</view>
+				</view>
+			</form>
+		</view>
+	</view>
+</view>

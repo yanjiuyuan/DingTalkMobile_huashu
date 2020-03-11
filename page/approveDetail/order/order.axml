@@ -1,9 +1,7 @@
 <import src="/util/template/template.axml"/>
 <view class="page">
-  
   <!-- 退回审批表单 -->
   <template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
-  
   <!-- 基本表单 -->
   <form onSubmit="submit">
     <view class="page-section">
@@ -13,7 +11,7 @@
           <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
         </view>
       </view>
-      <!-- <view class="form-line" /> -->
+      <!--<view class="form-line" /> -->
       <view class="form-row">
         <view class="form-row-label">项目名</view>
         <view class="form-row-content">
@@ -26,7 +24,7 @@
           <input name="title" class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" />
         </view>
       </view>
-      <!-- <view class="form-line" />  -->
+      <!--<view class="form-line" />  -->
       <view class="form-row">
         <view class="form-row-label">申请人</view>
         <view class="form-row-content">
@@ -40,14 +38,15 @@
         </view>
       </view>
       <button type="primary" onTap="downloadAllFile" disabled="{{disablePage}}">下载所有图纸</button>
-      <!-- <view class="form-line" /> -->
+      <!--<view class="form-line" /> -->
       <view class="form-row" style="height:auto;">
         <view class="form-row-label">PDF图纸</view>
         <view class="form-row-content">
           <view a:for="{{pdfList}}" a:for-index="i">
-            <view style="margin-bottom:-10px"><text>{{item.name}}</text></view>
+            <view style="margin-bottom:-10px">
+              <text>{{item.name}}</text></view>
             <button type="primary" onTap="downloadFile" data-mediaId="{{item.mediaId}}" disabled="{{disablePage}}" style="display:inline;padding:4rpx;margin:0 10rpx;">下载</button>
-            <!-- <view class="form-line" /> -->
+            <!--<view class="form-line" /> -->
           </view>
         </view>
       </view>
@@ -60,7 +59,6 @@
           </view>
         </view>
       </view>
-
       <!-- 物料表单 -->
       <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
       <!-- 选人组件 -->
@@ -76,7 +74,7 @@
         <button type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
       </view>
       <view a:if="{{index!=0}}">
-        <!-- <button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button> -->
+        <!--<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button> -->
         <button type="primary" onTap="output" disabled="{{disablePage}}">导出Bom表</button>
       </view>
       <view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">

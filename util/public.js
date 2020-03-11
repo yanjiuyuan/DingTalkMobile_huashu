@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.13",
+        version: "2.1.14",
         DingData: {
             nickName: "",
             departName: "",
@@ -618,34 +618,31 @@ export default {
                 switch (flowid) {
                     case "1":
                         url = "OfficeSupplies/ReadTable";
-                        break;
+                        break; //办公用品申请
                     case "6":
                         url = "DrawingUploadNew/GetPurchase";
-                        break;
-                    case "8":
+                        break; //图纸审批
+                    case "24":
                         url = "PurchaseNew/ReadPurchaseTable";
-                        break;
-                    case "12":
-                        url = "ItemCodeAdd/GetTable";
-                        break;
+                        break; //零部件采购
                     case "23":
                         url = "PurchaseOrder/QuaryByTaskId";
-                        break;
-                    case "26":
+                        break; //图纸下单
+                    case "28":
                         url = "Pick/Read";
-                        break;
+                        break; //领料
                     case "27":
                         url = "Godown/Read";
-                        break;
+                        break; //入库
                     case "33":
                         url = "DrawingChange/Read";
-                        break;
+                        break; //图纸变更
                     case "67":
                         url = "Borrow/Read";
-                        break;
+                        break; //借入
                     case "68":
                         url = "Maintain/Read";
-                        break;
+                        break; //维修
                 }
                 if (!url) return;
                 if (flowid == "12") {
@@ -698,7 +695,7 @@ export default {
                                 totalPrice: totalPrice == "NaN" ? 0 : totalPrice,
                             });
                         }
-                        if (flowid == "8") {
+                        if (flowid == "24") {
                             let totalPrice = 0.0;
                             for (let i of res) {
                                 totalPrice = (
@@ -766,7 +763,7 @@ export default {
                     case "6":
                         (url = "DrawingUploadNew/PrintAndSend"), (method = "post");
                         break; //图纸审批
-                    case "8":
+                    case "24":
                         (url = "PurchaseNew/PrintAndSend"), (method = "post");
                         break; //零部件采购
                     case "13":
@@ -784,10 +781,7 @@ export default {
                     case "23":
                         (url = "DrawingUpload/PrintAndSend"), (method = "post");
                         break; //图纸下单
-                    case "24":
-                        (url = "Gift/GetPrintPDF"), (method = "get");
-                        break; //礼品
-                    case "26":
+                    case "28":
                         (url = "Pick/PrintPDF"), (method = "post");
                         break; //领料申请
                     case "27":
@@ -820,9 +814,9 @@ export default {
                     case "69":
                         (url = "ProjectClosure/PrintAndSend"), (method = "post");
                         break; //结题
-                    case "75":
-                        (url = "PickMask/GetPrintPDF"), (method = "post");
-                        break;
+                    case "78":
+                        (url = "Gift/GetPrintPDF"), (method = "get");
+                        break; //礼品
                 }
                 let obj = {
                     UserId: that.data.DingData.userid,
@@ -870,13 +864,10 @@ export default {
                     case "6":
                         (url = "DrawingUploadNew/GetExcelReport"), (method = "get");
                         break; //图纸审批-
-                    case "8":
-                        (url = "api/PurchaseManage"), (method = "get");
-                        break; //零部件采购-
                     case "23":
                         (url = "PurchaseOrder/GetExcelReport"), (method = "get");
                         break; //图纸下单-
-                    case "26":
+                    case "28":
                         (url = "Pick/PrintExcel"), (method = "post");
                         break; //领料申请-
                     case "27":
@@ -1150,6 +1141,7 @@ export default {
                     app.globalData.sortItems = sortItem;
 
                     // console.log(sorts);
+
                     // console.log(tempdata);
 
                     that.setData({
@@ -1506,12 +1498,10 @@ export default {
             dd.getAuthCode({
                 success: res => {
                     console.log(res.authCode);
-
                     lib.func._getData(
                         "LoginMobile/Bintang" + lib.func.formatQueryStr({ authCode: res.authCode }),
                         res => {
                             let result = res;
-                            console.log(res);
                             dd.httpRequest({
                                 url:
                                     that.data.dormainName +

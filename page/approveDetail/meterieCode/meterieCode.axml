@@ -1,97 +1,67 @@
+<!-- 物料编码 -->
 <import src="/util/template/template.axml"/>
 <view class="page">
-  
-  <!-- 退回审批表单 -->
-  <template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenReturn,disablePage:disablePage}}"/>
-  
-  <!-- 基本表单 -->
-  <form onSubmit="submit">
-    <view class="page-section">
-      <view class="form-row">
-        <view class="form-row-label">标题</view>
-        <view class="form-row-content">
-          <input name="title" class="input" value="{{tableInfo.Title}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <!-- <view class="form-line" />  -->
-      <view class="form-row">
-        <view class="form-row-label">申请人</view>
-        <view class="form-row-content">
-          <input name="applyman" class="input" value="{{tableInfo.ApplyMan}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <!-- <view class="form-line" />  -->
-
-      <!-- 物料表单 -->
-      <view a:if="{{nodeid!=2}}">
-        <text>物料编码表单</text>
-        <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
-      </view>
-      <view a:if="{{nodeid==2}}" onTap="chooseItem">
-        <veiw onTap="chooseItem">
-          <text>物料编码表单</text>
-          <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
-        </view>
-
-        <view class="form-row">
-        <view class="form-row-label">添加到</view>
-        <radio-group name="codeType" class="radio-group">
-          <label class="radio" a:for="{{codeTypes}}">
-            <radio value="{{item.label}}" checked="{{item.checked}}"/>{{item.name}}
-          </label>
-        </radio-group>
-      </view>
-      </view>
-      
-      <!-- 选人组件 -->
-      <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
-      <view a:if="{{index==0}}">
-        <view class="page-section-suggest">
-          <view class="page-section-title">建议</view>
-          <view class="page-section-demo">
-            <textarea name="remark" placeholder="输入 建议" value="{{remark}}" />
-          </view>
-        </view>
-        <button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
-        <button type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
-      </view>
-      <view a:if="{{index!=0}}">
-        <button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
-        <button type="primary" onTap="output" disabled="{{disablePage}}">导出Bom表</button>
-      </view>
-      <view a:if="{{index==2 && state=='未完成'}}">
-        <button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
-        <button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
-      </view>
-    </view>
-  </form>
+	<!-- 退回审批表单 -->
+	<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+	<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+	<!-- 待编辑物料表单 -->
+	<view class="modal" a:if="{{!hidden2}}" key="modal">
+		<view class="modal-mask" animation="{{animMaskData}}"/>
+		<view class="modal-container" animation="{{animContentData}}">
+			<view class="modal-close" onTap="onModalCloseTap2">×</view>
+			<view class="modal-content">
+				<form onSubmit="addGood">
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">
+								<template is="required"></template>物料编码</view>
+							<view class="form-row-content">
+								<input name="CodeNumber" class="input" placeholder="物料编码" />
+							</view>
+						</view>
+					</view>
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">预计价格</view>
+							<view class="form-row-content">
+								<input name="FNote" class="input" placeholder="预计价格" />
+							</view>
+						</view>
+					</view>
+					<button type="primary" style="margin-bottom:0;" formType="submit">添加</button>
+				</form>
+			</view>
+		</view>
+	</view>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<!--<view><view class="form-row-label" style="float:left;">添加到</view><radio-group class="radio-group" style="float:left;" name="codeType" onChange="radioChange"><label class="radio" a:for="{{[{name:'零部件',checked:true,label:'1'},{name:'办公用品',checked:false,label:'2'}]}}"><radio value="{{item.label}}" checked="{{item.checked}}"/>{{item.name}}</label></radio-group></view> -->
+			<!--<view class="form-row" a:if="{{nodeid == 2 && index == 0}}"><view class="form-row-label" style="width:2.5rem">添加到</view><radio-group class="radio-group" name="codeType" onChange="radioChange"><label class="radio" a:for="{{[{name:'零部件',checked:true,label:'1'},{name:'办公用品',checked:false,label:'2'}]}}"><radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}</label></radio-group></view> -->
+			<!-- 物料表单 -->
+			<template a:if="{{nodeid!=2}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
+			<view a:else onTap="chooseItem">
+				<template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
+			</view>
+			<!-- 选人组件 -->
+			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+			<view a:if="{{index==0}}">
+				<template is="suggest"/>
+				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+			</view>
+			<view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
+				<button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成'}}">
+				<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+				<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+			</view>
+		</view>
+	</form>
 </view>
-
- <!-- 待编辑物料表单 -->
-  <view class="modal" a:if="{{!hidden}}" key="modal">
-      <view class="modal-mask" animation="{{animMaskData}}"/>
-      <view class="modal-container" animation="{{animContentData}}">
-          <view class="modal-close" onTap="onModalCloseTap">×</view>
-          <view class="modal-content">
-            <form onSubmit="edit">
-              <view class="page-section">
-                <view class="form-row">
-                  <view class="form-row-label"><template is="required"></template>物料编码</view>
-                  <view class="form-row-content">
-                    <input name="CodeNo" class="input" placeholder="物料编码" />
-                  </view>
-                </view>
-              </view>
-              <view class="page-section">
-                <view class="form-row">
-                  <view class="form-row-label">预计价格</view>
-                  <view class="form-row-content">
-                    <input name="FNote" class="input" placeholder="预计价格" />
-                  </view>
-                </view>
-              </view>
-              <button type="primary" style="margin-bottom:0;" formType="submit">添加</button>
-            </form>
-          </view>
-      </view>
-  </view>

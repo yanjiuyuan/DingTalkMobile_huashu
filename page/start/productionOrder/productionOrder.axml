@@ -1,0 +1,71 @@
+<!-- 生产下单 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+  <!-- 基本表单 -->
+  <form onSubmit="submit">
+    <view class="page-section">
+      <!-- 标题 -->
+      <template is ="titleOfObject" data="{{tableInfo}}"/>
+      <!-- 申请人 -->
+      <template is ="applyman" data="{{DingData}}"/>
+      <!-- 选择部门 -->
+      <!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>申请部门</view>
+        <view class="form-row-content">
+          <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>客户名称</view>
+        <view class="form-row-content">
+          <input name="totalPrice" class="input" placeholder="客户名称" value="{{totalPrice}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>合同编号</view>
+        <view class="form-row-content">
+          <input name="totalPrice" class="input" placeholder="合同编号" value="{{totalPrice}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>项目名称</view>
+        <view class="form-row-content">
+          <input name="totalPrice" class="input" placeholder="项目名称" value="{{totalPrice}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>运输要求</view>
+        <view class="form-row-content">
+          <input name="totalPrice" class="input" placeholder="运输要求" value="{{totalPrice}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>现场其他设备</view>
+        <view class="form-row-content">
+          <input name="totalPrice" class="input" placeholder="现场其他设备" value="{{totalPrice}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>包装要求</view>
+        <view class="form-row-content">
+          <input name="totalPrice" class="input" placeholder="包装要求" value="{{totalPrice}}"/>
+        </view>
+      </view>
+      <!-- 选人组件 -->
+      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="suggest" data="{{table}}"/>
+    </view>
+    <!-- 提交按钮 -->
+    <template is ="submitButton" data="{{disablePage:disablePage}}"/>
+    <!-- 临时保存 -->
+    <template is="temporaryPreservation"/>
+  </form>
+</view>

@@ -1,1 +1,6 @@
-{}
+{
+    "usingComponents": {
+        "my-picker": "/components/my-picker/my-picker",
+        "my-uploadfiles": "/components/my-uploadFiles/my-uploadFiles"
+    }
+}

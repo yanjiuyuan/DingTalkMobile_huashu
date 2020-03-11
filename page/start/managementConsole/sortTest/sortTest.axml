@@ -1,0 +1,36 @@
+<!-- 排序页面 -->
+<view class="text">
+  按住拖动排序
+</view>
+<view class='item_container'>
+	<view a:for='{{all_list}}' a:for-index="a" a:for-item="m" class="item" longTap="longTab" style="left:{{m.left}}px;top:{{m.top}}px">
+		<view style="display: flex;align-items: center;">
+			<view class="plus" data-item="{{a}}" onTap="toggle">
+          {{showOrClose[a].str}}
+			</view>
+			<view class="item-text">
+              {{m.SORT_NAME}}
+			</view>
+			<view class="item-right" onTouchMove="move" onTouchStart="moveStart" onTouchEnd="moveEnd" data-index="{{a}}" data-item="{{a}}">
+				<view class="one-line"></view>
+				<view class="one-line"></view>
+				<view class="one-line"></view>
+			</view>
+		</view>
+		<view class="{{showOrClose[a].class}} ">
+			<view a:for="{{m.flows}}" style="left:{{item.left}}px;top:{{item.top}}px" class="items">
+				<view class="left-item"></view>
+				<view class="middle-item">
+					<view class="middle-item-icon">
+					</view>
+					<view>{{item.FlowName}}</view>
+				</view>
+				<view class="item-right" data-Id="{{m.Id}}" data-fatherIndex="{{a}}" data-index="{{index}}" catchTouchMove="sonMove" catchTouchStart="sonStart" catchTouchEnd="sonMoveEnd">
+					<view class="one-line"></view>
+					<view class="one-line"></view>
+					<view class="one-line"></view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

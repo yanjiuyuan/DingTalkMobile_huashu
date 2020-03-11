@@ -1,122 +1,130 @@
+<!-- 立项 -->
 <import src="/util/template/template.axml"/>
 <view class="page">
-  
-  <!-- 退回审批表单 -->
-  <template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
-  
-  <!-- 基本表单 -->
-  <form onSubmit="submit">
-    <view class="page-section">
-      <view class="form-row">
-        <view class="form-row-label">申请人</view>
-        <view class="form-row-content">
-          <input name="ApplyMan" class="input" value="{{table.ApplyMan}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">项目名称</view>
-        <view class="form-row-content">
-          <input name="ProjectName" class="input" value="{{table.ProjectName}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label"><template is="required"></template>项目编号</view>
-        <view class="form-row-content">
-          <input a:if="{{nodeid == 1}}" name="ProjectId" class="input" />
-          <input a:if="{{nodeid != 1}}" name="ProjectId" class="input" value="{{table.ProjectId}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">项目状态</view>
-        <view class="form-row-content">
-          <input name="ProjectState" class="input" value="{{table.ProjectState}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">协作单位</view>
-        <view class="form-row-content">
-          <input name="CompanyName" class="input" value="{{table.CompanyName}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">部门名称</view>
-        <view class="form-row-content">
-          <input name="DeptName" class="input" value="{{table.DeptName}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">负责人</view>
-        <view class="form-row-content">
-          <input name="ResponsibleMan" class="input" value="{{table.ResponsibleMan}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <!-- <view class="form-line" />  -->
-      <view class="form-row">
-        <view class="form-row-label">团队成员</view>
-        <view class="form-row-content">
-          <textarea auto-height="true" name="TeamMembers" class="input" value="{{table.TeamMembers}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">项目类型</view>
-        <view class="form-row-content">
-          <input name="ProjectType" class="input" value="{{table.ProjectType}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">创建时间</view>
-        <view class="form-row-content">
-          <input name="CreateTime" class="input" value="{{table.CreateTime}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="page-section">
-        <view class="form-row">
-        <view class="form-row-label">开始时间</view>
-        <view class="form-row-content">
-          <input name="StartTime" class="input" value="{{table.StartTime}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">返回时间</view>
-        <view class="form-row-content">
-          <input name="EndTime" class="input" value="{{table.EndTime}}" disabled="{{true}}" />
-        </view>
-      </view>
-      <!-- <view class="form-line" />  -->
-      <view class="form-row">
-        <view class="form-row-label">文件列表</view>
-        <view class="form-row-content">
-          <view a:for="{{fileList}}">{{item.name}} <button type="primary" size="mini" onTap="downloadFile" data-mediaId="{{item.mediaId}}" style="margin:0;">下载</button></view>
-        </view>
-      </view>
-      <view a:if="{{nodeid >= 3}}" disabled="{{nodeid > 3}}">
-        <view class="form-row-label" style="float:left;">是否评审</view>
-        <radio-group class="radio-group" style="float:left;" name="IsReview" onChange="radioChange">
-          <label class="radio" a:for="{{[{name:'是',checked:true},{name:'否',checked:false}]}}">
-            <radio value="{{item.checked}}" checked="{{item.checked}}"/>{{item.name}}
-          </label>
-        </radio-group>
-      </view>
-
-      <!-- 选人组件 -->
-      <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
-      <view a:if="{{index==0}}">
-        <view class="page-section-suggest">
-          <view class="page-section-title">建议</view>
-          <view class="page-section-demo">
-            <textarea name="remark" placeholder="输入 建议" value="{{remark}}" />
-          </view>
-        </view>
-        <button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
-        <button type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
-      </view>
-      <view a:if="{{index!=0}}">
-        <button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
-      </view>
-      <view a:if="{{index==2 && state=='未完成'}}">
-        <button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
-        <button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
-      </view>
-    </view>
-  </form>
-</view>
+	<!-- 退回审批表单 -->
+	<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+	<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<view class="form-row">
+				<view class="form-row-label">项目名称</view>
+				<view class="form-row-content">
+					<input name="ProjectName" class="input" value="{{table.ProjectName}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目状态</view>
+				<view class="form-row-content">
+					<input name="ProjectState" class="input" value="{{table.ProjectState}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">合作单位</view>
+				<view class="form-row-content">
+					<input name="Customer" class="input" value="{{table.Customer}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">承担部门</view>
+				<view class="form-row-content">
+					<input name="DeptName" class="input" value="{{table.DeptName}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目负责人</view>
+				<view class="form-row-content">
+					<input name="ResponsibleMan" class="input" value="{{table.ResponsibleMan}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目组成员</view>
+				<view class="form-row-content">
+					<textarea maxlength="-1" auto-height="true" style="min-height:90rpx;padding:0;" name="TeamMembers" class="input" value="{{table.TeamMembers}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目大类</view>
+				<view class="form-row-content">
+					<input name="ProjectType" class="input" value="{{table.ProjectType}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目小类</view>
+				<view class="form-row-content">
+					<input name="ProjectType" class="input" value="{{table.ProjectSmallType}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">创建时间</view>
+				<view class="form-row-content">
+					<input name="CreateTime" class="input" value="{{table.CreateTime}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="page-section">
+				<view class="form-row">
+					<view class="form-row-label">开始时间</view>
+					<view class="form-row-content">
+						<input name="StartTime" class="input" value="{{table.StartTime}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">结束时间</view>
+					<view class="form-row-content">
+						<input name="EndTime" class="input" value="{{table.EndTime}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">立项文件</view>
+					<view class="form-row-content">
+						<view a:for="{{fileList}}">{{item.name}}
+							<button type="primary" size="mini" onTap="downloadFile" data-mediaId="{{item.mediaId}}" style="margin:0;">下载</button></view>
+					</view>
+				</view>
+				<view class="form-row" a:if="{{nodeid == 2 && index == 0}}">
+					<view class="form-row-label">是否评审</view>
+					<radio-group class="radio-group" style="float:left;" name="IsReview" onChange="radioChange">
+						<label class="radio" a:for="{{[{name:'是',checked:true},{name:'否',checked:false}]}}">
+							<radio disabled="{{nodeid != 2}}" value="{{item.checked}}" checked="{{item.checked}}"/>{{item.name}}
+						</label>
+					</radio-group>
+				</view>
+				<view class="form-row" a:if="{{nodeid > 2 && index !== 0}}">
+					<view class="form-row-label">是否评审</view>
+					<view class="form-row-content">
+						<input name="IsReview" class="input" value="{{IsReview}}" disabled="{{true}}" />
+					</view>
+				</view>
+				<view class="form-row" a:if="{{nodeid > 3 || (index == 0 && nodeid == 3)}}">
+					<view class="form-row-label">
+						<template is="required"></template>项目编号</view>
+					<view class="form-row-content">
+						<input name="ProjectId" class="input" placeholder="1234**567,*为字母2-3个
+" value="{{table.ProjectId}}" disabled="{{nodeid != 3}}" />
+					</view>
+				</view>
+			</view>
+			<!-- 选人组件 -->
+			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+			<view a:if="{{index==0}}">
+				<template is="suggest"/>
+				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+			</view>
+			<view a:if="{{ index!= 0 && state == '已完成' }}">
+				<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成'}}">
+				<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+			</view>
+			<view a:if="{{index == 2 && state=='未完成' && rebackAble == true }}">
+				<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+			</view>
+			<view a:if="{{index == 2 && state == '已撤回' || index == 2 && state == '被退回'}}">
+				<!--<button onTap="relaunch" type="warn" disabled="{{disablePage}}">重新发起</button> -->
+			</view>
+			</form>
+		</view>

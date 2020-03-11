@@ -1,0 +1,94 @@
+<!-- 私车 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<!-- 标题 -->
+			<template is ="title" data="{{tableInfo}}"/>
+			<!-- 申请人 -->
+			<template is ="applyman" data="{{DingData}}"/>
+			<!-- 选择部门 -->
+			<!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请部门</view>
+				<view class="form-row-content">
+					<my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>驾驶员</view>
+				<view class="form-row-content">
+					<input name="DrivingMan" class="input" disabled="{{true}}" value="{{DingData.nickName}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">同行人</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" style="min-height:90rpx;padding:0;" maxlength="-1" style="resize: none;" name="PeerNumber" class="input" disabled="{{true}}" value="{{table.PeerNumber}}"></textarea>
+				</view>
+				<view onTap="choosePeoples" class="tag tag-info">+ 选人</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>车牌号</view>
+				<view class="form-row-content">
+					<input name="CarNumber" class="input" value="{{table.CarNumber}}" placeholder="请输入车牌号" 
+data-name="CarNumber" onInput="inputToTable"  />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>计划行车路线</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="PlantTravelWay" class="input" data-name="PlantTravelWay" onInput="inputToTable"  value="{{table.PlantTravelWay}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>用车事由</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="MainContent" class="input" data-name="MainContent" onInput="inputToTable"  value="{{table.MainContent}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>开始时间</view>
+				<view class="form-row-content">
+					<input name="StartTime" class="input" placeholder="开始时间" disabled="true" value="{{table.StartTime}}" />
+				</view>
+				<view onTap="selectStartDateTime" class="tag tag-info">+ 选择</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>结束时间</view>
+				<view class="form-row-content">
+					<input name="EndTime" class="input" placeholder="结束时间" disabled="true" value="{{table.EndTime}}" />
+				</view>
+				<view onTap="selectEndDateTime" class="tag tag-info">+ 选择</view>
+			</view>
+			<checkbox-group onChange="onChecked">
+				<label class="checkbox" a:for="{{items}}">
+					<checkbox value="{{item.checked}}" checked="{{item.checked}}" />
+					<text class="checkbox-text">{{item.name}}</text>
+				</label>
+			</checkbox-group>
+			<checkbox-group onChange="onChecked2">
+				<label class="checkbox" a:for="{{items2}}">
+					<checkbox value="{{item.checked}}" checked="{{item.checked}}" />
+					<text class="checkbox-text">{{item.name}}</text>
+				</label>
+			</checkbox-group>
+			<!-- 选人组件 -->
+			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+			<template is="suggest" data="{{table}}"/>
+		</view>
+		<button type="primary" onTap="downLoad">下载《私车公用协议书》</button>
+		<!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+		<!-- 临时保存 -->
+		<template is="temporaryPreservation"/>
+	</form>
+</view>

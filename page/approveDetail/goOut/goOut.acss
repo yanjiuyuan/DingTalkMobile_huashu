@@ -1,0 +1,17 @@
+@import '/util/template/template.acss';
+
+.Rotate-downward{
+  transform:rotate(90deg);
+  transition:0.1s;
+}
+
+.RotateToTheRight{
+  transition:0.1s;
+}
+
+.show{
+  display: block;
+}
+.hidden{
+  display: none;
+}

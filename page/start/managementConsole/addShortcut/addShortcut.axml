@@ -1,0 +1,16 @@
+<!-- 添加快捷方式页面 -->
+<view class="title">
+  为「{{title}}」分组添加快捷方式
+</view>
+<view a:for="{{menu}}" class="menu" a:for-item="item">
+  <view class="item">
+    <view class="item-icon">
+    </view>
+    <view class="item-text">
+        {{item.FlowName}}
+    </view>
+  </view>
+  <view class="add" onTap="add" data-item="{{item}}">
+      添加
+  </view>
+</view>
