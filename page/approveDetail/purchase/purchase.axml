@@ -18,7 +18,8 @@
 				</view>
 			</view>
 			<!-- 物料表单 -->
-			<template is="datatable" data="{{items:tableItems2,data:tableData,param:tableParam}}"/>
+			<template a:if="{{nodeid != 5}}" is="datatable" data="{{items:tableItems2,data:tableData,param:tableParam}}"/>
+			<template a:if="{{nodeid == 5}}" is="datatable" data="{{items:tableItems2,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
 			<!-- 选人组件 -->
 			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
 			<view a:if="{{index==0}}">

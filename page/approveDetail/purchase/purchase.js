@@ -7,6 +7,9 @@ Page({
         ...pub.data,
         hidden: true,
         totalPrice: "0",
+        selectOperate: "选择采购员",
+        tableOptions: [],
+
         tableItems2: [
             {
                 prop: "CodeNo",
@@ -58,17 +61,112 @@ Page({
     submit(e) {
         let that = this;
         let value = e.detail.value;
-
         let param = {
             Title: value.title,
             Remark: value.remark,
         };
         if (this.data.nodeid == 5) {
+            this._postData(
+                "Purchase/ModifyPurchaseTable",
+                res => {
+                    that.aggreSubmit(param);
+                },
+                this.data.tableData
+            );
+            return;
         }
-        return;
         this.aggreSubmit(param);
     },
+
+    setChooseMan() {
+        let that = this;
+        if (this.data.nodeid != 5) return;
+        let mans = [];
+        for (let d of this.data.tableData) {
+            let opt = this.data.tableOptions[d.index];
+            d.PurchaseMan = opt.name;
+            d.PurchaseManId = opt.emplId;
+            mans.push({
+                name: opt.name,
+                userId: opt.emplId,
+            });
+        }
+        let hash = {};
+        console.log(mans);
+        mans = mans.reduce((preVal, curVal) => {
+            hash[curVal.userId] ? "" : (hash[curVal.userId] = true && preVal.push(curVal));
+            return preVal;
+        }, []);
+        let nodeId = parseInt(this.data.nodeid) + 2;
+        let nodeList = this.data.nodeList;
+        console.log(mans);
+        for (let i = 0; i < nodeList.length; i++) {
+            if (nodeList[i].NodeId == nodeId) {
+                nodeList[i].AddPeople = mans;
+                this.setData({
+                    [`nodeList[${i}]`]: nodeList[i],
+                });
+            }
+        }
+    },
+    //下拉框选择后回调
+    tableSelect(e) {
+        console.log("//下拉框选择后回调");
+        let selectIndex = e.detail.value;
+        let rowIndex = e.target.dataset.index;
+        let row = this.data.tableData[rowIndex];
+        row.index = selectIndex;
+        this.setData({
+            [`tableData[${rowIndex}]`]: row,
+        });
+        this.setChooseMan();
+    },
     onReady() {
-        console.log(this.data.tableData);
+        let that = this;
+        this.getDataReturnData(
+            "Role/GetRoleInfo" + that.formatQueryStr({ RoleName: "采购员" }),
+            data => {
+                console.log(data.data);
+                let options = data.data;
+                that._getData(
+                    "/PurchaseNew/ReadPurchaseTable" +
+                        that.formatQueryStr({ TaskId: this.data.taskid }),
+                    res => {
+                        if (this.data.nodeid == 5) {
+                            for (let i of res) {
+                                for (let j of options) {
+                                    if (j.name == "巫仕座") {
+                                        i["PurchaseMan"] = j.name;
+                                        i["PurchaseManId"] = j.emplId;
+                                        this.data.nodeList[7].AddPeople = [
+                                            {
+                                                name: j.name,
+                                                uerid: j.emplId,
+                                            },
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+
+                        if (that.data.nodeid == 7 && that.data.index == 0) {
+                            let tmp = [];
+                            for (let d of res) {
+                                if (d.PurchaseManId == app.userInfo.userid) {
+                                    tmp.push(d);
+                                }
+                            }
+                            res = tmp;
+                        }
+
+                        that.setData({
+                            nodeList: that.data.nodeList,
+                            tableData: res,
+                            tableOptions: options,
+                        });
+                    }
+                );
+            }
+        );
     },
 });

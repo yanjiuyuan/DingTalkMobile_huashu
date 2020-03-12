@@ -1,4 +1,5 @@
 import pub from "/util/public";
+import promptConf from "/util/promptConf";
 let good = {};
 Page({
     ...pub.func,
@@ -7,6 +8,7 @@ Page({
         ...pub.data,
         hidden: true,
         tableOperate: "选择",
+        ContractNameIndex: -1,
         purchaseList: [],
         options: [],
         tableParam2: {
@@ -14,6 +16,7 @@ Page({
             now: 1,
             total: 0,
         },
+
         SendPosition: [{ name: "研究院", checked: true }, { name: "基地" }],
         tableOperate2: "删除",
         good: {},
@@ -112,14 +115,21 @@ Page({
         );
     },
     submit(e) {
-        var that = this;
-        var value = e.detail.value;
+        let that = this;
+        let value = e.detail.value;
 
-        var param = {
-            Title: newTitle || value.title,
+        if (this.data.ContractNameIndex == -1) {
+            dd.alert({
+                content: "合同名称不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return;
+        }
+        let param = {
+            Title: value.title,
             Remark: value.remark,
-            ProjectName: that.data.projectList[that.data.projectIndex].ContractName,
-            ProjectId: that.data.projectList[that.data.projectIndex].ContractNo,
+            ProjectName: that.data.ContractNameList[that.data.ContractNameIndex].ContractName,
+            ProjectId: that.data.ContractNameList[that.data.ContractNameIndex].ContractNo,
         };
         let callBack = function(taskId) {
             that.bindAll(taskId);
@@ -239,5 +249,18 @@ Page({
             localStorage.removeItem("purchase");
         }
     },
-    onReady() {},
+    onReady() {
+        this._getData("ContractManager/Quary?pageIndex=1&pageSize=1000", res => {
+            console.log(res);
+            this.setData({
+                ContractNameList: res,
+            });
+        });
+    },
+
+    bindPickerChange(e) {
+        this.setData({
+            ContractNameIndex: e.detail.value,
+        });
+    },
 });

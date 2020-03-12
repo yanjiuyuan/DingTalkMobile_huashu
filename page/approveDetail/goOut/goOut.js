@@ -12,17 +12,39 @@ Page({
         table: {},
         rotate: "RotateToTheRight",
         show: "hidden",
-        fileLists: [] // 相关文件数组
+        fileLists: [], // 相关文件数组
     },
     submit(e) {
+        let that = this;
         let value = e.detail.value;
         let param = {
             Title: value.title,
             Remark: value.remark,
-            ImageUrl: this.data.tableInfo["ImageUrl"]
+            ImageUrl: this.data.tableInfo["ImageUrl"],
         };
-        if (this.data.nodeid == 2 && this.data.tableInfo.ImageUrl.split(",").length < this.data.planLength) {
+        if (
+            this.data.nodeid == 2 &&
+            this.data.tableInfo.ImageUrl.split(",").length < this.data.planLength
+        ) {
             dd.alert({ content: "定位照片数小于计划外出地点数" });
+            return;
+        }
+        if (this.data.nodeid == 2) {
+            if (value.ContactPeople == "") {
+                dd.alert({
+                    content: "接触人员不允许为空，请输入！",
+                    buttonText: promptConf.promptConf.Confirm,
+                });
+                return;
+            }
+            this.data.table.ContactPeople = value.ContactPeople;
+            that._postData(
+                "Evection/Modify",
+                res => {
+                    this.aggreSubmit(param);
+                },
+                this.data.table
+            );
             return;
         }
         this.setData({ disablePage: true });
@@ -39,12 +61,12 @@ Page({
             valid: true,
             flowid: this.data.flowid,
             title: this.data.tableInfo.Title,
-            table: this.data.table
+            table: this.data.table,
         });
         for (let m of this.data.menu) {
             if (m.flowId == this.data.flowid) {
                 dd.redirectTo({
-                    url: "/page/start/" + m.url + "?flowid=" + m.flowId
+                    url: "/page/start/" + m.url + "?flowid=" + m.flowId,
                 });
             }
         }
@@ -60,7 +82,7 @@ Page({
                 for (let p of res.apFilePaths) {
                     that.setData({ disablePage: true });
                     dd.showLoading({
-                        content: promptConf.promptConf.PictureProcessing
+                        content: promptConf.promptConf.PictureProcessing,
                     });
                     dd.uploadFile({
                         url: that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
@@ -69,12 +91,16 @@ Page({
                         IsWaterMark: true,
                         filePath: p,
                         success: res => {
-                            if (that.data.tableInfo["ImageUrl"]) that.data.tableInfo["ImageUrl"] += ",";
+                            if (that.data.tableInfo["ImageUrl"])
+                                that.data.tableInfo["ImageUrl"] += ",";
                             else that.data.tableInfo["ImageUrl"] = "";
-                            if (JSON.parse(res.data).Content == "null" || !JSON.parse(res.data).Content) {
+                            if (
+                                JSON.parse(res.data).Content == "null" ||
+                                !JSON.parse(res.data).Content
+                            ) {
                                 dd.alert({
                                     content: promptConf.promptConf.PictureProcessingError,
-                                    buttonText: promptConf.promptConf.Confirm
+                                    buttonText: promptConf.promptConf.Confirm,
                                 });
                                 return;
                             }
@@ -91,7 +117,7 @@ Page({
                         },
                         fail: err => {
                             dd.alert({ content: "sorry" + JSON.stringify(err) });
-                        }
+                        },
                     });
                 }
             },
@@ -99,10 +125,10 @@ Page({
                 if (res.error == "3") {
                     dd.alert({
                         content: "请在android的“设置-应用-权限”选项中，允许访问你的相机",
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                 }
-            }
+            },
         });
         return;
         dd.getLocation({
@@ -111,12 +137,12 @@ Page({
                 res = { address: "研究院" };
                 that.data.placeArr.push(res.address);
                 that.setData({
-                    "table.LocationPlace": that.data.placeArr.join("-")
+                    "table.LocationPlace": that.data.placeArr.join("-"),
                 });
             },
             fail() {
                 dd.alert({ title: "定位失败" });
-            }
+            },
         });
     },
     addPlace2() {
@@ -129,7 +155,7 @@ Page({
                 for (let p of res.apFilePaths) {
                     that.setData({ disablePage: true });
                     dd.showLoading({
-                        content: promptConf.promptConf.PictureProcessing
+                        content: promptConf.promptConf.PictureProcessing,
                     });
                     dd.uploadFile({
                         url: that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
@@ -138,12 +164,16 @@ Page({
                         IsWaterMark: true,
                         filePath: p,
                         success: res => {
-                            if (that.data.tableInfo["ImageUrl"]) that.data.tableInfo["ImageUrl"] += ",";
+                            if (that.data.tableInfo["ImageUrl"])
+                                that.data.tableInfo["ImageUrl"] += ",";
                             else that.data.tableInfo["ImageUrl"] = "";
-                            if (JSON.parse(res.data).Content == "null" || !JSON.parse(res.data).Content) {
+                            if (
+                                JSON.parse(res.data).Content == "null" ||
+                                !JSON.parse(res.data).Content
+                            ) {
                                 dd.alert({
                                     content: promptConf.promptConf.PictureProcessingError,
-                                    buttonText: promptConf.promptConf.Confirm
+                                    buttonText: promptConf.promptConf.Confirm,
                                 });
                                 return;
                             }
@@ -160,7 +190,7 @@ Page({
                         },
                         fail: err => {
                             dd.alert({ content: "sorry" + JSON.stringify(err) });
-                        }
+                        },
                     });
                 }
             },
@@ -168,10 +198,10 @@ Page({
                 if (res.error == "3") {
                     dd.alert({
                         content: "请在android的“设置-应用-权限”选项中，允许访问你的照片",
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                 }
-            }
+            },
         });
         return;
         dd.getLocation({
@@ -180,12 +210,12 @@ Page({
                 res = { address: "研究院" };
                 that.data.placeArr.push(res.address);
                 that.setData({
-                    "table.LocationPlace": that.data.placeArr.join("-")
+                    "table.LocationPlace": that.data.placeArr.join("-"),
                 });
             },
             fail() {
                 dd.alert({ title: "定位失败" });
-            }
+            },
         });
     },
 
@@ -205,19 +235,19 @@ Page({
 
                 if (timestamp2 + 1800000 > timestamp) {
                     this.setData({
-                        timeUp: true
+                        timeUp: true,
                     });
                 }
             }
             this.setData({
-                table: res
+                table: res,
             });
         });
 
         let param = {
             ApplyManId: this.data.DingData.userid,
             nodeId: this.data.nodeid,
-            TaskId: this.data.taskid
+            TaskId: this.data.taskid,
         };
         this._getData(
             "FlowInfoNew/GetApproveInfo" + this.formatQueryStr(param),
@@ -229,14 +259,14 @@ Page({
                     for (let i = 0, len = OldFileUrl.length; i < len; i++) {
                         fileLists.push({
                             OldFileUrl: OldFileUrl[i],
-                            MediaId: MediaId[i]
+                            MediaId: MediaId[i],
                         });
                     }
                 }
 
                 that.setData({
                     fileLists: fileLists,
-                    tableInfo: res
+                    tableInfo: res,
                 });
                 that.handleUrlData(res);
             },
@@ -247,10 +277,12 @@ Page({
     deleteImg() {
         this.data.imgUrlList = this.data.tableInfo.ImageUrl.split(",");
         this.setData({
-            imageList: this.data.imageList.splice(0, this.data.imageList.length - 1)
+            imageList: this.data.imageList.splice(0, this.data.imageList.length - 1),
         });
         //
-        this.data.tableInfo["ImageUrl"] = this.data.imgUrlList.slice(0, this.data.imgUrlList.length - 1).join(",");
+        this.data.tableInfo["ImageUrl"] = this.data.imgUrlList
+            .slice(0, this.data.imgUrlList.length - 1)
+            .join(",");
         this._postData("FlowInfoNew/TaskModify", res => {}, this.data.tableInfo);
     },
 
@@ -266,14 +298,14 @@ Page({
                     let index = e.currentTarget.dataset.index;
                     this.data.imageList.splice(index, 1);
                     this.setData({
-                        imageList: this.data.imageList
+                        imageList: this.data.imageList,
                     });
                     this.data.imgUrlList = this.data.tableInfo.ImageUrl.split(",");
                     this.data.imgUrlList.splice(index, 1);
                     this.data.tableInfo["ImageUrl"] = this.data.imgUrlList.join(",");
                     this._postData("FlowInfoNew/TaskModify", res => {}, this.data.tableInfo);
                 }
-            }
+            },
         });
     },
 
@@ -282,12 +314,12 @@ Page({
         if (this.data.rotate == "RotateToTheRight") {
             this.setData({
                 rotate: "Rotate-downward",
-                show: "show"
+                show: "show",
             });
         } else if (this.data.rotate == "Rotate-downward") {
             this.setData({
                 rotate: "RotateToTheRight",
-                show: "hidden"
+                show: "hidden",
             });
         }
     },
@@ -304,7 +336,7 @@ Page({
             },
             fail: function(err) {
                 console.log(err);
-            }
+            },
         });
-    }
+    },
 });

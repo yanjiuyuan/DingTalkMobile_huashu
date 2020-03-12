@@ -167,10 +167,13 @@ Page({
                     url = "/page/approveDetail/finishedPurchase/finishedPurchase";
                     break;
                 case 27:
-                    url = "/page/approveDetail/intoStorage/intoStorage";
+                    url = "/page/approveDetail/ /intoStorage";
                     break;
                 case 28:
                     url = "/page/approveDetail/picking/picking";
+                    break;
+                case 30:
+                    url = "/page/approveDetail/goOut/goOut";
                     break;
                 case 31:
                     url = "/page/approveDetail/createProject/createProject";
@@ -183,6 +186,9 @@ Page({
                     break;
                 case 68:
                     url = "/page/approveDetail/maintain/maintain";
+                    break;
+                case 78:
+                    url = "/page/approveDetail/gift/gift";
                     break;
             }
 

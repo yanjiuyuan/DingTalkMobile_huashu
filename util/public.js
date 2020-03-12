@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.14",
+        version: "2.1.15",
         DingData: {
             nickName: "",
             departName: "",
@@ -447,30 +447,31 @@ export default {
                             });
                             return;
                         }
-                        for (let a of node.AddPeople) {
-                            let tmpParam = {
-                                ApplyMan: a.name,
-                                ApplyManId: a.userId,
-                                TaskId: that.data.taskid,
-                                ApplyTime: null,
-                                IsEnable: 1,
-                                FlowId: that.data.flowid,
-                                NodeId: node.NodeId,
-                                Remark: null,
-                                IsSend: node.IsSend,
-                                State: 0,
-                                ImageUrl: null,
-                                FileUrl: null,
-                                IsPost: false,
-                                OldImageUrl: null,
-                                OldFileUrl: null,
-                                IsBack: null,
-                            };
-                            for (let p2 in param2) {
-                                tmpParam[p2] = param2[p2];
-                            }
-                            paramArr.push(tmpParam);
+                    }
+
+                    for (let a of node.AddPeople) {
+                        let tmpParam = {
+                            ApplyMan: a.name,
+                            ApplyManId: a.userId,
+                            TaskId: that.data.taskid,
+                            ApplyTime: null,
+                            IsEnable: 1,
+                            FlowId: that.data.flowid,
+                            NodeId: node.NodeId,
+                            Remark: null,
+                            IsSend: node.IsSend,
+                            State: 0,
+                            ImageUrl: null,
+                            FileUrl: null,
+                            IsPost: false,
+                            OldImageUrl: null,
+                            OldFileUrl: null,
+                            IsBack: null,
+                        };
+                        for (let p2 in param2) {
+                            tmpParam[p2] = param2[p2];
                         }
+                        paramArr.push(tmpParam);
                     }
                 }
                 that._postData(
@@ -625,6 +626,9 @@ export default {
                     case "24":
                         url = "PurchaseNew/ReadPurchaseTable";
                         break; //零部件采购
+                    case "26":
+                        url = "PurchaseNew/ReadPurchaseTable";
+                        break; //成品
                     case "23":
                         url = "PurchaseOrder/QuaryByTaskId";
                         break; //图纸下单

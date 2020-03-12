@@ -68,13 +68,6 @@
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
-					<template is="required"></template>接触人员</view>
-				<view class="form-row-content">
-					<textarea auto-height="true" name="ContactPeople" class="input" value="{{table.ContactPeople}}" data-name="ContactPeople" onInput="inputToTable" />
-				</view>
-			</view>
-			<view class="form-row">
-				<view class="form-row-label">
 					<template is="required"></template>开始时间</view>
 				<view class="form-row-content">
 					<input name="BeginTime" class="input" placeholder="开始时间" value="{{table.BeginTime}}" disabled="true"/>

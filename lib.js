@@ -74,7 +74,6 @@ export default {
                 },
             });
         },
-
         getDataReturnData(url, succe, userInfo = {}) {
             dd.httpRequest({
                 url: dormainName + url,
@@ -109,7 +108,6 @@ export default {
                 },
             });
         },
-
         postDataReturnData(url, succe, param, userInfo = {}) {
             dd.httpRequest({
                 url: dormainName + url,
@@ -387,7 +385,6 @@ function _getTime() {
     if (second < 10) second = "0" + second;
     return year + split + month + split + day + " " + hour + ":" + minute + ":" + second;
 }
-
 function _dateToString(date, split) {
     if (!split) split = "-";
     let d = new Date(date);
@@ -398,7 +395,6 @@ function _dateToString(date, split) {
     if (day < 10) day = "0" + day;
     return year + split + month + split + day;
 }
-
 function errorMessage(res) {
     let meg = "";
     switch (res.error) {

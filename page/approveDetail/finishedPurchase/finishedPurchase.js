@@ -1,4 +1,5 @@
 import pub from "/util/public";
+const app = getApp();
 let good = {};
 let items = [
     { prop: "CodeNo", label: "物料编码", width: 200 },
@@ -70,15 +71,16 @@ Page({
         //data:[]
     },
     submit(e) {
-        var that = this;
-        var value = e.detail.value;
-        var param = {
+        let that = this;
+        let value = e.detail.value;
+        let param = {
             Title: value.title,
             Remark: value.remark,
         };
+
         if (this.data.nodeid == "4") {
             this._postData(
-                "PurchaseNew/ModifyPurchaseTable",
+                "Purchase/ModifyPurchaseTable",
                 res => {
                     that.aggreSubmit(param);
                 },
@@ -90,9 +92,9 @@ Page({
     },
     //设置采购员
     setChooseMan() {
-        var that = this;
+        let that = this;
         if (this.data.nodeid != 4) return;
-        var mans = [];
+        let mans = [];
         for (let d of this.data.tableData) {
             let opt = this.data.tableOptions[d.index];
             d.PurchaseMan = opt.name;
@@ -108,7 +110,7 @@ Page({
             hash[curVal.userId] ? "" : (hash[curVal.userId] = true && preVal.push(curVal));
             return preVal;
         }, []);
-        var nodeId = parseInt(this.data.nodeid) + 2;
+        let nodeId = parseInt(this.data.nodeid) + 2;
         let nodeList = this.data.nodeList;
         console.log(mans);
         for (let i = 0; i < nodeList.length; i++) {
@@ -123,7 +125,6 @@ Page({
     //下拉框选择后回调
     tableSelect(e) {
         console.log("//下拉框选择后回调");
-        console.log(e);
         let selectIndex = e.detail.value;
         let rowIndex = e.target.dataset.index;
         let row = this.data.tableData[rowIndex];
@@ -154,6 +155,54 @@ Page({
                 }),
             function(res) {
                 dd.alert({ content: "获取成功" });
+            }
+        );
+    },
+    onReady() {
+        let that = this;
+        this.getDataReturnData(
+            "Role/GetRoleInfo" + that.formatQueryStr({ RoleName: "采购员" }),
+            data => {
+                console.log(data.data);
+                let options = data.data;
+                that._getData(
+                    "/PurchaseNew/ReadPurchaseTable" +
+                        that.formatQueryStr({ TaskId: this.data.taskid }),
+                    res => {
+                        if (this.data.nodeid == 4) {
+                            for (let i of res) {
+                                for (let j of options) {
+                                    if (j.name == "杜双凤") {
+                                        i["PurchaseMan"] = j.name;
+                                        i["PurchaseManId"] = j.emplId;
+                                        this.data.nodeList[6].AddPeople = [
+                                            {
+                                                name: j.name,
+                                                uerid: j.emplId,
+                                            },
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+
+                        if (that.data.nodeid == 6 && that.data.index == 0) {
+                            let tmp = [];
+                            for (let d of res) {
+                                if (d.PurchaseManId == app.userInfo.userid) {
+                                    tmp.push(d);
+                                }
+                            }
+                            res = tmp;
+                        }
+
+                        that.setData({
+                            nodeList: that.data.nodeList,
+                            tableData: res,
+                            tableOptions: options,
+                        });
+                    }
+                );
             }
         );
     },

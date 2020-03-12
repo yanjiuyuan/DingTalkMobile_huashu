@@ -262,13 +262,25 @@
 				<text>操作</text></view>
 			<view class="cell-new cell-title" style="width:100rpx;" a:if="{{tableOperate2}}">
 				<text>操作2</text></view>
+			<view class="cell-new cell-title" style="width:200rpx;" a:if="{{selectOperate}}">
+				<text>{{selectOperate}}</text>
+			</view>
 			<view class="cell-new cell-title" a:for="{{items}}" style="width:{{item.width}}rpx;">
 				<text>{{item.label}}</text></view>
 			<view a:for="{{data}}" a:for-item="d" style="padding:0px;margin:0px">
 				<view class="cell-new" style="width:100rpx;" a:if="{{tableOperate}}">
 					<text class="button" data-row="{{d}}" data-index="{{index}}">{{tableOperate}}</text></view>
 				<view class="cell-new" style="width:100rpx;" a:if="{{tableOperate2}}">
-					<text class="button" data-row="{{d}}" data-index="{{index}}" data-opt2="{{true}}">{{tableOperate2}}</text></view>
+					<text class="button" data-row="{{d}}" data-index="{{index}}" data-opt2="{{true}}">{{tableOperate2}}</text>
+				</view>
+				<view class="cell-new" style="width:200rpx;" a:if="{{selectOperate}}">
+					<picker onChange="tableSelect" data-index="{{index}}" value="{{d.index}}" range="{{tableOptions}}" range-key="name">
+						<view class="row">
+							<view class="row-extra">{{tableOptions[d.index].name}}</view>
+							<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+						</view>
+					</picker>
+				</view>
 				<view class="cell-new" a:for="{{items}}" style="width:{{item.width}}rpx;">
 					<text a:if="{{d[item.prop].indexOf('删除')>=0}}" style="color:red;">{{(d[item.prop] == null || d[item.prop] == undefined)?'-':d[item.prop]}}</text>
 					<text a:else>{{(d[item.prop] == null || d[item.prop] == undefined)?'-':d[item.prop]}}</text></view></view></scroll-view>
