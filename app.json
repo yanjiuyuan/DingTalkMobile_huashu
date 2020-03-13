@@ -1,88 +1,82 @@
 {
-    "pages": [
-        "page/start/index",
-        "page/approve/approve",
-        "page/start/purchase/purchase",
-        "page/approveDetail/purchase/purchase",
-        "util/errorPage/errorPage",
-        "page/start/finishedPurchase/finishedPurchase",
-        "page/approveDetail/finishedPurchase/finishedPurchase",
-        "page/approveDetail/paper/paper",
-        "page/start/picking/picking",
-        "page/start/intoStorage/intoStorage",
-        "page/approveDetail/intoStorage/intoStorage",
-        "page/approveDetail/picking/picking",
-        "page/approveDetail/meterieCode/meterieCode",
-        "page/approveDetail/officePurchase/officePurchase",
-        "page/start/officesupplies/officesupplies",
-        "page/approveDetail/officeSupplies/officeSupplies",
-        "page/approveDetail/order/order",
-        "page/approveDetail/createProject/createProject",
-        "page/approveDetail/changePaper/changePaper",
-        "page/start/createProject/createProject",
-        "page/start/maintain/maintain",
-        "page/start/borrowThing/borrowThing",
-        "page/approveDetail/borrowThing/borrowThing",
-        "page/approveDetail/maintain/maintain",
-        "page/start/productionOrder/productionOrder",
-
-        "page/start/gift/gift",
-        "page/approveDetail/gift/gift",
-        "page/start/goOut/goOut",
-
-        "page/start/crossHelp/crossHelp",
-        "page/approveDetail/crossHelp/crossHelp",
-
-        "page/start/letGoodsGo/letGoodsGo",
-        "page/approveDetail/letGoodsGo/letGoodsGo",
-
-        "page/start/usePublicCar/usePublicCar",
-        "page/approveDetail/usePublicCar/usePublicCar",
-
-        "page/start/useCar/useCar",
-        "page/approveDetail/useCar/useCar",
-
-        "page/start/carManager/carManager",
-
-        "page/approveDetail/goOut/goOut",
-        "page/start/productionOrder/productionOrder",
-        "page/start/productionPreInvestment/productionPreInvestment",
-        "page/start/preInvestmentReport/preInvestmentReport",
-        "page/start/managementConsole/managementConsole",
-        "page/start/managementConsole/flowDetail/flowDetail",
-        "page/start/managementConsole/flowDetail/setNodeInfo/setNodeInfo",
-        "page/start/managementConsole/addFlow/setNodeInfo/setNodeInfo",
-        "page/start/managementConsole/addShortcut/addShortcut",
-        "page/start/managementConsole/sortTest/sortTest",
-        "page/start/managementConsole/addFlow/addFlow",
-        "util/people/people"
-    ],
-    "window": {
-        "enableWK": "YES",
-        "enableDSL": true,
-        "defaultTitle": "华数钉钉",
-        "backgroundColor": "#F5F5F9",
-        "pullRefresh": false,
-        "allowsBounceVertical": true
-    },
-    "tabBar": {
-        "textColor": "#404040",
-        "selectedColor": "#108ee9",
-        "backgroundColor": "#fff",
-        "items": [
-            {
-                "pagePath": "page/start/index",
-                "icon": "image/icon_component.png",
-                "activeIcon": "image/icon_component_HL.png",
-                "name": "发起审批"
-            },
-            {
-                "pagePath": "page/approve/approve",
-                "icon": "image/icon_API.png",
-                "activeIcon": "image/icon_API_HL.png",
-                "name": "审批列表"
-            }
-        ]
-    },
-    "debug": true
+  "pages": [
+    "page/start/index",
+    "page/approve/approve",
+    "page/start/purchase/purchase",
+    "page/approveDetail/purchase/purchase",
+    "util/errorPage/errorPage",
+    "page/start/finishedPurchase/finishedPurchase",
+    "page/approveDetail/finishedPurchase/finishedPurchase",
+    "page/approveDetail/paper/paper",
+    "page/start/picking/picking",
+    "page/start/intoStorage/intoStorage",
+    "page/approveDetail/intoStorage/intoStorage",
+    "page/approveDetail/picking/picking",
+    "page/approveDetail/meterieCode/meterieCode",
+    "page/approveDetail/officePurchase/officePurchase",
+    "page/start/officesupplies/officesupplies",
+    "page/approveDetail/officeSupplies/officeSupplies",
+    "page/approveDetail/order/order",
+    "page/approveDetail/createProject/createProject",
+    "page/approveDetail/changePaper/changePaper",
+    "page/start/createProject/createProject",
+    "page/start/maintain/maintain",
+    "page/start/borrowThing/borrowThing",
+    "page/approveDetail/borrowThing/borrowThing",
+    "page/approveDetail/maintain/maintain",
+    "page/start/productionOrder/productionOrder",
+    "page/start/gift/gift",
+    "page/approveDetail/gift/gift",
+    "page/start/goOut/goOut",
+    "page/start/crossHelp/crossHelp",
+    "page/approveDetail/crossHelp/crossHelp",
+    "page/start/letGoodsGo/letGoodsGo",
+    "page/approveDetail/letGoodsGo/letGoodsGo",
+    "page/start/usePublicCar/usePublicCar",
+    "page/approveDetail/usePublicCar/usePublicCar",
+    "page/start/useCar/useCar",
+    "page/approveDetail/useCar/useCar",
+    "page/start/carManager/carManager",
+    "page/approveDetail/goOut/goOut",
+    "page/start/productionOrder/productionOrder",
+    "page/start/productionPreInvestment/productionPreInvestment",
+    "page/start/preInvestmentReport/preInvestmentReport",
+    "page/start/managementConsole/managementConsole",
+    "page/start/managementConsole/flowDetail/flowDetail",
+    "page/start/managementConsole/flowDetail/setNodeInfo/setNodeInfo",
+    "page/start/managementConsole/addFlow/setNodeInfo/setNodeInfo",
+    "page/start/managementConsole/addShortcut/addShortcut",
+    "page/start/managementConsole/sortTest/sortTest",
+    "page/start/managementConsole/addFlow/addFlow",
+    "util/people/people",
+    "page/approveDetail/productionOrder/productionOrder"
+  ],
+  "window": {
+    "enableWK": "YES",
+    "enableDSL": true,
+    "defaultTitle": "华数钉钉",
+    "backgroundColor": "#F5F5F9",
+    "pullRefresh": false,
+    "allowsBounceVertical": true
+  },
+  "tabBar": {
+    "textColor": "#404040",
+    "selectedColor": "#108ee9",
+    "backgroundColor": "#fff",
+    "items": [
+      {
+        "pagePath": "page/start/index",
+        "icon": "image/icon_component.png",
+        "activeIcon": "image/icon_component_HL.png",
+        "name": "发起审批"
+      },
+      {
+        "pagePath": "page/approve/approve",
+        "icon": "image/icon_API.png",
+        "activeIcon": "image/icon_API_HL.png",
+        "name": "审批列表"
+      }
+    ]
+  },
+  "debug": true
 }

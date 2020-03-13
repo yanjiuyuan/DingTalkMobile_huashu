@@ -87,7 +87,6 @@ Page({
                 width: 300,
             },
         ],
-        //data:[]
     },
     //表单操作相关
     search(e) {

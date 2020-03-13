@@ -154,6 +154,12 @@ Page({
                 case 8:
                     url = "/page/approveDetail/meterieCode/meterieCode";
                     break;
+                case 13:
+                    url = "/page/approveDetail/usePublicCar/usePublicCar";
+                    break;
+                case 14:
+                    url = "/page/approveDetail/useCar/useCar";
+                    break;
                 case 18:
                     url = "/page/approveDetail/officePurchase/officePurchase";
                     break;
@@ -178,14 +184,23 @@ Page({
                 case 31:
                     url = "/page/approveDetail/createProject/createProject";
                     break;
+                case 32:
+                    url = "/page/approveDetail/crossHelp/crossHelp";
+                    break;
                 case 33:
                     url = "/page/approveDetail/changePaper/changePaper";
+                    break;
+                case 35:
+                    url = "/page/approveDetail/letGoodsGo/letGoodsGo";
                     break;
                 case 67:
                     url = "/page/approveDetail/borrowThing/borrowThing";
                     break;
                 case 68:
                     url = "/page/approveDetail/maintain/maintain";
+                    break;
+                case 75:
+                    url = "/page/approveDetail/productionOrder/productionOrder";
                     break;
                 case 78:
                     url = "/page/approveDetail/gift/gift";

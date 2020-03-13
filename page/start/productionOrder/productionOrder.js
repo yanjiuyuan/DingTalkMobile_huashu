@@ -45,7 +45,7 @@ Page({
                 width: 200,
             },
             {
-                prop: "Name",
+                prop: "CodeName",
                 label: "物料名称",
                 width: 300,
             },
@@ -124,9 +124,9 @@ Page({
 
         if (this.data.ifedit) {
             let param = {
-                CodeNumber: good.FNumber,
-                Name: good.FName,
-                Standards: good.FModel,
+                CodeNumber: this.data.good.FNumber,
+                CodeName: this.data.good.FName,
+                Standards: this.data.good.FModel,
                 Count: value.Count.trim(),
                 Date: value.Date,
                 Purpose: value.Purpose.trim(),
@@ -153,9 +153,9 @@ Page({
             });
         } else {
             let param = {
-                CodeNumber: good.FNumber,
-                Name: good.FName,
-                Standards: good.FModel,
+                CodeNumber: this.data.good.FNumber,
+                CodeName: this.data.good.FName,
+                Standards: this.data.good.FModel,
                 Count: value.Count.trim(),
                 Date: value.Date,
                 Purpose: value.Purpose.trim(),
@@ -218,5 +218,96 @@ Page({
             }
         );
     },
-    submit(e) {},
+    //表单判断
+    judge(value) {
+        let that = this;
+        if (that.data.projectList[that.data.projectIndex] == undefined) {
+            dd.alert({
+                content: "项目名称不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        if (value.Customer.trim() == "") {
+            dd.alert({
+                content: "客户名称不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        if (value.ContractNumber.trim() == "") {
+            dd.alert({
+                content: "客户名称不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        if (value.TransportationRequirements.trim() == "") {
+            dd.alert({
+                content: "运输要求不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+
+        if (value.OtherRequipment.trim() == "") {
+            dd.alert({
+                content: "现场其他设备不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        if (value.PackingRequire.trim() == "") {
+            dd.alert({
+                content: "包装要求不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        if (that.data.purchaseList.length == 0) {
+            dd.alert({
+                content: "物料不允许为空，请选择！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        return true;
+    },
+    submit(e) {
+        let that = this;
+        let value = e.detail.value;
+        if (this.judge(value) == false) {
+            return;
+        }
+        let param = {
+            Title: value.title,
+            Remark: value.remark,
+            ProjectName: that.data.projectList[that.data.projectIndex].ProjectName,
+            ProjectId: that.data.projectList[that.data.projectIndex].ProjectId,
+        };
+        let callBack = function(taskId) {
+            that.bindAll(taskId, value);
+        };
+        console.log(param);
+        this.approvalSubmit(param, callBack);
+    },
+
+    bindAll(taskId, value) {
+        let that = this;
+        let paramArr = [];
+        for (let p of that.data.purchaseList) {
+            p.TaskId = taskId;
+            paramArr.push(p);
+        }
+        value.TaskId = taskId;
+        value.ProductionOrderDetails = paramArr;
+        that.requestJsonData(
+            "POST",
+            "ProductionOrder/Save",
+            function(res) {
+                that.doneSubmit();
+            },
+            JSON.stringify(value)
+        );
+    },
 });

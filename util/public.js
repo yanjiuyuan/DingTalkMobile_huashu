@@ -623,6 +623,9 @@ export default {
                     case "6":
                         url = "DrawingUploadNew/GetPurchase";
                         break; //图纸审批
+                    case "8":
+                        url = "ItemCodeAdd/GetTable";
+                        break; //物料编码
                     case "24":
                         url = "PurchaseNew/ReadPurchaseTable";
                         break; //零部件采购
@@ -649,7 +652,7 @@ export default {
                         break; //维修
                 }
                 if (!url) return;
-                if (flowid == "12") {
+                if (flowid == "8") {
                     this.requestData(
                         "GET",
                         url,
@@ -657,7 +660,7 @@ export default {
                             if (flowid == "1") {
                                 res = JSON.parse(res.data);
                             }
-                            if (flowid == "12") {
+                            if (flowid == "8") {
                                 res = res.data;
                                 this.setData({
                                     purchaseList: res,

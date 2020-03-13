@@ -171,6 +171,7 @@ Page({
                     res => {
                         if (this.data.nodeid == 4) {
                             for (let i of res) {
+                                i.index = 1;
                                 for (let j of options) {
                                     if (j.name == "杜双凤") {
                                         i["PurchaseMan"] = j.name;
@@ -194,6 +195,9 @@ Page({
                                 }
                             }
                             res = tmp;
+                            that.setData({
+                                "tableParam.total": res.length,
+                            });
                         }
 
                         that.setData({

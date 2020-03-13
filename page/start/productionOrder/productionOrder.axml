@@ -1,4 +1,4 @@
-<!-- 生产下单 -->
+<!-- 生产指令单 -->
 <import src="/util/template/template.axml"/>
 <!-- 待编辑物料表单 -->
 <!-- 待编辑物料表单 -->
@@ -89,35 +89,35 @@
         <view class="form-row-label">
           <template is="required"></template>客户名称</view>
         <view class="form-row-content">
-          <input name="Customer" class="input" placeholder="客户名称"/>
+          <input name="Customer" class="input" placeholder="客户名称" data-name="Customer" onInput="inputToTable" value="{{table.Customer}}"/>
         </view>
       </view>
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>合同编号</view>
         <view class="form-row-content">
-          <input name="ContractNumber" class="input" placeholder="合同编号"/>
+          <input name="ContractNumber" class="input" placeholder="合同编号" data-name="ContractNumber" onInput="inputToTable" value="{{table.ContractNumber}}"/>
         </view>
       </view>
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>运输要求</view>
         <view class="form-row-content">
-          <input name="TransportationRequirements" class="input" placeholder="运输要求"/>
+          <input name="TransportationRequirements" class="input" placeholder="运输要求" data-name="TransportationRequirements" onInput="inputToTable" value="{{table.TransportationRequirements}}"/>
         </view>
       </view>
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>现场其他设备</view>
         <view class="form-row-content">
-          <input name="OtherRequipment" class="input" placeholder="现场其他设备" />
+          <input name="OtherRequipment" class="input" placeholder="现场其他设备" data-name="OtherRequipment" onInput="inputToTable" value="{{table.OtherRequipment}}"/>
         </view>
       </view>
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>包装要求</view>
         <view class="form-row-content">
-          <input name="PackingRequire" class="input" placeholder="包装要求"/>
+          <input name="PackingRequire" class="input" placeholder="包装要求" data-name="PackingRequire" onInput="inputToTable" value="{{table.PackingRequire}}"/>
         </view>
       </view>
       <form onSubmit="search">
@@ -132,12 +132,12 @@
         </view>
       </form>
       <!-- 物料表单 -->
-      <view onTap="chooseItem">
+      <view onTap="chooseItem" a:if="{{tableData.length > 0}}">
         <text>物料表单</text>
         <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
       </view>
       <!-- 已选物料表单 -->
-      <view onTap="deleteItem">
+      <view onTap="deleteItem" a:if="{{purchaseList.length > 0}}">
         <text>已选物料表单</text>
         <template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2}}"/>
       </view>

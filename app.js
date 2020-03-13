@@ -1,40 +1,22 @@
-
-import lib from '/lib.js'
 App({
-  onLaunch(options) {
-    console.log('app onlaunch~~~~~~~~')
-    console.log(options)
-    //dd.alert({content:'app onlaunch~~~~~~~~'})
-    //dd.alert({content:JSON.stringify(options)})
-    return
-    //免登
-    var that = this
-    dd.showLoading({
-      content: '登录中...'
-    });
-    dd.getAuthCode({
-      success: (res) => {
-        console.log(res.authCode)
-        lib.func.requestData('GET','LoginMobile/Bintang',function(res){
-          console.log(res.data.data)
-          that.userInfo = res.data.data
-          dd.hideLoading()
-        },{authCode:res.authCode})
-      },
-      fail: (err) => {
-        console.log('免登失败')
-        dd.alert({ content: "免登失败" });
-        dd.alert({ content: JSON.stringify(err) })
-      }
-    })
-  },
-  onShow() {
-  },
-  onHide() {
-  },
-  userInfo:null,
-  globalData: {
-    hasLogin: false,
-    appId: 189694580
-  },
+    onLaunch(options) {
+        //第一次打开触发
+        console.log("第一次打开触发");
+    },
+    onShow() {
+        //后台进前台触发
+        console.log("后台进前台触发");
+    },
+    onHide() {
+        //前台进后台触发
+        console.log("前台进后台触发");
+    },
+    userInfo: null,
+    globalData: {
+        hasLogin: false,
+        appId: 189694580,
+        a: "",
+        table: {},
+        valid: false, //表示全局table变量是否可用
+    },
 });

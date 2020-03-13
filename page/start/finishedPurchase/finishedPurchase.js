@@ -178,6 +178,7 @@ Page({
         this.data.purchaseList.splice(index, 1);
         this.setData({
             purchaseList: this.data.purchaseList,
+            "tableParam2.total": this.data.purchaseList.length,
         });
         console.log(this.data.purchaseList);
     },
@@ -219,9 +220,11 @@ Page({
             Mark: value.Mark,
         };
         let length = this.data.purchaseList.length;
+
         let setStr = "purchaseList[" + length + "]";
         this.setData({
             [`purchaseList[${length}]`]: param,
+            "tableParam2.total": length + 1,
             totalPrice: this.data.totalPrice + param.Price * param.Count + "",
         });
         console.log(param.Purpose);

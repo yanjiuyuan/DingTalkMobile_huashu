@@ -134,6 +134,7 @@ Page({
                     res => {
                         if (this.data.nodeid == 5) {
                             for (let i of res) {
+                                i.index = 0;
                                 for (let j of options) {
                                     if (j.name == "巫仕座") {
                                         i["PurchaseMan"] = j.name;

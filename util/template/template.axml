@@ -61,7 +61,7 @@
 					</view>
 					<view a:if="{{node.AddPeople.length <= 2}}" a:for="{{node.AddPeople}}" a:for-item="ad" a:for-index="index" style="display:inline-block;">
 						<view class="choosePeople-view-right-item">
-							<view a:if="{{ad.name.length == 2}}">
+							<view a:if="{{ad.name.length == 2}}"> 
 									{{ad.name}}
 							</view>
 							<view a:if="{{ad.name.length > 2}}"> 
@@ -163,7 +163,8 @@
 				<view a:if="{{!node.ApplyTime && node.NodeName.indexOf('抄送') != -1 }}" class="choosePeople-view-text-right">未查看</view>
 			</view>
 		</view>
-	</view></template>
+	</view>
+</template>
 <!-- 通过选择改变流程配置的人员  -->
 <template name="choosePeopleAndChange">
 	<view class="choosePeople">
@@ -275,9 +276,9 @@
 				</view>
 				<view class="cell-new" style="width:200rpx;" a:if="{{selectOperate}}">
 					<picker onChange="tableSelect" data-index="{{index}}" value="{{d.index}}" range="{{tableOptions}}" range-key="name">
-						<view class="row">
-							<view class="row-extra">{{tableOptions[d.index].name}}</view>
-							<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+						<view class="row-picker">
+							<view class="row-extra-picker">{{tableOptions[d.index].name}}</view>
+							<image class="row-arrow-picker" src="/image/arrowright.png" mode="aspectFill" />
 						</view>
 					</picker>
 				</view>
