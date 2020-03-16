@@ -73,6 +73,7 @@ require('../../page/start/usePublicCar/usePublicCar?hash=dbc6514c480ea86c74b24ac
 require('../../page/approveDetail/usePublicCar/usePublicCar?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/start/useCar/useCar?hash=dbc6514c480ea86c74b24ac6112914ed031eccff');
 require('../../page/approveDetail/useCar/useCar?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../page/approveDetail/sendRead/sendRead?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/start/carManager/carManager?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/approveDetail/goOut/goOut?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/start/productionOrder/productionOrder?hash=d9e1d28e3a7a0002d1f248e5d6782649d2046d8d');

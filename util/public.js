@@ -730,7 +730,7 @@ export default {
             getDingList(taskId) {
                 let that = this;
                 that.data.dingList = [];
-                this._getData("DingTalkServers/Ding?taskId=" + taskId, function(data) {
+                this._getData("DingTalkServers/Ding?taskId=" + taskId, data => {
                     if (data == null) {
                         return;
                     }
@@ -1479,6 +1479,11 @@ export default {
                         }
                     );
                 },
+                fail: res => {
+                    dd.alert({
+                        content: "失败" + JSON.stringify(res),
+                    });
+                },
             });
         },
 
@@ -1552,6 +1557,11 @@ export default {
                             });
                         }
                     );
+                },
+                fail: res => {
+                    dd.alert({
+                        content: "失败" + JSON.stringify(res),
+                    });
                 },
             });
         },

@@ -36,7 +36,6 @@ Page({
         approveList: [],
     },
     onLoad(query) {
-        return;
         if (query.index) {
             this.setData({
                 activeItem: query.index,
@@ -67,7 +66,7 @@ Page({
     //切换审批列表
     changeItem(e) {
         this.data.size = 5;
-        var that = this;
+        let that = this;
         let index = e.target.dataset.index;
         if (index == this.data.activeItem) return;
         this.setData({
@@ -79,7 +78,7 @@ Page({
     },
     //关键字搜索
     search(e) {
-        var value = e.detail.value;
+        let value = e.detail.value;
         this.getApproveList(this.data.activeItem, value.keyword);
     },
     //下拉刷新
@@ -163,6 +162,9 @@ Page({
                 case 18:
                     url = "/page/approveDetail/officePurchase/officePurchase";
                     break;
+                case 19:
+                    url = "/page/approveDetail/sendRead/sendRead";
+                    break;
                 case 23:
                     url = "/page/approveDetail/order/order";
                     break;
@@ -173,7 +175,7 @@ Page({
                     url = "/page/approveDetail/finishedPurchase/finishedPurchase";
                     break;
                 case 27:
-                    url = "/page/approveDetail/ /intoStorage";
+                    url = "/page/approveDetail/intoStorage/intoStorage";
                     break;
                 case 28:
                     url = "/page/approveDetail/picking/picking";
@@ -193,6 +195,7 @@ Page({
                 case 35:
                     url = "/page/approveDetail/letGoodsGo/letGoodsGo";
                     break;
+
                 case 67:
                     url = "/page/approveDetail/borrowThing/borrowThing";
                     break;

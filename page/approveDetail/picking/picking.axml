@@ -11,15 +11,15 @@
 			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
 			<template is="department" data="{{department:tableInfo.Dept}}"/>
 			<template is="objectName" data="{{tableInfo:tableInfo}}"/>
-			<view class="form-row" style="height:auto;" a:if="{{(nodeid == 4 && index == 0) || nodeid > 4}}">
+			<view class="form-row" style="height:auto;" a:if="{{(nodeid == 3 && index == 0) || nodeid > 3}}">
 				<view class="form-row-label">
 					<template is="required"></template>上传照片</view>
 				<view class="form-row-content">
 					<view a:for="{{imageList}}" a:for-index="idx">
 						<image onTap="previewImg" style="width: 180rpx; height:180rpx;margin-right:2rpx;" data-url="{{item}}" src="{{item}}" />
-						<button a:if="{{nodeid == 4}}" size="mini" type="primary" data-url="{{item}}" data-index="{{idx}}" onTap="deletePhoto">删除</button>
+						<button a:if="{{nodeid == 3}}" size="mini" type="primary" data-url="{{item}}" data-index="{{idx}}" onTap="deletePhoto">删除</button>
 					</view>
-					<view a:if="{{nodeid == 4 }}" onTap="uploadImg" class="tag tag-info">+ 选择照片</view>
+					<view a:if="{{nodeid == 3 }}" onTap="uploadImg" class="tag tag-info">+ 选择照片</view>
 				</view>
 			</view>
 			<!-- 物料表单 -->
@@ -34,7 +34,6 @@
 			<view a:if="{{ index!= 0 && state == '已完成' }}">
 				<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
 			</view>
-			<button type="primary" onTap="output" disabled="{{disablePage}}">导出Bom表</button>
 			<view a:if="{{index==2 && (state=='已撤回' || state=='被退回')}}">
 				<button type="primary" onTap="relaunch" disabled="{{disablePage}}">重新发起</button>
 			</view>

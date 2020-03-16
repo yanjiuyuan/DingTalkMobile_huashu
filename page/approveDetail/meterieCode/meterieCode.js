@@ -107,10 +107,10 @@ Page({
                         res => {
                             this.aggreSubmit(param);
                         },
-                        JSON.stringify(this.data.tableData)
+                        JSON.stringify(this.data.purchaseList)
                     );
                 },
-                JSON.stringify(this.data.tableData)
+                JSON.stringify(this.data.purchaseList)
             );
             return;
         }

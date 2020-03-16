@@ -10,7 +10,7 @@ Page({
         tableOperate: "选择",
         purchaseList: [],
         tableParam2: {
-            total: 0
+            total: 0,
         },
         tableOperate2: "删除",
         tableOperate3: "编辑",
@@ -24,67 +24,67 @@ Page({
             {
                 prop: "fNumber",
                 label: "物料编码",
-                width: 200
+                width: 200,
             },
             {
                 prop: "fQty",
                 label: "实收数量",
-                width: 200
+                width: 200,
             },
             {
                 prop: "fName",
                 label: "物料名称",
-                width: 300
+                width: 300,
             },
             {
                 prop: "fModel",
                 label: "规格型号",
-                width: 300
+                width: 300,
             },
             {
                 prop: "unitName",
                 label: "单位",
-                width: 100
+                width: 100,
             },
             {
                 prop: "fFullName",
                 label: "供应商",
-                width: 300
-            }
+                width: 300,
+            },
         ],
         tableItems2: [
             {
                 prop: "fNumber",
                 label: "物料编码",
-                width: 200
+                width: 200,
             },
             {
                 prop: "fQty",
                 label: "实收数量",
-                width: 200
+                width: 200,
             },
             {
                 prop: "fName",
                 label: "物料名称",
-                width: 300
+                width: 300,
             },
             {
                 prop: "fModel",
                 label: "规格型号",
-                width: 300
+                width: 300,
             },
             {
                 prop: "unitName",
                 label: "单位",
-                width: 100
+                width: 100,
             },
 
             {
                 prop: "fFullName",
                 label: "供应商",
-                width: 300
-            }
-        ]
+                width: 300,
+            },
+        ],
     },
     //表单操作相关
     search(e) {
@@ -93,15 +93,18 @@ Page({
         if (!value || !value.keyWord) {
             dd.alert({
                 content: promptConf.promptConf.SearchNoInput,
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         let that = this;
         dd.showLoading({
-            content: promptConf.promptConf.Obtaining
+            content: promptConf.promptConf.Obtaining,
         });
-        let url = this.data.jinDomarn + "Godown/ReadGodownInfoSingle" + that.formatQueryStr({ keyWord: value.keyWord });
+        let url =
+            this.data.jinDomarn +
+            "Godown/ReadGodownInfoSingle" +
+            that.formatQueryStr({ keyWord: value.keyWord });
         dd.httpRequest({
             url: url,
             method: "GET",
@@ -110,20 +113,20 @@ Page({
                 if (res.data.data.length == 0) {
                     dd.alert({
                         content: promptConf.promptConf.SearchNoReturn,
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                     return;
                 }
                 that.setData({
                     "tableParam.total": res.data.data.length,
-                    "tableParam.now": 1
+                    "tableParam.now": 1,
                 });
                 that.data.data = res.data.data;
                 that.getData();
             },
             fail: function(res) {
                 dd.alert({ content: JSON.stringify(res) });
-            }
+            },
         });
     },
     searchByNo(e) {
@@ -131,15 +134,18 @@ Page({
         if (!value || !value.no) {
             dd.alert({
                 content: promptConf.promptConf.SearchNoPurchaseNumber,
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         let that = this;
         dd.showLoading({
-            content: promptConf.promptConf.Obtaining
+            content: promptConf.promptConf.Obtaining,
         });
-        let url = this.data.jinDomarn + "Godown/GetGodownInfoByFBillNo" + that.formatQueryStr({ FBillNo: value.no });
+        let url =
+            this.data.jinDomarn +
+            "Godown/GetGodownInfoByFBillNo" +
+            that.formatQueryStr({ FBillNo: value.no });
         dd.httpRequest({
             url: url,
             method: "GET",
@@ -149,10 +155,10 @@ Page({
                 if (res.data.data.length == 0) {
                     dd.alert({
                         content: promptConf.promptConf.SearchNoReturn,
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                     that.setData({
-                        "tableParam2.total": 0
+                        "tableParam2.total": 0,
                     });
                 }
 
@@ -163,23 +169,26 @@ Page({
                 that.setData({
                     "tableParam2.total": that.data.tableParam2.total + res.data.data.length,
                     goods: goods,
-                    purchaseList: purchaseList
+                    purchaseList: purchaseList,
                 });
             },
             fail: function(res) {
                 dd.alert({ content: JSON.stringify(res) });
-            }
+            },
         });
     },
     searchAndAdd(e) {
         dd.showLoading({
-            content: promptConf.promptConf.Obtaining
+            content: promptConf.promptConf.Obtaining,
         });
         let value = e.detail.value;
         console.log(value.keyWord);
         if (!value || !value.keyWord) return;
         let that = this;
-        let url = this.data.jinDomarn + "Godown/ReadGodownInfo" + that.formatQueryStr({ UnitName: value.keyWord });
+        let url =
+            this.data.jinDomarn +
+            "Godown/ReadGodownInfo" +
+            that.formatQueryStr({ UnitName: value.keyWord });
         dd.httpRequest({
             url: url,
             method: "GET",
@@ -190,7 +199,7 @@ Page({
                 if (res.data.data.length == 0) {
                     dd.alert({
                         content: promptConf.promptConf.SearchNoReturn,
-                        buttonText: promptConf.promptConf.CONFIRE
+                        buttonText: promptConf.promptConf.CONFIRE,
                     });
                 }
                 let addArr = [];
@@ -207,13 +216,13 @@ Page({
                 }
                 for (let i = 0; i < addArr.length; i++) {
                     that.setData({
-                        [`purchaseList[${length + i}]`]: addArr[i]
+                        [`purchaseList[${length + i}]`]: addArr[i],
                     });
                 }
             },
             fail: function(res) {
                 dd.alert({ content: JSON.stringify(res) });
-            }
+            },
         });
     },
     submit(e) {
@@ -225,21 +234,21 @@ Page({
         if (that.data.projectList[that.data.projectIndex] == undefined) {
             dd.alert({
                 content: "项目名称不能为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         if (value.title.trim() == "") {
             dd.alert({
                 content: `标题不能为空，请输入!`,
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
         }
 
         if (this.data.purchaseList.length == 0) {
             dd.alert({
                 content: "请选择物料",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
@@ -253,7 +262,7 @@ Page({
             Title: value.title,
             Remark: value.remark,
             ProjectName: that.data.projectList[that.data.projectIndex].ProjectName,
-            ProjectId: that.data.projectList[that.data.projectIndex].ProjectId
+            ProjectId: that.data.projectList[that.data.projectIndex].ProjectId,
         };
         let callBack = function(taskId) {
             console.log("提交审批ok!");
@@ -288,7 +297,7 @@ Page({
 
         this.setData({
             hidden: !this.data.hidden,
-            ifedit: false
+            ifedit: false,
         });
         this.createMaskShowAnim();
         this.createContentShowAnim();
@@ -305,7 +314,7 @@ Page({
             this.setData({
                 [`tableParam2.total`]: length - 1,
                 purchaseList: this.data.purchaseList,
-                goods: this.data.purchaseList
+                goods: this.data.purchaseList,
             });
             console.log(this.data.purchaseList);
         }
@@ -315,7 +324,7 @@ Page({
             if (!good) return;
             this.setData({
                 hidden: !this.data.hidden,
-                ifedit: true
+                ifedit: true,
             });
             this.createMaskShowAnim();
             this.createContentShowAnim();
@@ -331,21 +340,21 @@ Page({
         if (!reg.test(value.fQty)) {
             dd.alert({
                 content: `数量必须为整数，请重新输入！`,
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         if (value.fQty == 0) {
             dd.alert({
                 content: `数量不允许为0，请重新输入！`,
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         if (!value || !value.fQty) {
             dd.alert({
                 content: `数量不允许为空，请输入！`,
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
@@ -357,7 +366,7 @@ Page({
                     if (good.fNumber == g.fNumber && value.fQty > g.fQty) {
                         dd.alert({
                             content: promptConf.promptConf.GreaterThanAvailable,
-                            buttonText: promptConf.promptConf.Confirm
+                            buttonText: promptConf.promptConf.Confirm,
                         });
                         return;
                     }
@@ -366,7 +375,7 @@ Page({
                 if (this.data.purchaseList[i].fNumber == good.fNumber) {
                     good.fQty = value.fQty ? value.fQty + "" : "1";
                     this.setData({
-                        [`purchaseList[${i}]`]: good
+                        [`purchaseList[${i}]`]: good,
                     });
                     break;
                 }
@@ -379,7 +388,7 @@ Page({
                 if (p.fNumber == good.fNumber) {
                     dd.alert({
                         content: promptConf.promptConf.Repeat,
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                     return;
                 }
@@ -388,7 +397,7 @@ Page({
             if (value.fQty > good.fQty) {
                 dd.alert({
                     content: promptConf.promptConf.GreaterThanAvailable,
-                    buttonText: promptConf.promptConf.Confirm
+                    buttonText: promptConf.promptConf.Confirm,
                 });
                 return;
             }
@@ -400,8 +409,9 @@ Page({
                 fQty: value.fQty,
                 unitName: good.unitName,
                 fPrice: good.fPrice ? good.fPrice + "" : "0",
-                fAmount: good.fAmount ? good.fAmount + "" : "0",
-                fFullName: good.fFullName
+                fAmount: good.fPrice * value.fQty,
+                // fAmount: good.fPrice ? good.fAmount + "" : "0",
+                fFullName: good.fFullName,
             };
 
             this.data.goods.push(good);
@@ -410,7 +420,7 @@ Page({
             let setStr = "purchaseList[" + length + "]";
             this.setData({
                 [`tableParam2.total`]: length + 1,
-                [`purchaseList[${length}]`]: param
+                [`purchaseList[${length}]`]: param,
             });
             //数量判断
         }
@@ -422,7 +432,7 @@ Page({
         this.createContentHideAnim();
         setTimeout(() => {
             this.setData({
-                hidden: true
+                hidden: true,
             });
         }, 210);
     },
@@ -432,8 +442,8 @@ Page({
             searchShow: !this.data.searchShow,
             purchaseList: [],
             tableParam2: {
-                total: 0
-            }
+                total: 0,
+            },
         });
-    }
+    },
 });

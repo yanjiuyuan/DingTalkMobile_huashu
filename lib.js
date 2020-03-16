@@ -57,6 +57,7 @@ export default {
                         postErrorMsg("GET", url, res.data.error, userInfo);
                         return;
                     }
+
                     succe(res.data.data);
                 },
                 fail: function(res) {
@@ -89,42 +90,6 @@ export default {
 
                     if (doWithErrcode(res.data)) {
                         postErrorMsg("GET", url, res.data.error, userInfo);
-                        return;
-                    }
-                    succe(res);
-                },
-                fail: function(res) {
-                    if (JSON.stringify(res) == "{}") return;
-                    postErrorMsg("GET", url, res, userInfo);
-                    dd.alert({
-                        content:
-                            "获取数据失败-" +
-                            url +
-                            "报错:" +
-                            JSON.stringify(res) +
-                            errorMessage(res),
-                    });
-                },
-            });
-        },
-        postDataReturnData(url, succe, param, userInfo = {}) {
-            dd.httpRequest({
-                url: dormainName + url,
-                method: "POST",
-                data: JSON.stringify(param),
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    Accept: "application/json",
-                },
-                success: function(res) {
-                    let app = getApp();
-                    //检查登录
-                    if (app.userInfo) {
-                        userInfo = app.userInfo;
-                    }
-
-                    if (doWithErrcode(res.data)) {
-                        postErrorMsg("POST", url, res.data.error, userInfo);
                         return;
                     }
                     succe(res);
@@ -182,6 +147,43 @@ export default {
                 },
             });
         },
+        postDataReturnData(url, succe, param, userInfo = {}) {
+            dd.httpRequest({
+                url: dormainName + url,
+                method: "POST",
+                data: JSON.stringify(param),
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                },
+                success: function(res) {
+                    let app = getApp();
+                    //检查登录
+                    if (app.userInfo) {
+                        userInfo = app.userInfo;
+                    }
+
+                    if (doWithErrcode(res.data)) {
+                        postErrorMsg("POST", url, res.data.error, userInfo);
+                        return;
+                    }
+                    succe(res);
+                },
+                fail: function(res) {
+                    if (JSON.stringify(res) == "{}") return;
+                    postErrorMsg("GET", url, res, userInfo);
+                    dd.alert({
+                        content:
+                            "获取数据失败-" +
+                            url +
+                            "报错:" +
+                            JSON.stringify(res) +
+                            errorMessage(res),
+                    });
+                },
+            });
+        },
+
         requestData(type, url, succe, param = {}, userInfo) {
             dd.httpRequest({
                 url: dormainName + url,
