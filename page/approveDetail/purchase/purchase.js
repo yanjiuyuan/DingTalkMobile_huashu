@@ -1,5 +1,6 @@
 import pub from "/util/public";
 import promptConf from "/util/promptConf.js";
+const app = getApp();
 Page({
     ...pub.func,
     ...pub.func.dowith,
@@ -159,10 +160,10 @@ Page({
                             }
                             res = tmp;
                         }
-
                         that.setData({
                             nodeList: that.data.nodeList,
                             tableData: res,
+                            "tableParam.total": res.length,
                             tableOptions: options,
                         });
                     }

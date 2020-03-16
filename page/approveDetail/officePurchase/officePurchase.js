@@ -13,57 +13,57 @@ Page({
         tableParam: {
             size: 5000,
             now: 1,
-            total: 0
+            total: 0,
         },
         tableItems: [
             {
                 prop: "CodeNo",
                 label: "物料编码",
-                width: 200
+                width: 200,
             },
             {
                 prop: "Name",
                 label: "物料名称",
-                width: 300
+                width: 300,
             },
             {
                 prop: "Standard",
                 label: "规格型号",
-                width: 300
+                width: 300,
             },
             {
                 prop: "Unit",
                 label: "单位",
-                width: 100
+                width: 100,
             },
             {
                 prop: "Price",
                 label: "预计单价",
-                width: 100
+                width: 100,
             },
             {
                 prop: "Count",
                 label: "数量",
-                width: 100
+                width: 100,
             },
             {
                 prop: "totalPrice",
                 label: "总价",
-                width: 200
+                width: 200,
             },
             {
                 prop: "Purpose",
                 label: "用途",
-                width: 300
-            }
-        ]
+                width: 300,
+            },
+        ],
     },
     submit(e) {
         let that = this;
         let value = e.detail.value;
         let param = {
             Title: value.title,
-            Remark: value.remark
+            Remark: value.remark,
         };
         if (this.data.nodeid == 2) {
             let listParam = [];
@@ -104,66 +104,73 @@ Page({
                     parseFloat(row.Price) * parseFloat(row.Count)
                 ).toFixed(2);
 
-                d.tmpTotalPrice = Number(this.data.totalPrice);
+                d.tmpTotalPrice = d.tmpTotalPrice - parseFloat(row.Price) * parseFloat(row.Count);
+                d.tableParam.total = d.tableParam.total - 1;
                 this.data.deletedList.push(d.value.splice(index, 1)[0]);
             }
         }
         this.setData({
             dataList: this.data.dataList,
             totalPrice: this.data.totalPrice,
-            "tableParam.total": this.data.dataList[0].value.length
+            "tableParam.total": this.data.dataList[0].value.length,
         });
     },
     getBomInfo() {
-        this.requestData("GET", "OfficeSuppliesPurchase/ReadTable?TaskId=" + this.data.taskid, res => {
-            this.data.dataList = [];
-            let deptList = [];
-            let deptStr = "";
-            res = JSON.parse(res.data);
-            for (let d of res) {
-                if (d.Dept && deptStr.indexOf(d.Dept) < 0) {
-                    deptStr = deptStr + d.Dept + ",";
-                }
-            }
-            deptStr = deptStr.substring(0, deptStr.length - 1);
-            deptList = deptStr.split(",");
-            for (let d of deptList) {
-                this.data.dataList.push({
-                    name: d,
-                    value: [],
-                    tmpTotalPrice: 0,
-                    tableParam: {
-                        total: 0
+        this.requestData(
+            "GET",
+            "OfficeSuppliesPurchase/ReadTable?TaskId=" + this.data.taskid,
+            res => {
+                this.data.dataList = [];
+                let deptList = [];
+                let deptStr = "";
+                res = JSON.parse(res.data);
+                for (let d of res) {
+                    if (d.Dept && deptStr.indexOf(d.Dept) < 0) {
+                        deptStr = deptStr + d.Dept + ",";
                     }
+                }
+                deptStr = deptStr.substring(0, deptStr.length - 1);
+                deptList = deptStr.split(",");
+                for (let d of deptList) {
+                    this.data.dataList.push({
+                        name: d,
+                        value: [],
+                        tmpTotalPrice: 0,
+                        tableParam: {
+                            total: 0,
+                        },
+                    });
+                }
+
+                for (let d of res) {
+                    for (let l of this.data.dataList) {
+                        if (d.Dept == l.name) {
+                            this.data.totalPrice = (
+                                parseFloat(this.data.totalPrice) +
+                                parseFloat(d.Price) * parseFloat(d.Count)
+                            ).toFixed(2);
+                            d["totalPrice"] = (parseFloat(d.Price) * parseFloat(d.Count)).toFixed(
+                                2
+                            );
+                            l.value.push(d);
+                            l.tableParam.total++;
+                            l.tmpTotalPrice += parseFloat(d["totalPrice"]);
+
+                            break;
+                        }
+                    }
+                }
+                this.setData({
+                    dataList: this.data.dataList,
+                    totalPrice: this.data.totalPrice,
+                    "tableParam.total": this.data.dataList[0].value.length,
                 });
             }
-
-            for (let d of res) {
-                for (let l of this.data.dataList) {
-                    if (d.Dept == l.name) {
-                        this.data.totalPrice = (
-                            parseFloat(this.data.totalPrice) +
-                            parseFloat(d.Price) * parseFloat(d.Count)
-                        ).toFixed(2);
-                        d["totalPrice"] = (parseFloat(d.Price) * parseFloat(d.Count)).toFixed(2);
-                        l.value.push(d);
-                        l.tableParam.total++;
-                        l.tmpTotalPrice += parseFloat(d["totalPrice"]);
-
-                        break;
-                    }
-                }
-            }
-            this.setData({
-                dataList: this.data.dataList,
-                totalPrice: this.data.totalPrice,
-                "tableParam.total": this.data.dataList[0].value.length
-            });
-        });
+        );
     },
     onShow() {
         if (this.data.index != 0 || this.data.nodeid != 2) {
             this.data.tableOperate = "";
         }
-    }
+    },
 });

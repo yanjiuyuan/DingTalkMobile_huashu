@@ -194,7 +194,13 @@ Page({
                                     tmp.push(d);
                                 }
                             }
+
                             res = tmp;
+                            this.data.tableItems.unshift({
+                                prop: "PurchaseMan",
+                                label: "采购员",
+                                width: 200,
+                            });
                             that.setData({
                                 "tableParam.total": res.length,
                             });
@@ -202,6 +208,7 @@ Page({
 
                         that.setData({
                             nodeList: that.data.nodeList,
+                            tableItems: this.data.tableItems,
                             tableData: res,
                             tableOptions: options,
                         });

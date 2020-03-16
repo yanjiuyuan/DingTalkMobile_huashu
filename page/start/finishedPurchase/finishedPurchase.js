@@ -17,7 +17,7 @@ Page({
             total: 0,
         },
 
-        SendPosition: [{ name: "研究院", checked: true }, { name: "基地" }],
+        SendPosition: [{ name: "华数", checked: true }, { name: "基地" }],
         tableOperate2: "删除",
         good: {},
         totalPrice: 0,
