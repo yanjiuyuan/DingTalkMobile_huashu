@@ -50,6 +50,8 @@
         "page/start/managementConsole/sortTest/sortTest",
         "page/start/managementConsole/addFlow/addFlow",
         "util/people/people",
+        "page/start/role/role",
+        "page/start/processManagement/processManagement",
         "page/approveDetail/productionOrder/productionOrder"
     ],
     "window": {

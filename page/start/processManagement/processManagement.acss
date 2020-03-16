@@ -1,0 +1,105 @@
+@import "/util/template/template.acss";
+* {
+    font-family: "微软雅黑";
+}
+.DataIsNull {
+    width: 300rpx;
+    height: 400rpx;
+    margin: 200rpx auto 0 auto;
+    text-align: center;
+    font-size: 35rpx;
+    color: #bfbfbf;
+}
+
+.DataIsNull text {
+    margin-top: 30rpx;
+    display: inline-block;
+    font-family: "微软雅黑";
+}
+
+.DataIsNull image {
+    height: 200rpx;
+    width: 200rpx;
+}
+
+.block {
+    display: inline-block;
+    font-size: 10px;
+    float: right;
+    padding: 2rpx;
+    margin-left: 10rpx;
+    /* border-left: #fff; */
+}
+
+.sort {
+    position: relative;
+}
+.show {
+}
+.hidden {
+    display: none;
+}
+
+.Rotate-downward {
+    transform: rotate(90deg);
+    transition: 0.1s;
+}
+
+.RotateToTheRight {
+    transition: 0.1s;
+}
+
+* {
+    font-family: "微软雅黑";
+}
+
+.menu {
+    height: 130rpx;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px #f0f0f0 solid;
+    display: flex;
+    align-items: center;
+    /*垂直居中*/
+    justify-content: space-around;
+}
+
+.add {
+    height: 60rpx;
+    width: 90rpx;
+    border: 1px solid #4796fa;
+    border-radius: 10rpx;
+    color: #4796fa;
+    display: flex;
+    align-items: center;
+    /*垂直居中*/
+    justify-content: center;
+    /*水平居中*/
+}
+
+.item {
+    height: 100rpx;
+    width: 450rpx;
+    /* border:1px red solid; */
+    display: flex;
+    align-items: center;
+    /*垂直居中*/
+}
+
+.item-text {
+    margin-left: 40rpx;
+    font-size: 30rpx;
+    width: 1rem;
+}
+
+.item-icon {
+    height: 80rpx;
+    width: 80rpx;
+    border-radius: 50%;
+    background-color: #4796fa;
+    color: #fff;
+    font-size: 25rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
