@@ -79,69 +79,63 @@ Page({
             count: 1,
             sourceType: ["camera"],
             success: res => {
-                for (let p of res.apFilePaths) {
-                    that.setData({ disablePage: true });
-                    dd.showLoading({
-                        content: promptConf.promptConf.PictureProcessing,
-                    });
-                    dd.uploadFile({
-                        url: that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
-                        fileType: "image",
-                        fileName: p.substring(7),
-                        IsWaterMark: true,
-                        filePath: p,
-                        success: res => {
-                            if (that.data.tableInfo["ImageUrl"])
-                                that.data.tableInfo["ImageUrl"] += ",";
-                            else that.data.tableInfo["ImageUrl"] = "";
-                            if (
-                                JSON.parse(res.data).Content == "null" ||
-                                !JSON.parse(res.data).Content
-                            ) {
-                                dd.alert({
-                                    content: promptConf.promptConf.PictureProcessingError,
-                                    buttonText: promptConf.promptConf.Confirm,
-                                });
-                                return;
-                            }
-                            that.data.tableInfo["ImageUrl"] += JSON.parse(res.data).Content;
-                            that._postData(
-                                "FlowInfoNew/TaskModify",
-                                res => {
-                                    that.getFormData();
-                                    that.setData({ disablePage: false });
-                                    dd.hideLoading();
+                dd.compressImage({
+                    filePaths: res.apFilePaths,
+                    compressLevel: 2,
+                    success: res => {
+                        for (let p of res.apFilePaths) {
+                            that.setData({ disablePage: true });
+                            dd.showLoading({
+                                content: promptConf.promptConf.PictureProcessing,
+                            });
+                            dd.uploadFile({
+                                url:
+                                    that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
+                                fileType: "image",
+                                fileName: p.substring(7),
+                                IsWaterMark: true,
+                                filePath: p,
+                                success: res => {
+                                    if (that.data.tableInfo["ImageUrl"])
+                                        that.data.tableInfo["ImageUrl"] += ",";
+                                    else that.data.tableInfo["ImageUrl"] = "";
+                                    if (
+                                        JSON.parse(res.data).Content == "null" ||
+                                        !JSON.parse(res.data).Content
+                                    ) {
+                                        dd.alert({
+                                            content: promptConf.promptConf.PictureProcessingError,
+                                            buttonText: promptConf.promptConf.Confirm,
+                                        });
+                                        return;
+                                    }
+
+                                    that.data.tableInfo["ImageUrl"] += JSON.parse(res.data).Content;
+                                    that._postData(
+                                        "FlowInfoNew/TaskModify",
+                                        res => {
+                                            dd.hideLoading();
+                                            that.getFormData();
+                                            that.setData({ disablePage: false });
+                                        },
+                                        that.data.tableInfo
+                                    );
                                 },
-                                that.data.tableInfo
-                            );
-                        },
-                        fail: err => {
-                            dd.alert({ content: "sorry" + JSON.stringify(err) });
-                        },
-                    });
-                }
+                                fail: err => {
+                                    dd.alert({ content: "sorry" + JSON.stringify(err) });
+                                },
+                            });
+                        }
+                    },
+                });
             },
             fail: res => {
                 if (res.error == "3") {
                     dd.alert({
-                        content: "请在android的“设置-应用-权限”选项中，允许访问你的相机",
+                        content: "请在“设置-应用-权限”选项中，允许访问你的相机",
                         buttonText: promptConf.promptConf.Confirm,
                     });
                 }
-            },
-        });
-        return;
-        dd.getLocation({
-            success(res) {
-                console.log(res);
-                res = { address: "研究院" };
-                that.data.placeArr.push(res.address);
-                that.setData({
-                    "table.LocationPlace": that.data.placeArr.join("-"),
-                });
-            },
-            fail() {
-                dd.alert({ title: "定位失败" });
             },
         });
     },
@@ -152,69 +146,63 @@ Page({
             count: 1,
             sourceType: ["album"],
             success: res => {
-                for (let p of res.apFilePaths) {
-                    that.setData({ disablePage: true });
-                    dd.showLoading({
-                        content: promptConf.promptConf.PictureProcessing,
-                    });
-                    dd.uploadFile({
-                        url: that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
-                        fileType: "image",
-                        fileName: p.substring(7),
-                        IsWaterMark: true,
-                        filePath: p,
-                        success: res => {
-                            if (that.data.tableInfo["ImageUrl"])
-                                that.data.tableInfo["ImageUrl"] += ",";
-                            else that.data.tableInfo["ImageUrl"] = "";
-                            if (
-                                JSON.parse(res.data).Content == "null" ||
-                                !JSON.parse(res.data).Content
-                            ) {
-                                dd.alert({
-                                    content: promptConf.promptConf.PictureProcessingError,
-                                    buttonText: promptConf.promptConf.Confirm,
-                                });
-                                return;
-                            }
-                            that.data.tableInfo["ImageUrl"] += JSON.parse(res.data).Content;
-                            that._postData(
-                                "FlowInfoNew/TaskModify",
-                                res => {
-                                    that.getFormData();
-                                    that.setData({ disablePage: false });
-                                    dd.hideLoading();
+                dd.compressImage({
+                    filePaths: res.apFilePaths,
+                    compressLevel: 2,
+                    success: res => {
+                        for (let p of res.apFilePaths) {
+                            that.setData({ disablePage: true });
+                            dd.showLoading({
+                                content: promptConf.promptConf.PictureProcessing,
+                            });
+                            dd.uploadFile({
+                                url:
+                                    that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
+                                fileType: "image",
+                                fileName: p.substring(7),
+                                IsWaterMark: true,
+                                filePath: p,
+                                success: res => {
+                                    if (that.data.tableInfo["ImageUrl"])
+                                        that.data.tableInfo["ImageUrl"] += ",";
+                                    else that.data.tableInfo["ImageUrl"] = "";
+                                    if (
+                                        JSON.parse(res.data).Content == "null" ||
+                                        !JSON.parse(res.data).Content
+                                    ) {
+                                        dd.alert({
+                                            content: promptConf.promptConf.PictureProcessingError,
+                                            buttonText: promptConf.promptConf.Confirm,
+                                        });
+                                        return;
+                                    }
+
+                                    that.data.tableInfo["ImageUrl"] += JSON.parse(res.data).Content;
+                                    that._postData(
+                                        "FlowInfoNew/TaskModify",
+                                        res => {
+                                            dd.hideLoading();
+                                            that.getFormData();
+                                            that.setData({ disablePage: false });
+                                        },
+                                        that.data.tableInfo
+                                    );
                                 },
-                                that.data.tableInfo
-                            );
-                        },
-                        fail: err => {
-                            dd.alert({ content: "sorry" + JSON.stringify(err) });
-                        },
-                    });
-                }
+                                fail: err => {
+                                    dd.alert({ content: "sorry" + JSON.stringify(err) });
+                                },
+                            });
+                        }
+                    },
+                });
             },
             fail: res => {
                 if (res.error == "3") {
                     dd.alert({
-                        content: "请在android的“设置-应用-权限”选项中，允许访问你的照片",
+                        content: "请在“设置-应用-权限”选项中，允许访问你的照片",
                         buttonText: promptConf.promptConf.Confirm,
                     });
                 }
-            },
-        });
-        return;
-        dd.getLocation({
-            success(res) {
-                console.log(res);
-                res = { address: "研究院" };
-                that.data.placeArr.push(res.address);
-                that.setData({
-                    "table.LocationPlace": that.data.placeArr.join("-"),
-                });
-            },
-            fail() {
-                dd.alert({ title: "定位失败" });
             },
         });
     },

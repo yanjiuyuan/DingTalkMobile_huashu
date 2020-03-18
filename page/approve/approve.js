@@ -205,7 +205,16 @@ Page({
                 case 75:
                     url = "/page/approveDetail/productionOrder/productionOrder";
                     break;
+                case 76:
+                    url = "/page/approveDetail/productionPreInvestment/productionPreInvestment";
+                    break;
+                case 77:
+                    url = "/page/approveDetail/preInvestmentReport/preInvestmentReport";
+                    break;
                 case 78:
+                    url = "/page/approveDetail/gift/gift";
+                    break;
+                case 88:
                     url = "/page/approveDetail/gift/gift";
                     break;
             }

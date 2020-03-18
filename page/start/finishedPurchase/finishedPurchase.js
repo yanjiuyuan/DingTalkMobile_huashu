@@ -252,18 +252,4 @@ Page({
             localStorage.removeItem("purchase");
         }
     },
-    onReady() {
-        this._getData("ContractManager/Quary?pageIndex=1&pageSize=1000", res => {
-            console.log(res);
-            this.setData({
-                ContractNameList: res,
-            });
-        });
-    },
-
-    bindPickerChange(e) {
-        this.setData({
-            ContractNameIndex: e.detail.value,
-        });
-    },
 });

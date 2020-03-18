@@ -95,7 +95,7 @@
       </view>
       <view class="form-row">
         <view class="form-row-label">合同名称</view>
-        <picker onChange="bindPickerChange" value="{{ContractNameIndex}}" range="{{ContractNameList}}" range-key="ContractName">
+        <picker onChange="bindPickerContractChange" value="{{ContractNameIndex}}" range="{{ContractNameList}}" range-key="ContractName">
           <view class="row">
             <view class="row-extra" a:if="{{ContractNameIndex != -1}}">{{ContractNameList[ContractNameIndex].ContractName}}-编号：{{ContractNameList[ContractNameIndex].ContractNo}}</view>
             <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />

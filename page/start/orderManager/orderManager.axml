@@ -1,0 +1,37 @@
+<!-- 生产下单管理 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+  <form onSubmit="search">
+    <view class="form-row">
+      <view class="form-row-label">
+        <template is="required"></template>流程类别</view>
+      <view class="form-row-content">
+        <picker onChange="bindObjPickerChangeOne" value="{{flowIndex}}" range="{{flowNameList}}">
+          <view class="row">
+            <view class="row-title"></view>
+            <view class="row-extra">{{flowNameList[flowIndex]}}</view>
+            <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="form-row">
+      <view class="form-row-label">
+        <template is="required"></template>进度</view>
+      <view class="form-row-content">
+        <picker onChange="bindObjPickerChangeTwo" value="{{processIndex}}" range="{{tableOptions}}" range-key="name">
+          <view class="row">
+            <view class="row-title"></view>
+            <view class="row-extra">{{tableOptions[processIndex].name}}</view>
+            <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+          </view>
+        </picker>
+      </view>
+    </view>
+    <button size="default" onTap="search" type="primary">搜搜</button>
+  </form>
+  <view onTap="chooseItem">
+    <text>生产下单</text>
+    <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
+  </view>
+</view>

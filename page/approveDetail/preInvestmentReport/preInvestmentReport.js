@@ -49,7 +49,7 @@ Page({
             },
             {
                 prop: "ProductNumber",
-                label: "生产批次号",
+                label: "试制批次号",
                 width: 200,
             },
         ],
@@ -77,7 +77,7 @@ Page({
     onReady() {
         let that = this;
         //生产计划员填写
-        if (this.data.nodeid == 3 && this.data.index == 0) {
+        if (this.data.nodeid == 6 && this.data.index == 0) {
             this.setData({
                 tableOperate2: "编辑",
             });
@@ -115,7 +115,7 @@ Page({
         this.onModalCloseTap();
     },
     submit(e) {
-        if (this.data.nodeid == 3) {
+        if (this.data.nodeid == 6) {
             for (let i of this.data.purchaseList) {
                 if (!i.ProductNumber) {
                     dd.alert({

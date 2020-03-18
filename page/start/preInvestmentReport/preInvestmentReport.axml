@@ -1,5 +1,58 @@
 <!-- 小批量试制预投报告 -->
 <import src="/util/template/template.axml"/>
+<!-- 待编辑物料表单 -->
+<view class="modal" a:if="{{!hidden}}" key="modal">
+  <view class="modal-mask" animation="{{animMaskData}}"/>
+  <view class="modal-container" animation="{{animContentData}}">
+    <view class="modal-content">
+      <form onSubmit="addGood">
+        <scroll-view scroll-y="{{true}}" style="max-height:7rem">
+          <view class="page-section">
+            <view class="form-row">
+              <view class="form-row-label">
+                <template is="required"></template>数量</view>
+              <view class="form-row-content">
+                <input name="Count" class="input" placeholder="数量" maxlength="5" value="{{t.Count}}"/>
+              </view>
+            </view>
+          </view>
+          <view class="page-section">
+            <view class="form-row">
+              <view class="form-row-label">
+                <template is="required"></template>预计交货期</view>
+              <view class="form-row-content">
+                <input name="Date" class="input" placeholder="预计交货期" value="{{dateStr}}" disabled="{{true}}" />
+              </view>
+              <view onTap="selectDate" class="tag tag-info">+ 选择</view>
+            </view>
+          </view>
+          <view class="page-section">
+            <view class="form-row">
+              <view class="form-row-label">
+                <template is="required"></template>用途</view>
+              <view class="form-row-content">
+                <input name="Purpose" class="input" placeholder="用途" value="{{t.Purpose}}" />
+              </view>
+            </view>
+          </view>
+          <view class="page-section">
+            <view class="form-row">
+              <view class="form-row-label">备注</view>
+              <view class="form-row-content">
+                <input name="Remark" class="input" placeholder="备注" value="{{t.Remark}}" />
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="buttons">
+          <button a:if="{{!ifedit}}" type="primary" class="button-size" formType="submit">添加</button>
+          <button a:if="{{ifedit}}" type="primary" class="button-size" formType="submit">编辑</button>
+          <button type="warn" class="button-size" onTap="onModalCloseTap">取消</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>
 <view class="page">
   <!-- 基本表单 -->
   <form onSubmit="submit">
@@ -12,24 +65,43 @@
       <!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
       <view class="form-row">
         <view class="form-row-label">
-          <template is="required"></template>申请部门</view>
+          <template is="required"></template>预投部门</view>
         <view class="form-row-content">
           <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
         </view>
       </view>
       <view class="form-row">
         <view class="form-row-label">
-          <template is="required"></template>预投部门</view>
-        <view class="form-row-content">
-          <input name="totalPrice" class="input" placeholder="预投部门" value="{{totalPrice}}"/>
-        </view>
+          <template is="required"></template>项目名称</view>
+        <my-picker onChange="bindPickerChange" index="{{projectIndex}}" range="{{projectList}}" value="{{tableInfo.ProjectName}}" rangeKey="ProjectName"></my-picker>
       </view>
       <view class="form-row">
         <view class="form-row-label">
-          <template is="required"></template>预投缘由</view>
+          <template is="required"></template>预投目的</view>
         <view class="form-row-content">
-          <input name="totalPrice" class="input" placeholder="预投缘由" value="{{totalPrice}}"/>
+          <textarea name="ExpectPurpose" maxlength="20" class="input" placeholder="预投目的" value="{{table.ExpectPurpose}}" data-name="ExpectPurpose" onInput="inputToTable"/>
         </view>
+      </view>
+      <form onSubmit="search">
+        <view class="page-section">
+          <view class="form-row">
+            <view class="form-row-label">关键字</view>
+            <view class="form-row-content">
+              <input name="keyWord" class="input" placeholder="请输入关键字" />
+            </view>
+            <button type="primary" formType="submit" disabled="{{disablePage}}" class = "button-inline">搜索</button>
+          </view>
+        </view>
+      </form>
+      <!-- 物料表单 -->
+      <view onTap="chooseItem" a:if="{{tableData.length > 0}}">
+        <text>物料表单</text>
+        <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate}}"/>
+      </view>
+      <!-- 已选物料表单 -->
+      <view onTap="deleteItem" a:if="{{purchaseList.length > 0}}">
+        <text>已选物料表单</text>
+        <template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2}}"/>
       </view>
       <!-- 选人组件 -->
       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>

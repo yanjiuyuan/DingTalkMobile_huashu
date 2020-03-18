@@ -35,6 +35,7 @@
 						<view a:if="{{nodeid == 2 && index == 0 && timeUp}}" onTap="addPlace2" class="tag tag-info">+ 选择照片</view>
 					</view>
 				</view>
+				<text style="color:red" a:if="{{nodeid == 2 && index == 0}}">若图片上传失败，请调低相机分辨率。</text>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">外出事由</view>

@@ -134,30 +134,6 @@ Page({
         });
         this.setChooseMan();
     },
-    print() {
-        this._postData(
-            "PurchaseNew/PrintAndSend",
-            function(res) {
-                dd.alert({ content: "获取成功" });
-            },
-            {
-                UserId: this.data.DingData.userid,
-                TaskId: this.data.taskid,
-            }
-        );
-    },
-    output() {
-        this._getData(
-            "api/PurchaseManage" +
-                this.formatQueryStr({
-                    UserId: this.data.DingData.userid,
-                    TaskId: this.data.taskid,
-                }),
-            function(res) {
-                dd.alert({ content: "获取成功" });
-            }
-        );
-    },
     onReady() {
         let that = this;
         this.getDataReturnData(

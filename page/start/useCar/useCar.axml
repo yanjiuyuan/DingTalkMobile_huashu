@@ -35,22 +35,21 @@
 				<view class="form-row-label">
 					<template is="required"></template>车牌号</view>
 				<view class="form-row-content">
-					<input name="CarNumber" class="input" value="{{table.CarNumber}}" placeholder="请输入车牌号" 
-data-name="CarNumber" onInput="inputToTable"  />
+					<input name="CarNumber" class="input" value="{{table.CarNumber}}" placeholder="请输入车牌号" data-name="CarNumber" onInput="inputToTable" />
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
 					<template is="required"></template>计划行车路线</view>
 				<view class="form-row-content">
-					<textarea auto-height="true" name="PlantTravelWay" class="input" data-name="PlantTravelWay" onInput="inputToTable"  value="{{table.PlantTravelWay}}"/>
+					<textarea auto-height="true" name="PlantTravelWay" class="input" data-name="PlantTravelWay" onInput="inputToTable" value="{{table.PlantTravelWay}}"/>
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
 					<template is="required"></template>用车事由</view>
 				<view class="form-row-content">
-					<textarea auto-height="true" name="MainContent" class="input" data-name="MainContent" onInput="inputToTable"  value="{{table.MainContent}}"/>
+					<textarea auto-height="true" name="MainContent" class="input" data-name="MainContent" onInput="inputToTable" value="{{table.MainContent}}"/>
 				</view>
 			</view>
 			<view class="form-row">
@@ -85,10 +84,10 @@ data-name="CarNumber" onInput="inputToTable"  />
 			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
 			<template is="suggest" data="{{table}}"/>
 		</view>
-		<button type="primary" onTap="downLoad">下载《私车公用协议书》</button>
 		<!-- 提交按钮 -->
 		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
 		<!-- 临时保存 -->
 		<template is="temporaryPreservation"/>
+		<button type="primary" onTap="downLoad">下载《私车公用协议书》</button>
 	</form>
 </view>

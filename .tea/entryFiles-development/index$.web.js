@@ -62,3 +62,6 @@ require('../../util/people/people?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68'
 require('../../page/start/role/role?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/start/processManagement/processManagement?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/approveDetail/productionOrder/productionOrder?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../page/approveDetail/productionPreInvestment/productionPreInvestment?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../page/approveDetail/preInvestmentReport/preInvestmentReport?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../page/start/orderManager/orderManager?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');

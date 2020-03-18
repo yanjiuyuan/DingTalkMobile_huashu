@@ -1,4 +1,4 @@
-<!-- 生产指令单 -->
+<!-- 试制报告 -->
 <import src="/util/template/template.axml"/>
 <view class="page">
   <!-- 退回审批表单 -->
@@ -9,53 +9,21 @@
     <view class="page-section">
       <template is = "titleOfObjectApproval" data="{{tableInfo:tableInfo}}"></template>
       <template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
-      <template is="department" data="{{department:tableInfo.Dept}}"/>
+      <!--<template is="department" data="{{department:tableInfo.Dept}}"/> -->
       <view class="form-row">
         <view class="form-row-label">
-         客户名称
+           预投部门
         </view>
         <view class="form-row-content">
-          <input name="Customer" class="input" placeholder="客户名称" value="{{table.Customer}}" disable="{{true}}"/>
+          <input name="ExpectDept" placeholder=" 预投部门" class="input" disabled="{{true}}" value="{{table.ExpectDept}}"/>
         </view>
       </view>
       <view class="form-row">
         <view class="form-row-label">
-          合同编号
+          预投目的
         </view>
         <view class="form-row-content">
-          <input name="ContractNumber" class="input" placeholder="合同编号" value="{{table.ContractNumber}}" disable="{{true}}"/>
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">
-          项目名称
-        </view>
-        <view class="form-row-content">
-          <input name="ProjectName" class="input" placeholder="项目名称" value="{{table.ProjectName}}" disable="{{true}}"/>
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">
-          运输要求
-        </view>
-        <view class="form-row-content">
-          <input name="TransportationRequirements" class="input" placeholder="运输要求" value="{{table.TransportationRequirements}}" disable="{{true}}"/>
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label"> 
-          现场其他设备
-        </view>
-        <view class="form-row-content">
-          <input name="OtherRequipment" class="input" placeholder="现场其他设备" value="{{table.OtherRequipment}}" disable="{{true}}"/>
-        </view>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">
-          包装要求
-        </view>
-        <view class="form-row-content">
-          <input name="PackingRequire" class="input" placeholder="包装要求" value="{{table.PackingRequire}}" disable="{{true}}"/>
+          <textarea name="ExpectPurpose" maxlength="20" class="input" placeholder="预投目的" disabled="{{true}}" value="{{table.ExpectPurpose}}"/>
         </view>
       </view>
       <view onTap="chooseItem" a:if="{{purchaseList.length > 0}}">

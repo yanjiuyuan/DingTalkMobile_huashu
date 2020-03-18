@@ -1,0 +1,6 @@
+@import "/util/template/template.acss";
+.btn {
+    width: 90%;
+    border-radius: 40rpx;
+    margin: 0 auto;
+}

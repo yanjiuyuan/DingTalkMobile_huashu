@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.15",
+        version: "2.1.16",
         DingData: {
             nickName: "",
             departName: "",
@@ -42,6 +42,7 @@ export default {
         id: 0,
         nodeList: [],
         projectList: [],
+        ContractNameList: [],
         nodeInfo: {},
         rebackAble: true,
         FileUrl: "",
@@ -50,6 +51,7 @@ export default {
         stateIndex: -1,
         localStorage: localStorage,
         ProjectTypes: ProjectTypes,
+        ContractNameIndex: -1,
         projectIndex: -1,
         departIndex: -1,
         DeptNames: [],
@@ -106,6 +108,7 @@ export default {
                         });
                         that.getNodeList(); //获取审批列表
                         that.getProjectList(); //获取项目列表
+                        that.getContractNameList(); //获取合同列表
                         that.getNodeInfo(); //获取审批列表当前节点的信息
                     }
 
@@ -227,9 +230,9 @@ export default {
                     if (
                         (that.data.nodeInfo.IsNeedChose &&
                             that.data.nodeInfo.ChoseNodeId &&
-                            (that.data.nodeInfo.ChoseNodeId.indexOf(node.NodeId) >= 0 ||
-                                (that.data.addPeopleNodes &&
-                                    that.data.addPeopleNodes.indexOf(node.NodeId) >= 0))) ||
+                            that.data.nodeInfo.ChoseNodeId.indexOf(node.NodeId) >= 0) ||
+                        (that.data.addPeopleNodes &&
+                            that.data.addPeopleNodes.indexOf(node.NodeId) >= 0) ||
                         (node.NodeName.indexOf("申请人") >= 0 && node.NodeId > 0)
                     ) {
                         //第二个if表示判断该节点是否是必选节点
@@ -249,7 +252,10 @@ export default {
                             });
                             return;
                         }
+
                         for (let a of node.AddPeople) {
+                            console.log(node);
+
                             if (
                                 a.name == null ||
                                 a.name == "" ||
@@ -770,7 +776,7 @@ export default {
                     case "6":
                         (url = "DrawingUploadNew/PrintAndSend"), (method = "post");
                         break; //图纸审批
-                    case "24":
+                    case ("24", "26"):
                         (url = "PurchaseNew/PrintAndSend"), (method = "post");
                         break; //零部件采购
                     case "13":
@@ -821,7 +827,19 @@ export default {
                     case "69":
                         (url = "ProjectClosure/PrintAndSend"), (method = "post");
                         break; //结题
+                    case "75":
+                        (url = "ProductionOrder/PrintPDF"), (method = "post");
+                        break; //生产指令单
+                    case "76":
+                        (url = "ProductionOrder/PrintPDF"), (method = "post");
+                        break; //生产预投单
+                    case "77":
+                        (url = "ProductionOrder/PrintPDF"), (method = "post");
+                        break; //小批量试制报告
                     case "78":
+                        (url = "Gift/GetPrintPDF"), (method = "get");
+                        break; //礼品
+                    case "88":
                         (url = "Gift/GetPrintPDF"), (method = "get");
                         break; //礼品
                 }
@@ -874,6 +892,12 @@ export default {
                     case "23":
                         (url = "PurchaseOrder/GetExcelReport"), (method = "get");
                         break; //图纸下单-
+                    case "24":
+                        (url = "Purchase/PrintExcel"), (method = "get");
+                        break; //零部件采购
+                    case "26":
+                        (url = "Purchase/PrintExcel"), (method = "get");
+                        break; //成品采购-
                     case "28":
                         (url = "Pick/PrintExcel"), (method = "post");
                         break; //领料申请-
@@ -896,7 +920,7 @@ export default {
                         applyManId: this.data.DingData.userid,
                         taskId: this.data.taskid,
                     };
-                    if (this.data.flowid == "8") {
+                    if (this.data.flowid == "24" || this.data.flowid == "26") {
                         obj = {
                             UserId: this.data.DingData.userid,
                             taskId: this.data.taskid,
@@ -1163,9 +1187,19 @@ export default {
         //获取项目列表
         getProjectList() {
             let that = this;
-            this._getData("ProjectNew/GetAllProJect", function(res) {
+            this._getData("ProjectNew/GetAllProJect", res => {
                 that.setData({
                     projectList: res,
+                });
+            });
+        },
+        //获取合同列表
+        getContractNameList() {
+            let that = this;
+            this._getData("ContractManager/Quary?pageIndex=1&pageSize=1000", res => {
+                console.log(res);
+                this.setData({
+                    ContractNameList: res,
                 });
             });
         },
@@ -1576,7 +1610,6 @@ export default {
                 app.globalData.DeptNames = department;
             });
         },
-
         //选择项目名称之后 修改审批节点和标题
         bindPickerChange(e) {
             //for循环是判断是否需要需要审批节点
@@ -1674,7 +1707,12 @@ export default {
             }
             return count;
         },
-
+        //合同选择
+        bindPickerContractChange(e) {
+            this.setData({
+                ContractNameIndex: e.detail.value,
+            });
+        },
         //临时保存
         temporaryPreservation(e) {
             let that = this;

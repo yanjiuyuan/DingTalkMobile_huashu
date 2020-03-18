@@ -10,6 +10,7 @@ Page({
         hidden: true,
         tableOperate: "选择",
         purchaseList: [],
+
         tableParam2: {
             total: 0,
         },
@@ -94,12 +95,7 @@ Page({
 
         let reg3 = /^[\.\d]*$/; //纯数字包括小数
 
-        if (
-            !value.Count.trim() ||
-            !value.Date.trim() ||
-            !value.Purpose.trim() ||
-            !value.ProductNumber.trim()
-        ) {
+        if (!value.Count.trim() || !value.Date.trim() || !value.Purpose.trim()) {
             dd.alert({
                 content: `请填写已选信息！`,
                 buttonText: promptConf.promptConf.Confirm,
@@ -131,7 +127,7 @@ Page({
                 Date: value.Date,
                 Purpose: value.Purpose.trim(),
                 Remark: value.Remark.trim(),
-                ProductNumber: value.ProductNumber.trim(),
+                ProductNumber: "",
             };
             console.log("编辑");
             for (let i of this.data.purchaseList) {
@@ -160,7 +156,7 @@ Page({
                 Date: value.Date,
                 Purpose: value.Purpose.trim(),
                 Remark: value.Remark.trim(),
-                ProductNumber: value.ProductNumber.trim(),
+                ProductNumber: "",
             };
             console.log("添加");
             console.log(param);
@@ -221,13 +217,7 @@ Page({
     //表单判断
     judge(value) {
         let that = this;
-        if (that.data.projectList[that.data.projectIndex] == undefined) {
-            dd.alert({
-                content: "项目名称不允许为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm,
-            });
-            return false;
-        }
+
         if (value.Customer.trim() == "") {
             dd.alert({
                 content: "客户名称不允许为空，请输入！",
@@ -235,9 +225,16 @@ Page({
             });
             return false;
         }
-        if (value.ContractNumber.trim() == "") {
+        if (that.data.ContractNameList[that.data.ContractNameIndex] == undefined) {
             dd.alert({
-                content: "客户名称不允许为空，请输入！",
+                content: "合同编号不允许为空，请输入！",
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return false;
+        }
+        if (value.ProjectName.trim() == "") {
+            dd.alert({
+                content: "项目名称不允许为空，请输入！",
                 buttonText: promptConf.promptConf.Confirm,
             });
             return false;
@@ -276,14 +273,18 @@ Page({
     submit(e) {
         let that = this;
         let value = e.detail.value;
+
         if (this.judge(value) == false) {
             return;
         }
+        value.ContractNumber = this.data.ContractNameList[this.data.ContractNameIndex].ContractNo;
+        value.ContractName = this.data.ContractNameList[this.data.ContractNameIndex].ContractName;
+
         let param = {
             Title: value.title,
             Remark: value.remark,
-            ProjectName: that.data.projectList[that.data.projectIndex].ProjectName,
-            ProjectId: that.data.projectList[that.data.projectIndex].ProjectId,
+            // ProjectName: that.data.projectList[that.data.projectIndex].ProjectName,
+            // ProjectId: that.data.projectList[that.data.projectIndex].ProjectId,
         };
         let callBack = function(taskId) {
             that.bindAll(taskId, value);

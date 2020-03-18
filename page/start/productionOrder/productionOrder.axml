@@ -44,15 +44,6 @@
               </view>
             </view>
           </view>
-          <view class="page-section">
-            <view class="form-row">
-              <view class="form-row-label">
-                <template is="required"></template>生产批次号</view>
-              <view class="form-row-content">
-                <input name="ProductNumber" class="input" placeholder="生产批次号" value="{{t.ProductNumber}}" />
-              </view>
-            </view>
-          </view>
         </scroll-view>
         <view class="buttons">
           <button a:if="{{!ifedit}}" type="primary" class="button-size" formType="submit">添加</button>
@@ -82,11 +73,6 @@
       </view>
       <view class="form-row">
         <view class="form-row-label">
-          <template is="required"></template>项目名称</view>
-        <my-picker onChange="bindPickerChange" index="{{projectIndex}}" range="{{projectList}}" value="{{tableInfo.ProjectName}}" rangeKey="ProjectName"></my-picker>
-      </view>
-      <view class="form-row">
-        <view class="form-row-label">
           <template is="required"></template>客户名称</view>
         <view class="form-row-content">
           <input name="Customer" class="input" placeholder="客户名称" data-name="Customer" onInput="inputToTable" value="{{table.Customer}}"/>
@@ -95,8 +81,13 @@
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>合同编号</view>
+        <my-picker onChange="bindPickerContractChange" index="{{ContractNameIndex}}" range="{{ContractNameList}}" value="{{table.ContractNumber}}" rangeKey="ContractNo"></my-picker>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>项目名称</view>
         <view class="form-row-content">
-          <input name="ContractNumber" class="input" placeholder="合同编号" data-name="ContractNumber" onInput="inputToTable" value="{{table.ContractNumber}}"/>
+          <input name="ProjectName" class="input" placeholder="项目名称" data-name="ProjectName" onInput="inputToTable" value="{{table.ProjectName}}"/>
         </view>
       </view>
       <view class="form-row">
