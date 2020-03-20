@@ -6,7 +6,14 @@ Page({
     data: {
         tableParam: {
             total: 0,
+            now: 1,
         },
+
+        tableParam2: {
+            total: 0,
+            now: 1,
+        },
+        tableOperate: "详情",
         selectOperate: "进度",
         flowNameList: ["生产指令单", "生产预投单", "小批量试制预投报告"],
         tableOptions: [
@@ -23,7 +30,6 @@ Page({
                 name: "入库",
             },
         ],
-
         tableItems: [
             {
                 prop: "TaskId",
@@ -46,6 +52,40 @@ Page({
             //     width: 100,
             // },
         ],
+
+        tableItems2: [
+            {
+                prop: "ProductNumber",
+                label: "批次号",
+                width: 200,
+            },
+            {
+                prop: "CodeNumber",
+                label: "物料编码",
+                width: 300,
+            },
+            {
+                prop: "CodeName",
+                label: "物料名称",
+                width: 300,
+            },
+
+            {
+                prop: "Standards",
+                label: "规格型号",
+                width: 300,
+            },
+            {
+                prop: "Count",
+                label: "数量",
+                width: 300,
+            },
+            {
+                prop: "Date",
+                label: "预计交货日期",
+                width: 100,
+            },
+        ],
     },
     bindObjPickerChangeOne(e) {
         this.setData({
@@ -60,10 +100,21 @@ Page({
     //下拉框选择后回调
     tableSelect(e) {
         let selectIndex = e.detail.value;
-        let rowIndex = e.target.dataset.index;
+        console.log(e.target.dataset.index);
+        let rowIndex = e.target.dataset.index + (this.data.tableParam.now - 1) * 5;
         let row = this.data.tableData[rowIndex];
         row.index = selectIndex;
         row.Progress = this.data.tableOptions[selectIndex].name;
+        this._postData(
+            "ProductionOrder/Modify",
+            res => {
+                dd.alert({
+                    content: promptConf.promptConf.UpdateSuccess,
+                    buttonText: promptConf.promptConf.Confirm,
+                });
+            },
+            row
+        );
         this.setData({
             [`tableData[${rowIndex}]`]: row,
         });
@@ -95,9 +146,18 @@ Page({
             });
         });
     },
-
+    //搜索
     search() {
         let flowName = this.data.flowNameList[this.data.flowIndex] || "";
         let progress = this.data.tableOptions[this.data.processIndex].name || "";
+        this.getTableData(flowName, progress);
+    },
+
+    chooseItem(e) {
+        console.log(e);
+        this.setData({
+            tableData2: e.target.targetDataset.row.ProductionOrderDetails,
+            "tableParam2.total": e.target.targetDataset.row.ProductionOrderDetails.length,
+        });
     },
 });

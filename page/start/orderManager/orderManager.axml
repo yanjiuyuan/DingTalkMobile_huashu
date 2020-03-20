@@ -28,10 +28,14 @@
         </picker>
       </view>
     </view>
-    <button size="default" onTap="search" type="primary">搜搜</button>
+    <button size="default" onTap="search" type="primary">搜索</button>
   </form>
   <view onTap="chooseItem">
     <text>生产下单</text>
-    <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
+    <template is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,tableOperate:tableOperate,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
+  </view>
+  <view a:if ="{{tableData2.length > 0}}">
+    <text>相关产品</text>
+    <template is="datatable" data="{{items:tableItems2,data:tableData2,param:tableParam2}}"/>
   </view>
 </view>

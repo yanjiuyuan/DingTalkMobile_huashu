@@ -67,32 +67,38 @@ Page({
         dd.chooseImage({
             count: 1,
             success: res => {
-                that.setData({ imageList: that.data.imageList });
-                for (let p of res.apFilePaths) {
-                    console.log("imageList:", JSON.stringify(p));
-                    that.data.imageList.push(p);
-                    that.setData({ disablePage: true });
-                    dd.uploadFile({
-                        url: that.data.dormainName + "drawingupload/Upload",
-                        fileType: "image",
-                        fileName: p.substring(7),
-                        filePath: p,
-                        success: res => {
-                            console.log(
-                                "imgUrlList:",
-                                JSON.stringify(JSON.parse(res.data).Content)
-                            );
-                            that.data.imgUrlList.push(JSON.parse(res.data).Content);
-                            that.setData({ disablePage: false });
-                        },
-                        fail: err => {
-                            dd.alert({
-                                content: "sorry" + JSON.stringify(err),
+                dd.compressImage({
+                    filePaths: res.apFilePaths,
+                    compressLevel: 2,
+                    success: res => {
+                        that.setData({ imageList: that.data.imageList });
+                        for (let p of res.apFilePaths) {
+                            console.log("imageList:", JSON.stringify(p));
+                            that.data.imageList.push(p);
+                            that.setData({ disablePage: true });
+                            dd.uploadFile({
+                                url: that.data.dormainName + "drawingupload/Upload",
+                                fileType: "image",
+                                fileName: p.substring(7),
+                                filePath: p,
+                                success: res => {
+                                    console.log(
+                                        "imgUrlList:",
+                                        JSON.stringify(JSON.parse(res.data).Content)
+                                    );
+                                    that.data.imgUrlList.push(JSON.parse(res.data).Content);
+                                    that.setData({ disablePage: false });
+                                },
+                                fail: err => {
+                                    dd.alert({
+                                        content: "sorry" + JSON.stringify(err),
+                                    });
+                                },
                             });
-                        },
-                    });
-                }
-                that.setData({ imageList: that.data.imageList });
+                        }
+                        that.setData({ imageList: that.data.imageList });
+                    },
+                });
             },
         });
     },
