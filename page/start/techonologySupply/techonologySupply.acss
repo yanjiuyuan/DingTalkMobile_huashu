@@ -1,0 +1,44 @@
+@import '/util/template/template.acss';
+.margin-right{
+  margin-right: 20rpx;
+}
+.Rotate-downward{
+  transform:rotate(90deg);
+  transition:0.1s;
+}
+
+.RotateToTheRight{
+  transition:0.1s;
+}
+/* .checkbox-group{
+  background-color: #fff;
+  position: absolute;
+} */
+
+
+.checkbox-group{
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+
+}
+.margin{
+  margin-bottom: 0;
+}
+.sort{
+   position: relative;
+
+}
+
+.show{
+
+}
+.hidden{
+  display: none;
+}
+
+.block{
+  float: left;
+}

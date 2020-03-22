@@ -1,0 +1,4 @@
+@import '/util/template/template.acss';
+.redText {
+    color: red;
+}

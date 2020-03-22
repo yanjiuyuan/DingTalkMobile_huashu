@@ -1,0 +1,231 @@
+<!-- 结题 -->
+<import src="/util/template/template.axml"/>
+<!-- 退回审批表单 -->
+<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+<view class="page">
+	<!-- 待编辑物料表单 -->
+	<view class="modal" a:if="{{!hiddens}}" key="modal">
+		<view class="modal-mask" animation="{{animMaskData}}"/>
+		<view class="modal-container" animation="{{animContentData}}">
+			<view class="modal-content">
+				<form onSubmit="addGood">
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">科目/备注</view>
+							<view class="form-row-content">
+								<input name="Subject" class="input" value="{{Subject}}" disabled="true" />
+							</view>
+						</view>
+					</view>
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">
+								<template is="required"></template>支出数(各科目合计)</view>
+							<view class="form-row-content">
+								<input name="Money" class="input" placeholder="支出数(各科目合计)" />
+							</view>
+						</view>
+					</view>
+					<view class="page-section">
+						<view class="form-row">
+							<view class="form-row-label">
+								<template is="required"></template>支出数计算依据(名称+金额)</view>
+							<view class="form-row-content">
+								<input name="NameAndMoney" class="input" placeholder="支出数计算依据(名称+金额)" />
+							</view>
+						</view>
+					</view>
+					<view class="buttons">
+						<button type="primary" class="button-size" formType="submit" data-index="{{idx}}">添加</button>
+						<button type="warn" class="button-size" onTap="onModalCloseTap">取消</button>
+					</view>
+				</form>
+			</view>
+		</view>
+	</view>
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<view style="height:50rpx;"></view>
+			<view class="form-row">
+				<view class="form-row-label">项目名称</view>
+				<view class="form-row-content">
+          {{tableInfo.ProjectId}}-{{tableInfo.ProjectName}}
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目类型</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ProjectType}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">项目负责人</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ResponsibleMan}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row" style="height:auto;">
+				<view class="form-row-label">小组成员</view>
+				<view class="form-row-content">
+					<textarea maxlength="-1" class="input" value="{{table.TeamMembers}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">计划开始时间</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.StartTime}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">计划结束时间</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.EndTime}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">实际开始时间</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ActualCycleStart.slice(0,10)  }}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">实际结束时间</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ActualCycleEnd.slice(0,10)  }}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view style="height:50rpx;"></view>
+			<view class="form-row">
+				<view class="form-row-label">是否有横向合作单位</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.IsTransverse == true ? '是': '否'}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row" a:if="{{table.IsTransverse}}">
+				<view class="form-row-label">合同金额</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ContractAmount}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row" a:if="{{table.IsTransverse}}">
+				<view class="form-row-label">合作编码</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ContractNo}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row" a:if="{{table.IsTransverse}}">
+				<view class="form-row-label">实际到账</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.ActualMoney}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">是否有申报纵向项目</view>
+				<view class="form-row-content">
+					<input class="input" value="{{table.IsPortrait == true ? '是': '否'}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<view a:if="{{table.IsPortrait && (nodeid > 3 || index == 2 )}}">
+				<view >纵向基本情况表</view>
+				<template is="datatable" data="{{items:tableItems3,data:tableData3,param:tableParam3}}"/>
+				<button size="default" type="primary" onTap="PrintOne">打印纵向基本情况表</button>
+			</view>
+			<view style="height:50rpx;"></view>
+			<!-- 分界线 -->
+			<!-- 相关文件 -->
+			<view>
+				<view class="form-row margin" onTap="showOrClose">
+					<view class="form-row-label">相关文件</view>
+					<view class="form-row-content">
+						<image class="row-arrow margin-right {{rotate}}" src="/image/arrowright.png" mode="aspectFill" />
+					</view>
+				</view>
+				<view class="{{show}}">
+					<view a:for="{{uploadFileConfig}}" a:if="{{item.fileList != null && ( item.attribute == 'Bom6' ||  nodeid > 3  || Ind == 2 )    }}">
+						<view class="form-row" style="height:auto;">
+							<view class="form-row-label">{{item.label}}</view>
+							<view class="form-row-content">
+								<view a:for="{{item.fileList}}"> 
+									{{item.FileName.split(".")[0].length > 6 ? item.FileName.split(".")[0].slice(0,3) + "..." + item.FileName.split(".")[0].slice(item.FileName.split(".")[0].length-3,item.FileName.split(".")[0].length) +"." + item.FileName.split(".")[1] : item.FileName}}
+									<button type="primary" data-mediaId="{{item.MediaId}}" onTap="downloadFile" disabled="{{disablePage}}" style="display:inline;padding:4rpx;margin:0 10rpx;">下载</button>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 项目采购清单、借用清单、维修清单 -->
+		<view a:if="{{tableData1.length > 0}}">
+			<view class="form-row margin" onTap="showOrCloseOne">
+				<view style = "font-size:0.34rem">项目采购清单、借用清单、领料清单、入库清单</view>
+				<view class="form-row-content">
+					<image class="row-arrow margin-right {{rotate1}}" src="/image/arrowright.png" mode="aspectFill" />
+				</view>
+			</view>
+			<view class="{{show1}}">
+				<template is="datatable" data="{{items:tableItems1,data:tableData1,param:tableParam1}}"/>
+			</view>
+		</view>
+		<!-- 受理知识产权清单 -->
+		<view a:if="{{  intellectualProperty.length > 0 && ( nodeid > 1 || index == 2 ) }}">
+			<view class="form-row margin" onTap="showOrCloseTwo">
+				<view style = "font-size:0.34rem">受理知识产权清单</view>
+				<image class="row-arrow margin-right {{rotate2}}" src="/image/arrowright.png" mode="aspectFill" />
+			</view>
+		</view>
+		<view class="{{show2}}">
+			<template is="datatable" data="{{items:tableItems5,data:intellectualProperty,param:tableParam5}}"/>
+		</view>
+		<!-- 转化/应用单位情况表 -->
+		<view a:if="{{table.IsTransverse && (nodeid > 3  || index == 2)}}">
+			<view class="form-row margin" onTap="showOrCloseFour">
+				<view style = "font-size:0.34rem">转化/应用单位情况表</view>
+				<view class="form-row-content">
+					<image class="row-arrow margin-right {{rotate4}}" src="/image/arrowright.png" mode="aspectFill" />
+				</view>
+			</view>
+			<view class="{{show4}}">
+				<template is="datatable" data="{{items:tableItems2,data:tableData2,param:tableParam2}}"/>
+				<button size="default" type="primary" onTap="PrintTwo">打印转化/应用情况表</button>
+			</view>
+		</view>
+		<!-- 项目经费使用情况表（实际支出） -->
+		<view a:if="{{nodeid > 1}}">
+			<view class="form-row margin" onTap="showOrCloseThree">
+				<view style = "font-size:0.34rem">项目经费使用情况表（实际支出）</view>
+				<view class="form-row-content">
+					<image class="row-arrow margin-right {{rotate3}}" src="/image/arrowright.png" mode="aspectFill" />
+				</view>
+			</view>
+			<view class="{{show3}}">
+				<view onTap="chooseItem">
+					<template is="datatable" data="{{items:tableItems4,data:tableData4,param:tableParam4,tableOperate:tableOperate}}"/>
+				</view>
+				<button a:if="{{nodeid > 2 || (nodeid == 2 && index == 1)}}" size="default" onTap="PrintThree" type="primary">打印项目经费使用情况表</button>
+			</view>
+		</view>
+		<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+		<view a:if="{{index==0}}">
+			<template is="suggest"/>
+			<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+			<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+		</view>
+		<view a:if="{{ index!= 0 && state == '已完成' }}">
+			<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+		</view>
+		<view a:if="{{index==2 && state=='未完成'}}">
+			<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+		</view>
+		<view a:if="{{index == 2 && state=='未完成' && rebackAble == true}}">
+			<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+		</view>
+		<view a:if="{{index == 2 && state == '已撤回' || index == 2 && state == '被退回'}}">
+			<!--<button onTap="relaunch" type="warn" disabled="{{disablePage}}">重新发起</button> -->
+		</view>
+	</form>
+</view>

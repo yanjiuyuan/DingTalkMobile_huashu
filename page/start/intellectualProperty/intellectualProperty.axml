@@ -1,0 +1,65 @@
+<!-- 知识产权 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<!-- 标题 -->
+			<template is ="titleOfObject" data="{{tableInfo}}"/>
+			<!-- 申请人 -->
+			<template is ="applyman" data="{{DingData}}"/>
+			<!-- 选择部门 -->
+			<!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请部门</view>
+				<view class="form-row-content">
+					<my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请名称</view>
+				<view class="form-row-content">
+					<input name="Name" class="input" data-name="Name" onInput="inputToTable" value="{{table.Name}}" placeholder="请输入申请名称"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请类别</view>
+				<view class="form-row-content">
+					<picker onChange="changeState" value="{{stateIndex}}" range="{{IntellectualPropertyTypes}}">
+						<view class="row">
+							<view class="row-title"></view>
+							<view class="row-extra">{{IntellectualPropertyTypes[stateIndex]}}</view>
+							<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+						</view>
+					</picker>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>项目名称</view>
+				<!--<picker onChange="bindPickerChange" value="{{projectIndex}}" range="{{projectList}}" range-key="ProjectName"><view class="row"><view class="row-title"></view><view class="row-extra">{{projectList[projectIndex].ProjectName}}</view><image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" /></view></picker> -->
+				<my-picker onChange="bindPickerChange" index="{{projectIndex}}" range="{{projectList}}" value="{{table.Project}}" rangeKey="ProjectName"></my-picker>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请发明人</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" maxlength="-1" style="min-height:90rpx;padding:0;" name="Inventor" class="input" disabled="{{true}}" value="{{table.Inventor}}"/>
+				</view>
+				<view onTap="chooseMans" class="tag tag-info">+ 选人</view>
+			</view>
+			<text class="redText">#按贡献度大小排序#</text>
+			<!-- 选人组件 -->
+			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+			<!-- 建议输入框 -->
+			<template is="suggest" data="{{table}}"/>
+		</view>
+		<!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+		<!-- 临时保存 -->
+		<template is="temporaryPreservation"/>
+	</form>
+</view>

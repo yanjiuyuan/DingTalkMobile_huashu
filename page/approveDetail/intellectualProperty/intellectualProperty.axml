@@ -1,0 +1,110 @@
+<!-- 知识产权 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+	<!-- 退回审批表单 -->
+	<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+	<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+	<!-- 基本表单 -->
+	<form onSubmit="submit">
+		<view class="page-section">
+			<template is = "titleOfObjectApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
+			<template is="department" data="{{department:tableInfo.Dept}}"/>
+			<view class="form-row">
+				<view class="form-row-label">申请名称</view>
+				<view class="form-row-content">
+					<input class="input" name="Name" value="{{table.Name}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<!--<view class="form-line" />  -->
+			<view class="form-row">
+				<view class="form-row-label">申请类别</view>
+				<view class="form-row-content">
+					<input class="input" name="Type" value="{{table.Type}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<template is="objectName" data="{{tableInfo:tableInfo}}"/>
+			<view class="form-row">
+				<view class="form-row-label">申请发明人</view>
+				<view class="form-row-content">
+					<textarea maxlength="-1" style="min-height:90rpx;padding:0;" auto-height="true" name="Inventor" maxlength="0" class="input" value="{{table.Inventor
+}}" disabled="{{true}}" />
+				</view>
+			</view>
+			<!--<view class="form-line" />  -->
+			<view a:if="{{nodeid >= 5}}">
+				<view class="form-row">
+					<view class="form-row-label" style="width:2.7rem">
+						<template is="required"></template>发明人或设计人</view>
+					<view class="form-row-content">
+						<textarea maxlength="-1" style="min-height:90rpx;padding:0;" auto-height="true" name="ActualInventor" class="input" disabled="{{true}}" value="{{table.ActualInventor}}"/>
+					</view>
+					<view onTap="choosePeoples" class="tag tag-info" a:if="{{nodeid == 5 && index == 0}}">+ 选人</view>
+				</view>
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>申报名称</view>
+					<view class="form-row-content">
+						<input auto-height="true" name="ActualName" class="input" value="{{table.ActualName}}" disabled="{{nodeid != 5 }}" />
+					</view>
+				</view>
+				<view a:if="{{(nodeid == 5 && index == 0) }}">
+					<view class="form-row">
+						<view class="form-row-label">
+							<template is="required"></template>申报类别</view>
+						<view class="form-row-content">
+							<picker onChange="changeIptIndex" value="{{stateIndexs}}" range="{{IntellectualPropertyTypes}}">
+								<view class="row">
+									<view class="row-title"></view>
+									<view class="row-extra">{{IntellectualPropertyTypes[stateIndexs]}}</view>
+									<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
+								</view>
+							</picker>
+						</view>
+					</view>
+					<!--<view class="form-row"><view class="form-row-label"><template is="required"></template>申报单位</view><view class="form-row-content"><picker onChange="changeCompany" value="{{companyIndex}}" range="{{CompanyNames}}"><view class="row"><view class="row-extra">{{CompanyNames[companyIndex]}}</view><image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" /></view></picker></view></view> -->
+					<view class="form-row">
+						<view class="form-row-label">
+							<template is="required"></template>申报单位</view>
+						<view class="form-row-content">
+							<textarea name="Company" class="input" style="min-height:90rpx;padding:0;margin-left:0.15rem;" maxlength="-1" />
+						</view>
+					</view>
+				</view>
+				<view a:if="{{(nodeid > 5 && index != 0)}}">
+					<view class="form-row">
+						<view class="form-row-label">申报类别</view>
+						<view class="form-row-content">
+							<input name="ActualType" class="input" value="{{table.ActualType}}" disabled="{{true}}" />
+						</view>
+					</view>
+					<view class="form-row">
+						<view class="form-row-label">申报单位</view>
+						<view class="form-row-content">
+							<input name="Company" class="input" value="{{table.Company}}" disabled="{{true}}" />
+						</view>
+					</view>
+				</view>
+			</view>
+			<!-- 选人组件 -->
+			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
+			<view a:if="{{index==0}}">
+				<template is="suggest"/>
+				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<button type="warn" a:if="{{nodeInfo.IsBack}}" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
+			</view>
+			<view a:if="{{ index!= 0 && state == '已完成' }}">
+				<button type="primary" onTap="print" disabled="{{disablePage}}">打印表单</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成'}}">
+				<button type="primary" onTap="ding" disabled="{{disablePage}}">钉一下</button>
+			</view>
+			<view a:if="{{index==2 && state=='未完成' && rebackAble == true}}">
+				<button onTap="returnSubmit" type="warn" disabled="{{disablePage}}">撤回</button>
+			</view>
+			<view a:if="{{index == 2 && state == '已撤回' || index == 2 && state == '被退回'}}">
+				<button onTap="relaunch" type="primary" disabled="{{disablePage}}">重新发起</button>
+			</view>
+		</view>
+	</form>
+</view>

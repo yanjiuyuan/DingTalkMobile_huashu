@@ -1,0 +1,92 @@
+<!-- 项目技术支持 -->
+<import src="/util/template/template.axml"/>
+<template is="reBack" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hidden,disablePage:disablePage}}"/>
+<template is="changeRemark" data="{{animContentData:animContentData,animMaskData:animMaskData,hidden:hiddenCrmk,disablePage:disablePage}}"/>
+<view class="page">
+	<form onSubmit="submit">
+		<view class="page-section">
+			<!-- 标题 -->
+			<template is ="title" data="{{tableInfo}}"/>
+			<!-- 申请人 -->
+			<template is ="applyman" data="{{DingData}}"/>
+			<!-- 选择部门 -->
+			<!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex,chooseDept:tableInfo.dept}}"/> -->
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>申请部门</view>
+				<view class="form-row-content">
+					<my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">技术支持部门</view>
+				<view class="form-row-content">
+					<my-checkbox-group onChange="onChange" itemList="{{items}}" name="DeptName" selectedItem="{{table.DeptName}}"></my-checkbox-group>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>项目负责人</view>
+				<view class="form-row-content">
+					<input auto-height="true" name="ResponsibleMan" class="input" disabled="{{true}}" value="{{table.ResponsibleMan}}"></input>
+				</view>
+				<view onTap="choosePeoples" class="tag tag-info">+ 选人</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">其他工程师</view>
+				<view class="form-row-content">
+					<textarea disabled="{{true}}" style="min-height:90rpx;padding:0;" auto-height="true" maxlength="-1" name="OtherEngineers" class="input" value="{{table.OtherEngineers}}" placeholder=""/>
+				</view>
+				<view onTap="choosePeople" class="tag tag-info">+ 选人</view>
+			</view>
+			<view class="page-section">
+				<view class="form-row">
+					<view class="form-row-label">
+						<template is="required"></template>合作单位</view>
+					<view class="form-row-content">
+						<input name="Customer" class="input" placeholder="合作单位" data-name="Customer" onInput="inputToTable" value="{{table.Customer}}" />
+					</view>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>项目大类</view>
+				<my-picker index="{{index1}}" range ="{{array1}}" onChange="bindPickerChangeOne" value="{{table.ProjectType}}"/>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">紧急情况</view>
+				<my-picker index="{{index2}}" range ="{{array2}}" onChange="bindPickerChangeTwo" value="{{table.EmergencyLevel}}"/>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label">
+					<template is="required"></template>要求完成时间</view>
+				<view class="form-row-content">
+					<input name="TimeRequired" class="input" placeholder="开始时间" onFocus="selectStartDateTime" disabled="true" value="{{table.TimeRequired}}"/>
+				</view>
+				<view onTap="selectStartDateTime" class="tag tag-info">+ 选择</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label" style="width:3rem">
+					<template is="required"></template>客户项目整体情况</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="ProjectOverview" class="input" data-name="ProjectOverview" onInput="inputToTable" value="{{table.ProjectOverview}}"/>
+				</view>
+			</view>
+			<view class="form-row">
+				<view class="form-row-label" style="width:3rem">
+					<template is="required"></template>技术支持内容要点</view>
+				<view class="form-row-content">
+					<textarea auto-height="true" name="MainPoints" class="input" data-name="MainPoints" onInput="inputToTable" value="{{table.MainPoints}}"/>
+				</view>
+			</view>
+			<!-- 选人组件 -->
+			<template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+			<!-- 建议输入框 -->
+			<template is="suggest" data="{{table}}"/>
+		</view>
+		<!-- 提交按钮 -->
+		<template is ="submitButton" data="{{disablePage:disablePage}}"/>
+		<!-- 临时保存 -->
+		<template is="temporaryPreservation"/>
+	</form>
+</view>
