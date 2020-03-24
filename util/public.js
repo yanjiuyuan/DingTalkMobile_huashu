@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.16",
+        version: "2.1.17",
         DingData: {
             nickName: "",
             departName: "",
@@ -1483,7 +1483,7 @@ export default {
                                     "Content-Type": "application/json; charset=utf-8",
                                     Accept: "application/json",
                                 },
-                                success: function(res) {
+                                success: res => {
                                     console.log(res);
                                     let name = res.data.name;
 

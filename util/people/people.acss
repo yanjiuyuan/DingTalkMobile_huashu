@@ -16,9 +16,9 @@
 .add {
     height: 60rpx;
     width: 90rpx;
-    border: 1px solid #4796FA;
+    border: 1px solid #4796fa;
     border-radius: 10rpx;
-    color: #4796FA;
+    color: #4796fa;
     display: flex;
     align-items: center;
     /*垂直居中*/
@@ -43,7 +43,7 @@
     height: 80rpx;
     width: 80rpx;
     border-radius: 50%;
-    background-color: #4796FA;
+    background-color: #4796fa;
     color: #fff;
     font-size: 25rpx;
     display: flex;

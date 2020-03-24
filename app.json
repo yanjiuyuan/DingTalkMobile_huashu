@@ -70,7 +70,8 @@
         "defaultTitle": "华数钉钉",
         "backgroundColor": "#F5F5F9",
         "pullRefresh": false,
-        "allowsBounceVertical": true
+        "allowsBounceVertical": true,
+        "enableScrollBar": "NO"
     },
     "tabBar": {
         "textColor": "#404040",

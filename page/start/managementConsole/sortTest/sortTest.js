@@ -23,7 +23,7 @@ Page({
 
         all_width: "", //总的宽度
         moveable: false, //是否开启移动功能
-        showOrClose: []
+        showOrClose: [],
     },
     onLoad: function() {
         let that = this;
@@ -46,7 +46,7 @@ Page({
         }
         console.log(processedSort);
         this.setData({
-            all_list: processedSort
+            all_list: processedSort,
         });
 
         //计算父级节点的位置
@@ -63,7 +63,8 @@ Page({
                 let sonHeight = 0;
                 arr.forEach(function(n, i) {
                     n.left =
-                        (that.data.fatherWidth + that.data.fatherLeftDistance) * row + that.data.fatherLeftDistance;
+                        (that.data.fatherWidth + that.data.fatherLeftDistance) * row +
+                        that.data.fatherLeftDistance;
                     n.top =
                         (that.data.fatherHeight + that.data.fatherTopDistance) * column +
                         that.data.fatherTopDistance +
@@ -82,7 +83,8 @@ Page({
                         n.flows[index].left = 0;
                         // n.flows[index].top = n.top + (that.data.fatherHeight + that.data.sonTopDistance) * sonColumn + that.data.sonTopDistance;
                         n.flows[index].top =
-                            (that.data.fatherHeight + that.data.sonTopDistance) * sonColumn + that.data.sonTopDistance;
+                            (that.data.fatherHeight + that.data.sonTopDistance) * sonColumn +
+                            that.data.sonTopDistance;
                         n.flows[index]._left = n.flows[index].left;
                         n.flows[index]._top = n.flows[index].top;
 
@@ -111,9 +113,9 @@ Page({
                 });
 
                 that.setData({
-                    all_list: arr
+                    all_list: arr,
                 });
-            }
+            },
         });
     },
     onShow() {
@@ -123,7 +125,7 @@ Page({
                 show: true,
                 index: i,
                 str: "-",
-                class: "dropdown-content-show"
+                class: "dropdown-content-show",
             });
         }
     },
@@ -137,20 +139,22 @@ Page({
                 show: true,
                 index: i,
                 str: "+",
-                class: "dropdown-content"
+                class: "dropdown-content",
             };
         }
         //重新给父级元素定位
         for (let i = 0, len = this.data.all_list.length; i < len; i++) {
             if (i + 1 < len) {
                 this.data.all_list[i + 1].top =
-                    this.data.all_list[i].top + this.data.fatherHeight + this.data.fatherTopDistance;
+                    this.data.all_list[i].top +
+                    this.data.fatherHeight +
+                    this.data.fatherTopDistance;
                 this.data.all_list[i + 1]._top = this.data.all_list[i + 1].top;
             }
         }
         this.setData({
             showOrClose: this.data.showOrClose,
-            all_list: this.data.all_list
+            all_list: this.data.all_list,
         });
         x = e.changedTouches[0].clientX;
         y = e.changedTouches[0].clientY;
@@ -158,7 +162,7 @@ Page({
         y1 = this.data.all_list[e.target.dataset.index].top; //和上的距离
 
         this.setData({
-            current: e.target.dataset.index
+            current: e.target.dataset.index,
         });
     },
     //onTouchMove
@@ -173,7 +177,7 @@ Page({
         if (underIndex != null && underIndex != this.data.current) {
             this.changeArrayData(arr, underIndex, this.data.current);
             this.setData({
-                current: underIndex
+                current: underIndex,
             });
         }
 
@@ -187,7 +191,7 @@ Page({
             }
         });
         this.setData({
-            all_list: arr
+            all_list: arr,
         });
     },
 
@@ -207,7 +211,7 @@ Page({
         console.log(arr);
         this.SplicingFather(arr);
         this.setData({
-            all_list: arr
+            all_list: arr,
         });
     },
     //拼接数组
@@ -232,12 +236,16 @@ Page({
         }
         let obj = {
             applyManId: app.userInfo.userid,
-            FlowSortList: sort
+            FlowSortList: sort,
         };
         this._postData(
             "FlowInfoNew/LoadFlowModify",
             res => {
                 console.log(res);
+                dd.alert({
+                    content: promptConf.promptConf.UpdateSuccess,
+                    buttonText: promptConf.promptConf.Confirm,
+                });
             },
             obj
         );
@@ -272,15 +280,23 @@ Page({
                     (this.data.fatherLeftDistance + this.data.fatherWidth)) >>
                 0;
         var _column =
-            ((endy - this.data.fatherTopDistance) / (this.data.fatherHeight + this.data.fatherTopDistance)) >> 0;
-        var min_top = this.data.fatherTopDistance + _column * (this.data.fatherHeight + this.data.fatherTopDistance),
+            ((endy - this.data.fatherTopDistance) /
+                (this.data.fatherHeight + this.data.fatherTopDistance)) >>
+            0;
+        var min_top =
+                this.data.fatherTopDistance +
+                _column * (this.data.fatherHeight + this.data.fatherTopDistance),
             max_top = min_top + this.data.fatherHeight;
         if (endy > min_top && endy < max_top) {
             v_judge = true;
         }
         var _row =
-            ((endx - this.data.fatherLeftDistance) / (this.data.fatherWidth + this.data.fatherLeftDistance)) >> 0;
-        var min_left = this.data.fatherLeftDistance + _row * (this.data.fatherWidth + this.data.fatherLeftDistance),
+            ((endx - this.data.fatherLeftDistance) /
+                (this.data.fatherWidth + this.data.fatherLeftDistance)) >>
+            0;
+        var min_left =
+                this.data.fatherLeftDistance +
+                _row * (this.data.fatherWidth + this.data.fatherLeftDistance),
             max_left = min_left + this.data.fatherWidth;
         if (endx > min_left && endx < max_left) {
             h_judge = true;
@@ -307,11 +323,11 @@ Page({
             sortItem[item] = {
                 index: item,
                 str: "-",
-                class: "dropdown-content-show"
+                class: "dropdown-content-show",
             };
             this.calculatedAltitudeIncrease(this.data.all_list, item);
             this.setData({
-                showOrClose: sortItem
+                showOrClose: sortItem,
             });
         }
 
@@ -321,11 +337,11 @@ Page({
             sortItem[item] = {
                 index: item,
                 str: "+",
-                class: "dropdown-content"
+                class: "dropdown-content",
             };
             this.calculatedAltitudeReduce(this.data.all_list, item);
             this.setData({
-                showOrClose: sortItem
+                showOrClose: sortItem,
             });
         }
     },
@@ -338,7 +354,7 @@ Page({
             array[i]._top = array[i]._top - prevHeight;
         }
         this.setData({
-            all_list: array
+            all_list: array,
         });
     },
     //重新计算高度增加
@@ -349,7 +365,7 @@ Page({
             array[i]._top = array[i]._top + prevHeight;
         }
         this.setData({
-            all_list: array
+            all_list: array,
         });
     },
 
@@ -368,7 +384,7 @@ Page({
         b1 = this.data.all_list[fatherIndex].flows[index].top; //和上的距离
 
         this.setData({
-            sonCurrent: e.target.dataset.index
+            sonCurrent: e.target.dataset.index,
         });
     },
     sonMove(e) {
@@ -384,7 +400,7 @@ Page({
         if (underIndex != null && underIndex != this.data.sonCurrent) {
             this.changeSonArrayData(arr[fatherIndex].flows, underIndex, this.data.sonCurrent);
             this.setData({
-                sonCurrent: underIndex
+                sonCurrent: underIndex,
             });
         }
 
@@ -398,7 +414,7 @@ Page({
             }
         });
         this.setData({
-            all_list: arr
+            all_list: arr,
         });
     },
     sonMoveEnd(e) {
@@ -417,7 +433,7 @@ Page({
         });
         this.SplicingSon(arr[fatherIndex].flows, Id);
         this.setData({
-            all_list: arr
+            all_list: arr,
         });
     },
 
@@ -442,12 +458,15 @@ Page({
 
         let obj = {
             applyManId: app.userInfo.userid,
-            flowsList: flows
+            flowsList: flows,
         };
         this._postData(
             "FlowInfoNew/FlowModify",
             res => {
-                console.log(res);
+                dd.alert({
+                    content: promptConf.promptConf.UpdateSuccess,
+                    buttonText: promptConf.promptConf.Confirm,
+                });
             },
             obj
         );
@@ -479,14 +498,23 @@ Page({
                 ((this.data.all_width - this.data.sonLeftDistance) /
                     (this.data.sonLeftDistance + this.data.sonWidth)) >>
                 0;
-        var _column = ((endy - this.data.sonTopDistance) / (this.data.sonHeight + this.data.sonTopDistance)) >> 0;
-        var min_top = this.data.sonTopDistance + _column * (this.data.sonHeight + this.data.sonTopDistance),
+        var _column =
+            ((endy - this.data.sonTopDistance) /
+                (this.data.sonHeight + this.data.sonTopDistance)) >>
+            0;
+        var min_top =
+                this.data.sonTopDistance +
+                _column * (this.data.sonHeight + this.data.sonTopDistance),
             max_top = min_top + this.data.sonHeight;
         if (endy > min_top && endy < max_top) {
             v_judge = true;
         }
-        var _row = ((endx - this.data.sonLeftDistance) / (this.data.sonWidth + this.data.sonLeftDistance)) >> 0;
-        var min_left = this.data.sonLeftDistance + _row * (this.data.sonWidth + this.data.sonLeftDistance),
+        var _row =
+            ((endx - this.data.sonLeftDistance) /
+                (this.data.sonWidth + this.data.sonLeftDistance)) >>
+            0;
+        var min_left =
+                this.data.sonLeftDistance + _row * (this.data.sonWidth + this.data.sonLeftDistance),
             max_left = min_left + this.data.sonWidth;
         if (endx > min_left && endx < max_left) {
             h_judge = true;
@@ -502,7 +530,7 @@ Page({
         } else {
             return null;
         }
-    }
+    },
 });
 //  大
 
