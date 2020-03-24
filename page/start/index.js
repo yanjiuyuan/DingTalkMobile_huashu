@@ -119,11 +119,15 @@ Page({
     },
     getUserInfo() {
         let that = this;
-        this._getData("FlowInfoNew/GetUserInfo", function(data) {
+        this._getData("FlowInfoNew/GetUserInfo", data => {
             data.unshift(
                 {
                     PeopleId: "056652031835326264",
                     NodePeople: "许瑜瑜",
+                },
+                {
+                    PeopleId: "1561941679066303",
+                    NodePeople: "梁炳灿",
                 },
                 {
                     PeopleId: "175508475239722073",

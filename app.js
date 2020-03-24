@@ -6,6 +6,14 @@ App({
     onShow() {
         //后台进前台触发
         console.log("后台进前台触发");
+        // dd.getAuthCode({
+        //     success: res => {
+        //         console.log(res.authCode);
+        //         let url = "http://localhost:8081?authCode=" + res.authCode;
+        //         this.globalData.url = url;
+        //         console.log(this);
+        //     },
+        // });
     },
     onHide() {
         //前台进后台触发

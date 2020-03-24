@@ -58,7 +58,7 @@
 				使用公里数
 				</view>
 				<view class="form-row-content">
-					<input name="EndKilometres" class="input" value="{{table.UseKilometres}}" disabled="{{true}}" />
+					<input name="UseKilometres" class="input" value="{{table.UseKilometres}}" disabled="{{true}}" />
 				</view>
 			</view>
 		</view>

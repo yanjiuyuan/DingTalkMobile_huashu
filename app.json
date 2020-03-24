@@ -51,13 +51,11 @@
         "page/start/managementConsole/addFlow/addFlow",
         "util/people/people",
         "page/start/role/role",
-
         "page/start/intellectualProperty/intellectualProperty",
         "page/approveDetail/intellectualProperty/intellectualProperty",
         "page/start/techonologySupply/techonologySupply",
         "page/approveDetail/techonologySupply/techonologySupply",
         "page/approveDetail/projectClosure/projectClosure",
-
         "page/start/processManagement/processManagement",
         "page/approveDetail/productionOrder/productionOrder",
         "page/approveDetail/productionPreInvestment/productionPreInvestment",
