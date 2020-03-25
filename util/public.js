@@ -1130,6 +1130,7 @@ export default {
                         }
                     }
                 }
+                console.log(tempNodeList);
                 that.setData({
                     nodeList: tempNodeList,
                     isBack: res[0].IsBack,

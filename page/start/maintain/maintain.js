@@ -6,8 +6,10 @@ Page({
     data: {
         ...pub.data,
         hidden: true,
-        addPeopleNodes: [1], //额外添加审批人节点数组
+        addPeopleNodes: [2], //额外添加审批人节点数组
         tableOperate: "选择",
+
+        searchShow: true,
         purchaseList: [],
         tableParam2: {
             total: 0,
@@ -89,7 +91,7 @@ Page({
     submit(e) {
         let that = this;
         let value = e.detail.value;
-        if (this.data.projectIndex == -1 || this.data.purchaseList.length == 0) {
+        if (this.data.purchaseList.length == 0) {
             dd.alert({
                 content: `表单填写不完整`,
                 buttonText: promptConf.promptConf.Confirm,
@@ -206,5 +208,110 @@ Page({
             "tableParam2.total": length + 1,
         });
         this.onModalCloseTap();
+    },
+    searchOfficesupplies(e) {
+        let that = this;
+        let value = e.detail.value;
+        console.log(this.data.chooseParam);
+        console.log(value);
+        if (!value || !value.keyWord.trim()) {
+            dd.alert({
+                content: promptConf.promptConf.SearchNoInput,
+                buttonText: promptConf.promptConf.Confirm,
+            });
+            return;
+        }
+        let url =
+            that.data.jinDomarn +
+            "OfficeSupply/GetOfficeInfo" +
+            that.formatQueryStr({ Key: value.keyWord.trim() });
+        dd.httpRequest({
+            url: url,
+            method: "GET",
+            headers: { "Content-Type": "application/x-www-form-urlencoded; charset=utf-8" },
+            success: function(res) {
+                let data = res.data.data;
+                if (data.length == 0) {
+                    dd.alert({
+                        content: promptConf.promptConf.SearchNoReturn,
+                        buttonText: promptConf.promptConf.Confirm,
+                    });
+                }
+                that.setData({
+                    "tableParam.total": data.length,
+                    "tableParam.now": 1,
+                });
+                that.data.data = data;
+                that.getData();
+            },
+            fail: function(res) {
+                if (JSON.stringify(res) == "{}") return;
+                dd.alert({ content: "获取数据失败-" + url + "报错:" + JSON.stringify(res) });
+            },
+        });
+        return;
+    },
+    async test(e) {
+        this.data.flowid = 100;
+        await this.getNodeList();
+        await this.changeIndex(e);
+    },
+    changeIndex(e) {
+        console.log(this.data.nodeList);
+        for (let i = 0; i < this.data.nodeList.length; i++) {
+            if (this.data.nodeList[i].NodeName.indexOf("项目负责人") >= 0) {
+                this.data.nodeList[i].AddPeople = [
+                    {
+                        name: this.data.projectList[e.detail.value].ResponsibleMan,
+                        userId: this.data.projectList[e.detail.value].ResponsibleManId,
+                    },
+                ];
+                this.setData({
+                    nodeList: this.data.nodeList,
+                });
+            }
+        }
+        //选择完项目名称后修改标题
+        let newTitle =
+            this.data.projectList[e.detail.value].ProjectId +
+            "-" +
+            this.data.projectList[e.detail.value].ProjectName;
+        if (newTitle.indexOf("undefined") > -1) {
+            newTitle = undefined;
+        }
+        let a =
+            this.data.projectList[e.detail.value].ContractNo +
+            "-" +
+            this.data.projectList[e.detail.value].ContractName;
+        console.log("picker发送选择改变，携带值为" + e.detail.value);
+        this.setData({
+            ["tableInfo.Title"]: newTitle || a,
+            projectIndex: e.detail.value,
+        });
+    },
+    bindPickerChange(e) {
+        //for循环是判断是否需要需要审批节点
+        this.test(e);
+    },
+    radioChange(e) {
+        console.log("radioChange");
+        if (this.data.flowid == 101 || this.data.flowid == 100) {
+            this.data.flowid = 102;
+            this.getNodeList();
+        } else {
+            this.data.flowid = 101;
+            this.getNodeList();
+        }
+
+        this.setData({
+            searchShow: !this.data.searchShow,
+            purchaseList: [],
+            tableParam: {
+                total: 0,
+            },
+            tableParam2: {
+                total: 0,
+            },
+        });
     },
 });

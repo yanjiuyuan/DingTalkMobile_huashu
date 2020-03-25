@@ -87,17 +87,38 @@
 				</view>
 			</view>
 			<view class="form-row">
+				<view class="form-row-label" style="width:2.5rem">搜索类型</view>
+				<radio-group class="radio-group" name="codeType" onChange="radioChange">
+					<label a:for="{{[{name:'设备类',checked:true,label:'1'},{name:'办公用品类',checked:false,label:'2'}]}}">
+						<radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+					</label>
+				</radio-group>
+				<view style="color:red">切换清空数据！</view>
+			</view>
+			<view class="form-row" a:if="{{searchShow}}">
 				<view class="form-row-label">
-					<template is="required"></template>项目名称</view>
+					项目名称
+				</view>
 				<my-picker onChange="bindPickerChange" index="{{projectIndex}}" range="{{projectList}}" value="{{tableInfo.ProjectName}}" rangeKey="ProjectName"></my-picker>
 			</view>
 			<!-- 搜索 -->
-			<form onSubmit="searchCode">
+			<form onSubmit="searchCode" a:if="{{searchShow}}">
 				<view class="page-section">
 					<view class="form-row">
 						<view class="form-row-label">关键字</view>
 						<view class="form-row-content">
-							<input name="keyWord" class="input" placeholder="关键字" />
+							<input name="keyWord" class="input" placeholder="关键字(设备类)" />
+						</view>
+						<button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
+					</view>
+				</view>
+			</form>
+			<form onSubmit="searchOfficesupplies" a:if="{{!searchShow}}">
+				<view class="page-section">
+					<view class="form-row">
+						<view class="form-row-label">关键字</view>
+						<view class="form-row-content">
+							<input name="keyWord" class="input" placeholder="关键字(办公用品类)" />
 						</view>
 						<button type="primary" formType="submit" disabled="{{disablePage}}" class="button-inline">搜索</button>
 					</view>
