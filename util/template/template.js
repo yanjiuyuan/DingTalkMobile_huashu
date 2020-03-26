@@ -16,15 +16,15 @@ export default {
             pickedDepartments: [], //已选部门
             appId: globalData.appId, //微应用的Id
             responseUserOnly: false, //返回人，或者返回人和部门
-            startWithDepartmentId: 0 // 0表示从企业最上层开始},
+            startWithDepartmentId: 0, // 0表示从企业最上层开始},
         },
         //表格变量
         tableData: [],
         tableParam: {
             size: 5,
             now: 1,
-            total: 0
-        }
+            total: 0,
+        },
     },
     func: {
         //选人控件方法
@@ -36,7 +36,10 @@ export default {
             let index = nodeId;
             let IsMultipleSelection = 0;
             for (let i = nodeId - 1; 0 <= i; i--) {
-                if (arr[i].NodeName.indexOf("项目负责人") == 0 || arr[i].NodeName.indexOf("抄送") == 0) {
+                if (
+                    arr[i].NodeName.indexOf("项目负责人") == 0 ||
+                    arr[i].NodeName.indexOf("抄送") == 0
+                ) {
                     index--;
                 }
                 if (arr[i].NodeName.indexOf("项目负责人") == -1 && arr[i].IsSelectMore != null) {
@@ -50,7 +53,8 @@ export default {
 
             dd.complexChoose({
                 ...that.data.chooseParam,
-                multiple: IsMultipleSelection == 0 || IsMultipleSelection == undefined ? false : true,
+                multiple:
+                    IsMultipleSelection == 0 || IsMultipleSelection == undefined ? false : true,
                 pickedUsers: that.data.pickedUsers || [], //已选用户
                 success: function(res) {
                     console.log(res);
@@ -69,7 +73,7 @@ export default {
                         }
                         console.log(that.data.nodeList);
                         that.setData({
-                            nodeList: that.data.nodeList
+                            nodeList: that.data.nodeList,
                         });
                     }
                     //只选部门，不选部门外的人
@@ -105,7 +109,7 @@ export default {
                                 }
                                 console.log(that.data.nodeList);
                                 that.setData({
-                                    nodeList: that.data.nodeList
+                                    nodeList: that.data.nodeList,
                                 });
                             },
                             deptId
@@ -148,7 +152,7 @@ export default {
                                 }
                                 console.log(that.data.nodeList);
                                 that.setData({
-                                    nodeList: that.data.nodeList
+                                    nodeList: that.data.nodeList,
                                 });
                             },
                             deptId
@@ -182,7 +186,7 @@ export default {
                     //     }
                     // });
                 },
-                fail: function(err) {}
+                fail: function(err) {},
             });
         },
 
@@ -194,7 +198,7 @@ export default {
                 success: function(res) {},
                 fail: function(err) {
                     console.log("fail!!");
-                }
+                },
             });
         },
         showHiding(e) {
@@ -210,7 +214,7 @@ export default {
             }
 
             dd.navigateTo({
-                url: "/util/people/people?chooseMan=" + NodePeople.join(",")
+                url: "/util/people/people?chooseMan=" + NodePeople.join(","),
             });
         },
         //翻頁相關事件
@@ -219,11 +223,11 @@ export default {
             let arr = this.data.data.slice(start, start + this.data.tableParam.size);
             if (table) {
                 this.setData({
-                    [table]: arr
+                    [table]: arr,
                 });
             } else {
                 this.setData({
-                    tableData: arr
+                    tableData: arr,
                 });
             }
         },
@@ -232,7 +236,7 @@ export default {
 
             let page = event.target.dataset.page;
             this.setData({
-                "tableParam.now": page
+                "tableParam.now": page,
             });
             this.getData();
         },
@@ -241,31 +245,31 @@ export default {
             console.log("createMaskShowAnim");
             const animation = dd.createAnimation({
                 duration: 200,
-                timingFunction: "cubic-bezier(.55, 0, .55, .2)"
+                timingFunction: "cubic-bezier(.55, 0, .55, .2)",
             });
             this.maskAnim = animation;
             animation.opacity(1).step();
             this.setData({
-                animMaskData: animation.export()
+                animMaskData: animation.export(),
             });
         },
         createMaskHideAnim() {
             console.log("createMaskHideAnim");
             this.maskAnim.opacity(0).step();
             this.setData({
-                animMaskData: this.maskAnim.export()
+                animMaskData: this.maskAnim.export(),
             });
         },
         createContentShowAnim() {
             console.log("createContentShowAnim");
             const animation = dd.createAnimation({
                 duration: 200,
-                timingFunction: "cubic-bezier(.55, 0, .55, .2)"
+                timingFunction: "cubic-bezier(.55, 0, .55, .2)",
             });
             this.contentAnim = animation;
             animation.translateY(0).step();
             this.setData({
-                animContentData: animation.export()
+                animContentData: animation.export(),
             });
         },
         createContentHideAnim() {
@@ -273,20 +277,20 @@ export default {
 
             this.contentAnim.translateY("100%").step();
             this.setData({
-                animContentData: this.contentAnim.export()
+                animContentData: this.contentAnim.export(),
             });
         },
         //季老师修改意见
         changeSuggest(e) {
             this.setData({
-                changeRemarkId: e.target.targetDataset.NodeId
+                changeRemarkId: e.target.targetDataset.NodeId,
             });
         },
 
         bindObjPickerChange(e) {
             this.setData({
-                departmentIdnex: e.detail.value
+                departmentIdnex: e.detail.value,
             });
-        }
-    }
+        },
+    },
 };

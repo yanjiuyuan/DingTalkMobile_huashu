@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.18",
+        version: "2.1.19",
         DingData: {
             nickName: "",
             departName: "",
@@ -656,6 +656,15 @@ export default {
                     case "68":
                         url = "Maintain/Read";
                         break; //维修
+                    case "100":
+                        url = "Maintain/Read";
+                        break; //维修
+                    case "101":
+                        url = "Maintain/Read";
+                        break; //维修
+                    case "102":
+                        url = "Maintain/Read";
+                        break; //维修
                 }
                 if (!url) return;
                 if (flowid == "8") {
@@ -1130,7 +1139,7 @@ export default {
                         }
                     }
                 }
-                console.log(tempNodeList);
+
                 that.setData({
                     nodeList: tempNodeList,
                     isBack: res[0].IsBack,
@@ -1210,7 +1219,7 @@ export default {
             this._getData(
                 "FlowInfoNew/getnodeinfo" +
                     this.formatQueryStr({ FlowId: this.data.flowid, nodeId: this.data.nodeid }),
-                function(res) {
+                res => {
                     that.setData({
                         nodeInfo: res[0],
                         IsNeedChose: res[0].IsNeedChose,

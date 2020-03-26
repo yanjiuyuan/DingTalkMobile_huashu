@@ -99,6 +99,7 @@ Page({
             },
         });
     },
+
     //选人操作
     selectUser(value) {
         let userIndex = value.detail.value;
@@ -117,6 +118,7 @@ Page({
             userIndex: value.detail.value,
         });
     },
+
     getUserInfo() {
         let that = this;
         this._getData("FlowInfoNew/GetUserInfo", data => {
