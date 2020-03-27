@@ -10,13 +10,8 @@
 			<template is = "titleOfObjectApproval" data="{{tableInfo:tableInfo}}"></template>
 			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
 			<template is="department" data="{{department:tableInfo.Dept}}"/>
-			<template is="objectName" data="{{tableInfo:tableInfo}}"/>
-			<view class="form-row">
-				<view class="form-row-label">项目编号</view>
-				<view class="form-row-content">
-					<input class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" />
-				</view>
-			</view>
+			<template is="objectName" a:if="{{tableInfo.ProjectId}}" data="{{tableInfo:tableInfo}}"/>
+			<!--<view class="form-row"><view class="form-row-label">项目编号</view><view class="form-row-content"><input class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" /></view></view> -->
 			<!-- 物料表单 -->
 			<template is="datatable" data="{{items:tableItems2,data:tableData,param:tableParam}}"/>
 			<!-- 选人组件 -->

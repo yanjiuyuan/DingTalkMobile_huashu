@@ -11,7 +11,8 @@
 	<picker value="{{index}}" range="{{range}}" onChange="bindPickerChange" range-key="{{rangeKey}}">
 		<view class="row">
 			<view class="row-title"></view>
-			<view class="row-extra">{{range[index][rangeKey]}}</view>
+			<view class="row-extra" a:if="{{typeof rangeKeyValue =='object'}}">{{range[index][rangeKey]}}</view>
+			<view class="row-extra" a:if="{{typeof rangeKeyValue =='string'}}">{{range[index][rangeKey] }}-{{range[index][rangeKeyValue]}}</view>
 			<image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
 		</view>
 	</picker>

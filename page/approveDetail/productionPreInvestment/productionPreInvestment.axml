@@ -9,15 +9,9 @@
     <view class="page-section">
       <template is = "titleOfObjectApproval" data="{{tableInfo:tableInfo}}"></template>
       <template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
-      <!--<template is="department" data="{{department:tableInfo.Dept}}"/> -->
-      <view class="form-row">
-        <view class="form-row-label">
-           预投部门
-        </view>
-        <view class="form-row-content">
-          <input name="ExpectDept" placeholder=" 预投部门" class="input" disabled="{{true}}" value="{{table.ExpectDept}}"/>
-        </view>
-      </view>
+      <template is="department" data="{{department:tableInfo.Dept}}"/>
+      <!--<view class="form-row"><view class="form-row-label">
+           预投部门</view><view class="form-row-content"><input name="ExpectDept" placeholder=" 预投部门" class="input" disabled="{{true}}" value="{{table.ExpectDept}}"/></view></view> -->
       <view class="form-row">
         <view class="form-row-label">
           预投缘由

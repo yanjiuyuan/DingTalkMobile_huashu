@@ -20,6 +20,9 @@ Component({
         rangeKey: {
             type: String,
         }, //当 range 是一个 Object[] 时，通过 rangeKey 来指定 Object 中 key 的值作为选择器显示内容
+        rangeKeyValue: {
+            type: String,
+        }, //显示的第二个值
     },
     //组件初始化
     didMount() {

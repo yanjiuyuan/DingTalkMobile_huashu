@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.19",
+        version: "2.1.21",
         DingData: {
             nickName: "",
             departName: "",
@@ -161,6 +161,14 @@ export default {
                                 tableData3: data.tableInfo,
                             });
                         } else if (that.data.flowid == 24) {
+                        } else if (
+                            that.data.flowid == 75 ||
+                            that.data.flowid == 76 ||
+                            that.data.flowid == 77
+                        ) {
+                            that.setData({
+                                purchaseList: [], // 发起的物料表单
+                            });
                         } else {
                             console.log("sssss");
                             that.setData({
@@ -831,6 +839,15 @@ export default {
                         (url = "Borrow/PrintPDF"), (method = "post");
                         break; //借入
                     case "68":
+                        (url = "Maintain/PrintPDF"), (method = "post");
+                        break; //维修
+                    case "100":
+                        (url = "Maintain/PrintPDF"), (method = "post");
+                        break; //维修
+                    case "101":
+                        (url = "Maintain/PrintPDF"), (method = "post");
+                        break; //维修
+                    case "102":
                         (url = "Maintain/PrintPDF"), (method = "post");
                         break; //维修
                     case "69":
@@ -1620,47 +1637,6 @@ export default {
                 app.globalData.DeptNames = department;
             });
         },
-        //选择项目名称之后 修改审批节点和标题
-        bindPickerChange(e) {
-            //for循环是判断是否需要需要审批节点
-            for (let i = 0; i < this.data.nodeList.length; i++) {
-                if (this.data.nodeList[i].NodeName.indexOf("项目负责人") >= 0) {
-                    this.data.nodeList[i].AddPeople = [
-                        {
-                            name: this.data.projectList[e.detail.value].ResponsibleMan,
-                            userId: this.data.projectList[e.detail.value].ResponsibleManId,
-                        },
-                    ];
-                    this.setData({
-                        nodeList: this.data.nodeList,
-                    });
-                }
-            }
-            //选择完项目名称后修改标题
-            let newTitle =
-                this.data.projectList[e.detail.value].ProjectId +
-                "-" +
-                this.data.projectList[e.detail.value].ProjectName;
-            if (newTitle.indexOf("undefined") > -1) {
-                newTitle = undefined;
-            }
-            let a =
-                this.data.projectList[e.detail.value].ContractNo +
-                "-" +
-                this.data.projectList[e.detail.value].ContractName;
-            console.log("picker发送选择改变，携带值为" + e.detail.value);
-            this.setData({
-                ["tableInfo.Title"]: newTitle || a,
-                projectIndex: e.detail.value,
-            });
-        },
-
-        //选择部门函数
-        bindDeptChange(e) {
-            this.setData({
-                departIndex: e.detail.value,
-            });
-        },
 
         //重新发起审批
         relaunch(e) {
@@ -1717,12 +1693,72 @@ export default {
             }
             return count;
         },
+
+        //选择项目名称之后 修改审批节点和标题
+        bindPickerChange(e) {
+            //for循环是判断是否需要需要审批节点
+            for (let i = 0; i < this.data.nodeList.length; i++) {
+                if (this.data.nodeList[i].NodeName.indexOf("项目负责人") >= 0) {
+                    this.data.nodeList[i].AddPeople = [
+                        {
+                            name: this.data.projectList[e.detail.value].ResponsibleMan,
+                            userId: this.data.projectList[e.detail.value].ResponsibleManId,
+                        },
+                    ];
+                    this.setData({
+                        nodeList: this.data.nodeList,
+                    });
+                }
+            }
+            //选择完项目名称后修改标题
+            let newTitle =
+                this.data.projectList[e.detail.value].ProjectId +
+                "-" +
+                this.data.projectList[e.detail.value].ProjectName;
+            if (newTitle.indexOf("undefined") > -1) {
+                newTitle = undefined;
+            }
+            let a =
+                this.data.projectList[e.detail.value].ContractNo +
+                "-" +
+                this.data.projectList[e.detail.value].ContractName;
+            console.log("picker发送选择改变，携带值为" + e.detail.value);
+            this.setData({
+                ["tableInfo.Title"]: newTitle || a,
+                projectIndex: e.detail.value,
+            });
+        },
+
         //合同选择
         bindPickerContractChange(e) {
+            console.log(e.detail.value);
+            //选择完合同名称后修改标题
+            let title =
+                this.data.ContractNameList[e.detail.value].ContractNo +
+                "-" +
+                this.data.ContractNameList[e.detail.value].ContractName;
+            console.log("picker发送选择改变，携带值为" + e.detail.value);
+
             this.setData({
+                ["tableInfo.Title"]: title,
                 ContractNameIndex: e.detail.value,
             });
         },
+
+        //部门选择函数
+        bindObjPickerChange(e) {
+            console.log("picker发送选择改变，携带值为", e.detail.value);
+            this.setData({
+                departmentIdnex: e.detail.value,
+            });
+        },
+        //选择部门函数
+        bindDeptChange(e) {
+            this.setData({
+                departIndex: e.detail.value,
+            });
+        },
+
         //临时保存
         temporaryPreservation(e) {
             let that = this;
@@ -1798,13 +1834,7 @@ export default {
                 items: this.data.items,
             });
         },
-        //部门选择函数
-        bindObjPickerChange(e) {
-            console.log("picker发送选择改变，携带值为", e.detail.value);
-            this.setData({
-                departmentIdnex: e.detail.value,
-            });
-        },
+
         //选择附件
         uploadFiles() {
             let that = this;

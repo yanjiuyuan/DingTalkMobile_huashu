@@ -6,6 +6,10 @@ Page({
     data: {
         ...pub.data,
         hidden2: true,
+
+        rotate: "RotateToTheRight",
+        show: "hidden",
+
         tableParam2: {
             total: 0,
         },
@@ -135,5 +139,20 @@ Page({
             Remark: value.remark,
         };
         this.aggreSubmit(param);
+    },
+
+    // 展示和隐藏
+    showOrClose() {
+        if (this.data.rotate == "RotateToTheRight") {
+            this.setData({
+                rotate: "Rotate-downward",
+                show: "show",
+            });
+        } else if (this.data.rotate == "Rotate-downward") {
+            this.setData({
+                rotate: "RotateToTheRight",
+                show: "hidden",
+            });
+        }
     },
 });

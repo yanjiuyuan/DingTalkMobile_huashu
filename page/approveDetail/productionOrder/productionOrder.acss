@@ -1,1 +1,30 @@
 @import "/util/template/template.acss";
+.file {
+    background: #fff;
+    margin-top: 20rpx;
+    width: 100%;
+    line-height: 100rpx;
+    font-size: 0.34rem;
+    padding-left: 0.2rem;
+    position: relative;
+}
+.filelist {
+    /* display: none; */
+    position: absolute;
+}
+
+.Rotate-downward {
+    transform: rotate(90deg);
+    transition: 0.1s;
+}
+
+.RotateToTheRight {
+    transition: 0.1s;
+}
+
+.show {
+    display: block;
+}
+.hidden {
+    display: none;
+}

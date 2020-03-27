@@ -81,7 +81,7 @@
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>合同编号</view>
-        <my-picker onChange="bindPickerContractChange" index="{{ContractNameIndex}}" range="{{ContractNameList}}" value="{{table.ContractNumber}}" rangeKey="ContractNo"></my-picker>
+        <my-picker onChange="bindPickerContractChange" index="{{ContractNameIndex}}" range="{{ContractNameList}}" value="{{table.ContractNumber}}" rangeKey="ContractNo" rangeKeyValue="ContractName"></my-picker>
       </view>
       <view class="form-row">
         <view class="form-row-label">

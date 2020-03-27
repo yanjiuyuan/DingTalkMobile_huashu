@@ -15,7 +15,7 @@
          客户名称
         </view>
         <view class="form-row-content">
-          <input name="Customer" class="input" placeholder="客户名称" value="{{table.Customer}}" disable="{{true}}"/>
+          <input name="Customer" class="input" placeholder="客户名称" value="{{table.Customer}}" disabled="{{true}}"/>
         </view>
       </view>
       <view class="form-row">
@@ -23,7 +23,15 @@
           合同编号
         </view>
         <view class="form-row-content">
-          <input name="ContractNumber" class="input" placeholder="合同编号" value="{{table.ContractNumber}}" disable="{{true}}"/>
+          <input name="ContractNumber" class="input" placeholder="合同编名称" value="{{table.ContractNumber}}" disabled="{{true}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          合同名称
+        </view>
+        <view class="form-row-content">
+          <input name="ContractName" class="input" placeholder="合同编号" value="{{table.ContractName}}" disabled="{{true}}"/>
         </view>
       </view>
       <view class="form-row">
@@ -31,7 +39,7 @@
           项目名称
         </view>
         <view class="form-row-content">
-          <input name="ProjectName" class="input" placeholder="项目名称" value="{{table.ProjectName}}" disable="{{true}}"/>
+          <input name="ProjectName" class="input" placeholder="项目名称" value="{{table.ProjectName}}" disabled="{{true}}"/>
         </view>
       </view>
       <view class="form-row">
@@ -39,7 +47,7 @@
           运输要求
         </view>
         <view class="form-row-content">
-          <input name="TransportationRequirements" class="input" placeholder="运输要求" value="{{table.TransportationRequirements}}" disable="{{true}}"/>
+          <input name="TransportationRequirements" class="input" placeholder="运输要求" value="{{table.TransportationRequirements}}" disabled="{{true}}"/>
         </view>
       </view>
       <view class="form-row">
@@ -47,7 +55,7 @@
           现场其他设备
         </view>
         <view class="form-row-content">
-          <input name="OtherRequipment" class="input" placeholder="现场其他设备" value="{{table.OtherRequipment}}" disable="{{true}}"/>
+          <input name="OtherRequipment" class="input" placeholder="现场其他设备" value="{{table.OtherRequipment}}" disabled="{{true}}"/>
         </view>
       </view>
       <view class="form-row">
@@ -55,7 +63,26 @@
           包装要求
         </view>
         <view class="form-row-content">
-          <input name="PackingRequire" class="input" placeholder="包装要求" value="{{table.PackingRequire}}" disable="{{true}}"/>
+          <input name="PackingRequire" class="input" placeholder="包装要求" value="{{table.PackingRequire}}" disabled="{{true}}"/>
+        </view>
+      </view>
+      <view>
+        <view class="form-row margin" onTap="showOrClose">
+          <view class="form-row-label">相关文件</view>
+          <view class="form-row-content">
+            <image class="row-arrow margin-right {{rotate}}" src="/image/arrowright.png" mode="aspectFill" />
+          </view>
+        </view>
+        <view class="{{show}}">
+          <view a:for="{{fileList}}">
+            <view class="form-row" style="height:auto;">
+              <view class="form-row-label">{{index + 1 }}.</view>
+              <view class="form-row-content">
+									{{item.name.split(".")[0].length > 6 ? item.name.split(".")[0].slice(0,3) + "..." + item.name.split(".")[0].slice(item.name.split(".")[0].length-3,item.name.split(".")[0].length) +"." + item.name.split(".")[1] : item.name}}
+                <button type="primary" data-mediaId="{{item.mediaId}}" onTap="downloadFile" disabled="{{disablePage}}" style="display:inline;padding:4rpx;margin:0 10rpx;">下载</button>
+              </view>
+            </view>
+          </view>
         </view>
       </view>
       <view onTap="chooseItem" a:if="{{purchaseList.length > 0}}">

@@ -62,14 +62,8 @@
       <!-- 申请人 -->
       <template is ="applyman" data="{{DingData}}"/>
       <!-- 选择部门 -->
-      <!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
-      <view class="form-row">
-        <view class="form-row-label">
-          <template is="required"></template>预投部门</view>
-        <view class="form-row-content">
-          <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
-        </view>
-      </view>
+      <template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/>
+      <!--<view class="form-row"><view class="form-row-label"><template is="required"></template>预投部门</view><view class="form-row-content"><my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/></view></view> -->
       <view class="form-row">
         <view class="form-row-label">
           <template is="required"></template>项目名称</view>
