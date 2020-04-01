@@ -72,7 +72,7 @@ Page({
         this.setData({
             activeItem: index,
         });
-        this.checkLogin(function() {
+        this.checkLogin(() => {
             that.getApproveList(index);
         });
     },
@@ -84,7 +84,7 @@ Page({
     //下拉刷新
     onPullDownRefresh() {
         var that = this;
-        this.checkLogin(function() {
+        this.checkLogin(() => {
             that.getApproveList(that.data.activeItem);
         });
         dd.stopPullDownRefresh();

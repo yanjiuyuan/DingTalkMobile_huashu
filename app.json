@@ -1,5 +1,6 @@
 {
     "pages": [
+        "page/test/test",
         "page/start/index",
         "page/approve/approve",
         "page/start/purchase/purchase",

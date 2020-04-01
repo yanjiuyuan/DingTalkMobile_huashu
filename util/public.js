@@ -19,13 +19,12 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.21",
+        version: "2.1.22",
         DingData: {
             nickName: "",
             departName: "",
             userid: "",
         },
-
         reg: /^-?\d+$/, //只能是整数数字
         reg2: /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$ /, //正浮点数
         reg3: /^[\.\d]*$/, //纯数字包括小数
@@ -40,9 +39,9 @@ export default {
         nodeid: 0,
         state: "",
         id: 0,
-        nodeList: [],
-        projectList: [],
-        ContractNameList: [],
+        nodeList: [], //审批列表
+        projectList: [], //项目名称
+        ContractNameList: [], //合同名称
         nodeInfo: {},
         rebackAble: true,
         FileUrl: "",
@@ -107,8 +106,7 @@ export default {
                             imgUrlList: [], //清除图片数据
                         });
                         that.getNodeList(); //获取审批列表
-                        that.getProjectList(); //获取项目列表
-                        that.getContractNameList(); //获取合同列表
+
                         that.getNodeInfo(); //获取审批列表当前节点的信息
                     }
 
@@ -167,7 +165,7 @@ export default {
                             that.data.flowid == 77
                         ) {
                             that.setData({
-                                purchaseList: [], // 发起的物料表单
+                                purchaseList: that.data.purchaseList,
                             });
                         } else {
                             console.log("sssss");
@@ -1215,6 +1213,7 @@ export default {
         getProjectList() {
             let that = this;
             this._getData("ProjectNew/GetAllProJect", res => {
+                app.globalData.projectList = res;
                 that.setData({
                     projectList: res,
                 });
@@ -1224,7 +1223,7 @@ export default {
         getContractNameList() {
             let that = this;
             this._getData("ContractManager/Quary?pageIndex=1&pageSize=1000", res => {
-                console.log(res);
+                app.globalData.ContractNameList = res;
                 this.setData({
                     ContractNameList: res,
                 });
@@ -1481,6 +1480,8 @@ export default {
                 };
 
                 that.setData({
+                    projectList: app.globalData.projectList,
+                    ContractNameList: app.globalData.ContractNameList,
                     DingData: DingData,
                     DeptNames: app.globalData.DeptNames,
                 });
@@ -1560,7 +1561,12 @@ export default {
                     departmentList: app.userInfo.departmentList,
                 };
 
-                that.setData({ DingData: DingData, DeptNames: app.globalData.DeptNames });
+                that.setData({
+                    projectList: app.globalData.projectList,
+                    ContractNameList: app.globalData.ContractNameList,
+                    DingData: DingData,
+                    DeptNames: app.globalData.DeptNames,
+                });
                 callBack();
                 return;
             }
@@ -1724,7 +1730,7 @@ export default {
                 this.data.projectList[e.detail.value].ContractName;
             console.log("picker发送选择改变，携带值为" + e.detail.value);
             this.setData({
-                ["tableInfo.Title"]: newTitle || a,
+                "tableInfo.Title": newTitle || a,
                 projectIndex: e.detail.value,
             });
         },
@@ -1738,10 +1744,10 @@ export default {
                 "-" +
                 this.data.ContractNameList[e.detail.value].ContractName;
             console.log("picker发送选择改变，携带值为" + e.detail.value);
-
+            console.log(title);
             this.setData({
-                ["tableInfo.Title"]: title,
                 ContractNameIndex: e.detail.value,
+                "tableInfo.Title": title,
             });
         },
 

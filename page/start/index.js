@@ -11,6 +11,8 @@ Page({
             that.getMenu();
         });
         this.getDepartmentList();
+        this.getProjectList(); //获取项目列表
+        this.getContractNameList(); //获取合同列表
         this.getUserInfo();
     },
     data: {

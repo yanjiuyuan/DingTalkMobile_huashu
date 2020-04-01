@@ -12,6 +12,10 @@ App({
                 let url = "http://47.93.56.50?authCode=" + res.authCode;
                 this.globalData.url = url;
             },
+
+            fail: res => {
+                console.log(res);
+            },
         });
     },
     onHide() {
