@@ -46,6 +46,16 @@ Page({
                 label: "申请人",
                 width: 300,
             },
+            {
+                prop: "ContractName",
+                label: "合同信息",
+                width: 300,
+            },
+            {
+                prop: "ProjectName",
+                label: "项目信息",
+                width: 300,
+            },
             // {
             //     prop: "Progress",
             //     label: "进度",
@@ -102,7 +112,7 @@ Page({
         let selectIndex = e.detail.value;
         console.log(e.target.dataset.index);
         let rowIndex = e.target.dataset.index + (this.data.tableParam.now - 1) * 5;
-        let row = this.data.tableData[rowIndex];
+        let row = this.data.purchaseList[rowIndex];
         row.index = selectIndex;
         row.Progress = this.data.tableOptions[selectIndex].name;
         this._postData(
@@ -116,7 +126,7 @@ Page({
             row
         );
         this.setData({
-            [`tableData[${rowIndex}]`]: row,
+            [`tableData[${e.target.dataset.index}]`]: row,
         });
     },
 
@@ -135,6 +145,16 @@ Page({
             {
                 prop: "ApplyMan",
                 label: "申请人",
+                width: 300,
+            },
+            {
+                prop: "ProjectName",
+                label: "项目信息",
+                width: 400,
+            },
+            {
+                prop: "ContractName",
+                label: "合同信息",
                 width: 300,
             },
         ];
@@ -195,7 +215,7 @@ Page({
                 }
             }
             this.setData({
-                tableData: res,
+                purchaseList: res,
                 "tableParam.total": res.length,
                 "tableParam.now": 1,
                 tableData2: [],
