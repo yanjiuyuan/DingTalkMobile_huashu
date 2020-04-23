@@ -98,6 +98,8 @@ require('../../page/approveDetail/productionOrder/productionOrder?hash=32d7d2807
 require('../../page/approveDetail/productionPreInvestment/productionPreInvestment?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/approveDetail/preInvestmentReport/preInvestmentReport?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 require('../../page/start/orderManager/orderManager?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../page/start/borrowBook/borrowBook?hash=1843e4342add8461cd5ea49fda83621d6d6284a9');
+require('../../page/approveDetail/borrowBook/borrowBook?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
 }
 self.bootstrapApp ? self.bootstrapApp({ success }) : success();
 }

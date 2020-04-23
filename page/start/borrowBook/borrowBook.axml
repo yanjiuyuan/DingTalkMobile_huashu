@@ -1,0 +1,67 @@
+<!-- 借阅申请 -->
+<import src="/util/template/template.axml"/>
+<view class="page">
+  <!-- 基本表单 -->
+  <form onSubmit="submit">
+    <view class="page-section">
+      <!-- 标题 -->
+      <template is ="titleOfObject" data="{{tableInfo}}"/>
+      <!-- 申请人 -->
+      <template is ="applyman" data="{{DingData}}"/>
+      <!-- 选择部门 -->
+      <!--<template is="chooseDepartment" data="{{departmentList:DingData.departmentList,index:departmentIdnex}}"/> -->
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>申请部门</view>
+        <view class="form-row-content">
+          <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>借阅内容</view>
+        <view class="form-row-content">
+          <textarea auto-height="true" name="content" class="input" data-name="content" onInput="inputToTable" value="{{table.content}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label">
+          <template is="required"></template>借阅用途</view>
+        <view class="form-row-content">
+          <textarea auto-height="true" name="contentPurpose" class="input" data-name="contentPurpose" onInput="inputToTable" value="{{table.contentPurpose}}"/>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-row-label" style="width:4rem">材料介质</view>
+        <radio-group class="radio-group" name="isPaper" onChange="radioChange" style="font-size:30rpx">
+          <label a:for="{{arr}}">
+            <radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+          </label>
+        </radio-group>
+      </view>
+      <view class="form-row" a:if="{{isPaper}}">
+        <view class="form-row-label">
+          <template is="required"></template>归还时间</view>
+        <view class="form-row-content">
+          <input name="ReceivingTime" class="input" placeholder="开始时间" disabled="true" value="{{table.ReceivingTime}}" />
+        </view>
+        <view onTap="selectStartDateTime" class="tag tag-info">+ 选择</view>
+      </view>
+      <view class="form-row" a:if="{{!isPaper}}">
+        <view class="form-row-label" style="width:5.2rem">是否编辑</view>
+        <radio-group class="radio-group" name="isEdit" onChange="radioChangeOne" style="font-size:30rpx">
+          <label a:for="{{arr2}}">
+            <radio value="{{item.label}}" checked="{{item.checked}}" />{{item.name}}
+          </label>
+        </radio-group>
+      </view>
+      <!-- 选人组件 -->
+      <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
+      <template is="suggest" data="{{table}}"/>
+    </view>
+    <!-- 提交按钮 -->
+    <template is ="submitButton" data="{{disablePage:disablePage}}"/>
+    <!-- 临时保存 -->
+    <template is="temporaryPreservation"/>
+  </form>
+</view>

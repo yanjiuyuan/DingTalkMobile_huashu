@@ -232,6 +232,9 @@ Page({
                 case 102:
                     url = "/page/approveDetail/maintain/maintain";
                     break;
+                case 110:
+                    url = "/page/approveDetail/borrowBook/borrowBook";
+                    break;
             }
 
             // for (let i = 0, length = app.globalData.menu.length; i < length; i++) {

@@ -53,13 +53,13 @@ Page({
                 });
                 return;
             }
-            if (this.data.carList[this.data.carIndex].IsOccupyCar == true) {
-                dd.alert({
-                    content: "车辆已被占用，请重新选择！",
-                    buttonText: promptConf.promptConf.Confirm,
-                });
-                return;
-            }
+            // if (this.data.carList[this.data.carIndex].IsOccupyCar == true) {
+            //     dd.alert({
+            //         content: "车辆已被占用，请重新选择！",
+            //         buttonText: promptConf.promptConf.Confirm,
+            //     });
+            //     return;
+            // }
             param["Title"] =
                 this.data.tableInfo.Title + "-" + this.data.carList[this.data.carIndex].Name;
         }

@@ -60,7 +60,9 @@
         "page/approveDetail/productionOrder/productionOrder",
         "page/approveDetail/productionPreInvestment/productionPreInvestment",
         "page/approveDetail/preInvestmentReport/preInvestmentReport",
-        "page/start/orderManager/orderManager"
+        "page/start/orderManager/orderManager",
+        "page/start/borrowBook/borrowBook",
+        "page/approveDetail/borrowBook/borrowBook"
     ],
     "window": {
         "enableWK": "YES",
