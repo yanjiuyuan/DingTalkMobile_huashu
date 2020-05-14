@@ -78,7 +78,7 @@ Page({
             Remark: value.remark,
         };
 
-        if (this.data.nodeid == "4") {
+        if (this.data.nodeid == "5") {
             this._postData(
                 "Purchase/ModifyPurchaseTable",
                 res => {
@@ -93,7 +93,7 @@ Page({
     //设置采购员
     setChooseMan() {
         let that = this;
-        if (this.data.nodeid != 4) return;
+        if (this.data.nodeid != 5) return;
         let mans = [];
         for (let d of this.data.tableData) {
             let opt = this.data.tableOptions[d.index];
@@ -122,6 +122,24 @@ Page({
             }
         }
     },
+
+    onShow() {
+        let obj = {
+            prop: "PurchaseMan",
+            label: "采购员",
+            width: 200,
+        };
+
+        if (
+            this.data.nodeid > 5 &&
+            JSON.stringify(this.data.tableItems2).indexOf(JSON.stringify(obj)) == -1
+        ) {
+            this.data.tableItems2.push(obj);
+            this.setData({
+                tableItems2: this.data.tableItems2,
+            });
+        }
+    },
     //下拉框选择后回调
     tableSelect(e) {
         console.log("//下拉框选择后回调");
@@ -145,14 +163,14 @@ Page({
                     "/PurchaseNew/ReadPurchaseTable" +
                         that.formatQueryStr({ TaskId: this.data.taskid }),
                     res => {
-                        if (this.data.nodeid == 4) {
+                        if (this.data.nodeid == 5) {
                             for (let i of res) {
                                 i.index = 1;
                                 for (let j of options) {
                                     if (j.name == "杜双凤") {
                                         i["PurchaseMan"] = j.name;
                                         i["PurchaseManId"] = j.emplId;
-                                        this.data.nodeList[6].AddPeople = [
+                                        this.data.nodeList[7].AddPeople = [
                                             {
                                                 name: j.name,
                                                 uerid: j.emplId,
@@ -163,7 +181,7 @@ Page({
                             }
                         }
 
-                        if (that.data.nodeid == 6 && that.data.index == 0) {
+                        if (that.data.nodeid == 7 && that.data.index == 0) {
                             let tmp = [];
                             for (let d of res) {
                                 if (d.PurchaseManId == app.userInfo.userid) {

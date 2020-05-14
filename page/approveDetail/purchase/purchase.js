@@ -10,7 +10,6 @@ Page({
         totalPrice: "0",
         selectOperate: "选择采购员",
         tableOptions: [],
-
         tableItems2: [
             {
                 prop: "CodeNo",
@@ -79,6 +78,23 @@ Page({
         this.aggreSubmit(param);
     },
 
+    onShow() {
+        let obj = {
+            prop: "PurchaseMan",
+            label: "采购员",
+            width: 200,
+        };
+
+        if (
+            this.data.nodeid > 5 &&
+            JSON.stringify(this.data.tableItems2).indexOf(JSON.stringify(obj)) == -1
+        ) {
+            this.data.tableItems2.push(obj);
+            this.setData({
+                tableItems2: this.data.tableItems2,
+            });
+        }
+    },
     setChooseMan() {
         let that = this;
         if (this.data.nodeid != 5) return;

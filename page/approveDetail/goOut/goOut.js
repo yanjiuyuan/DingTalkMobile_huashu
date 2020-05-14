@@ -214,23 +214,27 @@ Page({
             this._getData(
                 "Evection/Read" + this.formatQueryStr({ TaskId: this.data.taskid }),
                 res => {
-                    console.log(this.data.nodeList[1]);
-                    let ApplyTime = this.data.nodeList[1].ApplyTime || null;
-                    if (ApplyTime) {
-                        let dateTmp = res.EndTime.replace(/-/g, "/");
-                        let timestamp = Date.parse(dateTmp);
-                        let dateTmp2 = ApplyTime.replace(/-/g, "/");
-                        let timestamp2 = Date.parse(dateTmp2);
+                    setTimeout(() => {
+                        let ApplyTime = null;
+                        console.log(that.data.nodeList[1]);
+                        that.data.nodeList[1].ApplyTime &&
+                            (ApplyTime = that.data.nodeList[1].ApplyTime);
+                        if (ApplyTime) {
+                            let dateTmp = res.EndTime.replace(/-/g, "/");
+                            let timestamp = Date.parse(dateTmp);
+                            let dateTmp2 = ApplyTime.replace(/-/g, "/");
+                            let timestamp2 = Date.parse(dateTmp2);
 
-                        console.log(timestamp2);
-                        console.log(timestamp);
+                            console.log(timestamp2);
+                            console.log(timestamp);
 
-                        if (timestamp2 + 1800000 > timestamp) {
-                            this.setData({
-                                timeUp: true,
-                            });
+                            if (timestamp2 + 1800000 > timestamp) {
+                                this.setData({
+                                    timeUp: true,
+                                });
+                            }
                         }
-                    }
+                    }, 200);
                     this.setData({
                         table: res,
                     });

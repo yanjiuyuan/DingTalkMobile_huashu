@@ -21,8 +21,8 @@
         </view>
       </view>
       <!-- 物料表单 -->
-      <template a:if="{{nodeid!= 4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
-      <template a:if="{{nodeid== 4}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
+      <template a:if="{{nodeid!= 5 || index!= 0}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam}}"/>
+      <template a:if="{{index == 0 && nodeid== 5}}" is="datatable" data="{{items:tableItems,data:tableData,param:tableParam,selectOperate:selectOperate,tableOptions:tableOptions}}"/>
       <!-- 选人组件 -->
       <template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>
       <view a:if="{{index==0}}">

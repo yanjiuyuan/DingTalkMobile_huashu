@@ -48,7 +48,7 @@
 				接触人员
 				</view>
 				<view class="form-row-content">
-					<textarea auto-height="true" name="ContactPeople" class="input" value="{{table.ContactPeople || ''}}" disabled="{{nodeid !=2}}"/>
+					<textarea auto-height="true" maxlength="80" name="ContactPeople" class="input" value="{{table.ContactPeople || ''}}" disabled="{{nodeid !=2}}"/>
 				</view>
 			</view>
 			<view class="page-section">

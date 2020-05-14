@@ -1,5 +1,5 @@
-// let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
-let dormainName = "http://47.96.172.122:8092/"; //线上
+let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
+// let dormainName = "http://47.96.172.122:8092/"; //线上
 
 function doWithErrcode(result) {
     if (!result) {
