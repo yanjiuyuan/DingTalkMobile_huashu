@@ -13,12 +13,13 @@ Page({
         options: [],
         tableParam2: {
             size: 100,
-            now: 1,
+            // now: 1,
             total: 0,
         },
 
         SendPosition: [{ name: "华数", checked: true }, { name: "基地" }],
         tableOperate2: "删除",
+        tableOperate3: "编辑",
         good: {},
         totalPrice: 0,
         tableItems: [

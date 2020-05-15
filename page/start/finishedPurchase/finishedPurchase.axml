@@ -38,8 +38,9 @@
                 <view class="form-row-label">
                   <template is="required"></template>需用日期</view>
                 <view class="form-row-content">
-                  <input name="UrgentDate" class="input" placeholder="需用日期" onFocus="selectDate" value="{{dateStr}}" onTap="selectDate"/>
+                  <input name="UrgentDate" class="input" placeholder="需用日期" value="{{dateStr}}" disabled="{{true}}" />
                 </view>
+                <view onTap="selectDate" class="tag tag-info">+ 选择</view>
               </view>
             </view>
             <view class="page-section">
@@ -72,8 +73,8 @@
           </scroll-view>
           <view class="buttons">
             <button type="primary" class="button-size" formType="submit">添加</button>
-            <button type="warn" class="button-size" onTap="onModalCloseTap">取消</button>
-          </view>
+            <button type="warn" class="button-size" onTap="onModalCloseTap">取消</button></view>
+          <!--<view class="buttons"><button a:if="{{!ifedit}}" type="primary" class="button-size" formType="submit">添加</button><button a:if="{{ifedit}}" type="primary" class="button-size" formType="submit">编辑</button><button type="warn" class="button-size" onTap="onModalCloseTap">取消</button></view> -->
         </form>
       </view>
     </view>

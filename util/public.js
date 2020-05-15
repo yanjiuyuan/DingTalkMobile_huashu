@@ -19,7 +19,7 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.25",
+        version: "2.1.26",
         DingData: {
             nickName: "",
             departName: "",
@@ -158,7 +158,6 @@ export default {
                                 tableData2: data.data,
                                 tableData3: data.tableInfo,
                             });
-                        } else if (that.data.flowid == 24) {
                         } else if (
                             that.data.flowid == 75 ||
                             that.data.flowid == 76 ||
@@ -791,9 +790,12 @@ export default {
                     case "6":
                         (url = "DrawingUploadNew/PrintAndSend"), (method = "post");
                         break; //图纸审批
-                    case ("24", "26"):
+                    case "24":
                         (url = "PurchaseNew/PrintAndSend"), (method = "post");
                         break; //零部件采购
+                    case "26":
+                        (url = "PurchaseNew/PrintAndSend"), (method = "post");
+                        break; //成品采购
                     case "13":
                         (url = "CarTableNew/GetPrintPDF"), (method = "post");
                         break; //公车

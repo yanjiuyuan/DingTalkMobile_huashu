@@ -58,10 +58,10 @@ Page({
         totalPrice: "0",
         selectOperate: "选择采购员",
         tableOptions: [],
-        tableItems: items,
+        tableItems2: items,
         tableParam: {
             size: 885,
-            now: 1,
+            // now: 1,
             total: 0,
         },
         // tableItems2: [{prop: 'PurchaseMan',
@@ -190,7 +190,7 @@ Page({
                             }
 
                             res = tmp;
-                            this.data.tableItems.unshift({
+                            this.data.tableItems2.unshift({
                                 prop: "PurchaseMan",
                                 label: "采购员",
                                 width: 200,
@@ -202,7 +202,7 @@ Page({
 
                         that.setData({
                             nodeList: that.data.nodeList,
-                            tableItems: this.data.tableItems,
+                            tableItems2: this.data.tableItems2,
                             tableData: res,
                             tableOptions: options,
                         });

@@ -182,6 +182,8 @@ Page({
                             "tableParam.total": res.length,
                             tableOptions: options,
                         });
+                        that.data.data = res;
+                        that.getData();
                     }
                 );
             }
