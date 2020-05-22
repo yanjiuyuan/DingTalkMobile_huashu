@@ -52,6 +52,7 @@ let items = [
 Page({
     ...pub.func,
     ...pub.func.dowith,
+
     data: {
         ...pub.data,
         hidden: true,

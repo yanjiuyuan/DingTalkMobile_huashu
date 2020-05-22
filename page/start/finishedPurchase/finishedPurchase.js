@@ -200,7 +200,13 @@ Page({
         var value = e.detail.value;
         console.log(value);
         for (let p of this.data.purchaseList) {
-            if (p.CodeNo == good.FNumber) return;
+            if (p.CodeNo == good.FNumber) {
+                dd.alert({
+                    content: "物料编码重复，请重新输入！",
+                    buttonText: promptConf.promptConf.Confirm,
+                });
+                return;
+            }
         }
         if (!value || !value.Unit || !value.Count || !value.UrgentDate || !value.Purpose) {
             dd.alert({

@@ -7,6 +7,9 @@ Page({
     data: {
         ...pub.data,
         hidden: true,
+        tableParam: {
+            total: 0,
+        },
         totalPrice: "0",
         selectOperate: "选择采购员",
         tableOptions: [],
@@ -182,8 +185,8 @@ Page({
                             "tableParam.total": res.length,
                             tableOptions: options,
                         });
-                        that.data.data = res;
-                        that.getData();
+                        // that.data.data = res;
+                        // that.getData();
                     }
                 );
             }
