@@ -111,7 +111,7 @@ Page({
         this._getData(
             "FlowInfoNew/GetApproveInfo" + this.formatQueryStr(param),
             function(res) {
-                console.log(JSON.parse(res.counts).Designer);
+                // console.log(JSON.parse(res.counts).Designer);
                 that.setData({
                     ["tableInfo.counts"]: JSON.parse(res.counts)
                 });

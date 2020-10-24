@@ -84,26 +84,46 @@
 							<button type="primary" size="mini" onTap="downloadFile" data-mediaId="{{item.mediaId}}" style="margin:0;">下载</button></view>
 					</view>
 				</view>
-				<view class="form-row" a:if="{{nodeid == 2 && index == 0}}">
+				<view class="form-row" a:if="{{nodeid == 4 && index == 0}}">
 					<view class="form-row-label">是否评审</view>
 					<radio-group class="radio-group" style="float:left;" name="IsReview" onChange="radioChange">
 						<label class="radio" a:for="{{[{name:'是',checked:true},{name:'否',checked:false}]}}">
-							<radio disabled="{{nodeid != 2}}" value="{{item.checked}}" checked="{{item.checked}}"/>{{item.name}}
+							<radio disabled="{{nodeid != 4}}" value="{{item.checked}}" checked="{{item.checked}}"/>{{item.name}}
 						</label>
 					</radio-group>
 				</view>
-				<view class="form-row" a:if="{{nodeid > 2 && index !== 0}}">
+
+
+				<view class="form-row" a:if="{{nodeid == 4 && index == 0 && IsReview == true}}">
+					<view class="form-row-label">评审时间</view>
+          <view class="form-row-content"> 
+            <input name="StartTime" class="input" placeholder="评审时间" onFocus="selectStartDateTime" value="{{table.ReviewTime}}" disabled="{{true}}" />
+          </view>
+          <view onTap="selectStartDateTime" class="tag tag-info">+ 选择</view>
+        </view> 
+				</view>
+	
+
+				<view class="form-row" a:if="{{nodeid > 4 && index !== 0}}">
 					<view class="form-row-label">是否评审</view>
 					<view class="form-row-content">
 						<input name="IsReview" class="input" value="{{IsReview}}" disabled="{{true}}" />
 					</view>
 				</view>
-				<view class="form-row" a:if="{{nodeid > 3 || (index == 0 && nodeid == 3)}}">
+
+				<view class="form-row" a:if="{{IsReview == '是'}}">
+					<view class="form-row-label">评审时间</view>
+					<view class="form-row-content">
+						<input name="IsReview" class="input" value="{{table.ReviewTime}}" disabled="{{true}}" />
+					</view>
+				</view>
+
+				<view class="form-row" a:if="{{nodeid > 5 || (index == 0 && nodeid == 5)}}">
 					<view class="form-row-label">
 						<template is="required"></template>项目编号</view>
 					<view class="form-row-content">
-						<input name="ProjectId" class="input" placeholder="1234**567,*为字母2-3个
-" value="{{table.ProjectId}}" disabled="{{nodeid != 3}}" />
+						<input name="ProjectId" class="input" placeholder="项目编号
+" value="{{table.ProjectId}}" disabled="{{nodeid != 5}}" />
 					</view>
 				</view>
 			</view>
@@ -127,4 +147,4 @@
 				<!--<button onTap="relaunch" type="warn" disabled="{{disablePage}}">重新发起</button> -->
 			</view>
 			</form>
-		</view>
+		</view> 

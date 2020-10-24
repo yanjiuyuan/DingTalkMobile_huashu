@@ -9,6 +9,19 @@ Page({
         table: {},
         show: true
     },
+    onReady(){
+        if(this.data.nodeid == 1){
+            this.setData({
+                addPeopleNodes:[2],
+
+            })
+        }
+        else{
+             this.setData({
+                addPeopleNodes:[],
+            })
+        }
+    },
     submit(e) {
         let that = this;
         let value = e.detail.value;
@@ -58,13 +71,21 @@ Page({
             this.data.table["TechnicalProposal"] = value.TechnicalProposal.trim();
             this.data.table["ProjectName"] = value.ProjectName.trim();
         }
-        if (this.data.nodeid == 4) {
-            let reg = /^\d{4}\w{3}\d{3}$|^\d{4}\w{2}\d{3}$/;
-            if (!reg.test(value.ProjectNo)) {
+        if (this.data.nodeid == 6) {
+            // let reg = /^\d{4}\w{3}\d{3}$|^\d{4}\w{2}\d{3}$/;
+            // if (!reg.test(value.ProjectNo)) {
+            //     dd.alert({
+            //         content: promptConf.promptConf.ItemNumberStandard, 
+            //         buttonText: promptConf.promptConf.Confirm 
+            //     }); 
+            //     return;
+            // }
+
+            if(value.ProjectNo.trim().length <7){
                 dd.alert({
-                    content: promptConf.promptConf.ItemNumberStandard,
-                    buttonText: promptConf.promptConf.Confirm
-                });
+                    content:  '项目编号长度不小于7位',
+                    buttonText: promptConf.promptConf.Confirm 
+                }); 
                 return;
             }
             if (!value.ProjectNo) {
@@ -76,7 +97,7 @@ Page({
             }
             this.data.table["ProjectNo"] = value.ProjectNo;
             this.data.table["IsCreateProject"] = true;
-            var param2 = {
+            let param2 = {
                 CreateTime: this._getTime(),
                 IsEnable: true,
                 ProjectState: "在研",
@@ -98,6 +119,7 @@ Page({
                 ResponsibleManId: this.data.table.ResponsibleManId,
                 ProjectFileUrl: ""
             };
+            that.setData({ disablePage: true });
 
             this._postData(
                 "ProjectNew/AddProject",
@@ -105,8 +127,9 @@ Page({
                     this._postData(
                         "TechnicalSupport/Modify",
                         res => {
+                            // return;
                             that.aggreSubmit(param);
-                        },
+                        },  
                         this.data.table
                     );
                 },
@@ -126,7 +149,7 @@ Page({
 
     choosePeoples(e) {
         console.log("start choose people");
-        this.data.addPeopleNodes = [5];
+        this.data.addPeopleNodes = [7];
         let nodeId = e.target.targetDataset.NodeId;
         let that = this;
         console.log(that.data.pickedUsers);
@@ -151,14 +174,14 @@ Page({
                         addPeoples.push({
                             name: d.name,
                             userId: d.userId
-                        });
+                        }); 
                     }
                     that.setData({
-                        "nodeList[5].NodePeople": names,
+                        "nodeList[7].NodePeople": names,
 
-                        "nodeList[5].AddPeople": addPeoples,
+                        "nodeList[7].AddPeople": addPeoples,
                         "table.TeamMembers": names.join(","),
-                        "table.TeamMembersId": ids.join(",")
+                        "table.TeamMembersId": ids.join(",") 
                     });
                 } else if (res.departments.length > 0 && res.users.length == 0) {
                     let deptId = [];
@@ -192,8 +215,8 @@ Page({
                             addPeoples = that.objectArrayDuplication(addPeoples, "userId");
                             console.log(addPeoples);
                             that.setData({
-                                "nodeList[5].AddPeople": addPeoples,
-                                "nodeList[5].NodePeople": names,
+                                "nodeList[7].AddPeople": addPeoples,
+                                "nodeList[7].NodePeople": names,
                                 "table.TeamMembers": names.join(","),
                                 "table.TeamMembersId": ids.join(",")
                             });
@@ -242,8 +265,8 @@ Page({
                             ids = [...new Set(ids)]; //数组去重
                             addPeoples = that.objectArrayDuplication(addPeoples, "userId");
                             that.setData({
-                                "nodeList[5].AddPeople": addPeoples,
-                                "nodeList[5].NodePeople": names,
+                                "nodeList[7].AddPeople": addPeoples,
+                                "nodeList[7].NodePeople": names,
                                 "table.TeamMembers": names.join(","),
                                 "table.TeamMembersId": ids.join(",")
                             });

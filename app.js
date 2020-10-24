@@ -2,20 +2,35 @@ App({
     onLaunch(options) {
         //第一次打开触发
         console.log("第一次打开触发");
+
+
     },
     onShow() {
-        //后台进前台触发
-        console.log("后台进前台触发");
-        // dd.getAuthCode({
-        //     success: res => {
-        //         console.log(res.authCode);
-        //         let url = "http://47.93.56.50?authCode=" + res.authCode;
-        //         this.globalData.url = url;
-        //     },
-        //     fail: res => {
-        //         console.log(res);
-        //     },
-        // });
+    if (dd.canIUse('getUpdateManager')) {
+                const updateManager = dd.getUpdateManager();
+                updateManager.onCheckForUpdate(function (res) {
+
+                    if (res.hasUpdate) {
+                        updateManager.onUpdateReady(function (ret) {
+                            console.log(ret.version) // 更新版本号
+                            dd.confirm({
+                                title: '更新提示',
+                                content: '新版本已经准备好，是否重启应用？',
+                                success: function (res) {
+                                    if (res.confirm) {
+                                        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                                        updateManager.applyUpdate()
+                                    } 
+                                }
+                            })
+                        })
+                    }
+                    //console.log(res.hasUpdate) // 是否有更新
+                })
+                updateManager.onUpdateFailed(function () {
+                    // 新版本下载失败
+                })
+    }
     },
     onHide() {
         //前台进后台触发

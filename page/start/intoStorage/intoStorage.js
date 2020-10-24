@@ -314,7 +314,7 @@ Page({
             this.setData({
                 [`tableParam2.total`]: length - 1,
                 purchaseList: this.data.purchaseList,
-                goods: this.data.purchaseList,
+                goods: JSON.parse(JSON.stringify(this.data.purchaseList)),
             });
             console.log(this.data.purchaseList);
         }

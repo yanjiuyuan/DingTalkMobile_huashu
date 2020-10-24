@@ -14,7 +14,7 @@ Page({
         let value = e.detail.value;
         value["CooperateDept"] = this.data.DeptNames[this.data.departIndex];
         value["CooperateManId"] = this.data.table.CooperateManId;
-        value["CooperateMan"] = this.data.table.CooperateMan;
+        value["CooperateMan"] = this.data.table.CooperateMan; 
 
         console.log(value);
 

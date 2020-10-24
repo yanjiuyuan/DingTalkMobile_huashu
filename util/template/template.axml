@@ -1,5 +1,5 @@
 <!-- 选人控件 -->
-<template name="choosePeople">
+<!-- <template name="choosePeople">
 	<view style="padding:40rpx 0;clear:left;">
 		<view a:for="{{nodeList}}" a:for-item="node">
 			<view class="tag tag-warning" style="width:160rpx;margin-right:10rpx;"> {{node.NodeName}}</view>
@@ -17,7 +17,7 @@
 			<view a:if="{{index< length-1}}" style="font-size:100rpx;line-height:60rpx;color:#409EFF;margin-left:40rpx;padding:10rpx;">﹀</view>
 		</view>
 	</view>
-</template>
+</template> -->
 <!-- 选人控件 发起审批流程 -->
 <template name="choosePeople">
 	<view class="choosePeople">
@@ -108,7 +108,7 @@
 	<view class="choosePeople">
 		<view class="choosePeople-title">审批流程</view>
 		<view a:for="{{nodeList}}" a:for-item="node" a:if="{{node}}">
-			<view class="choosePeople-view-new" a:if="{{node.NodeName !== '结束'}}">
+			<view class="choosePeople-view-new"  a:if="{{node.NodeName !== '结束'}}">
 				<!-- 左边的点和线 -->
 				<view class="choosePeople-view-left">
 					<view class="choosePeople-view-left-icon">

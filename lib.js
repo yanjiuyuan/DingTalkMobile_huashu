@@ -1,6 +1,6 @@
 // let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
-let dormainName = "http://47.96.172.122:8092/"; //线上
-
+let dormainName = "http://47.96.172.122:8092/"; //线上华数
+ 
 function doWithErrcode(result) {
     if (!result) {
         return 1;
@@ -9,11 +9,11 @@ function doWithErrcode(result) {
         dd.alert({
             content: result.error.errorMessage,
             buttonText: "确认",
-        });
+        }); 
         return 1;
     }
     return;
-}
+} 
 let d = new Date();
 let year = d.getFullYear();
 let month = d.getMonth() + 1;
@@ -23,7 +23,9 @@ let minutes = d.getMinutes();
 export default {
     data: {
         // jinDomarn:'http://1858o1s713.51mypc.cn:16579/api/',
-        jinDomarn: "http://wuliao5222.55555.io:35705/api/",
+        // jinDomarn: "http://wuliao5222.55555.io:35705/api/",
+        jinDomarn: "http://120.37.178.46:8886/api/",
+
         dormainName: dormainName,
         currentPage: 1,
         totalRows: 0,

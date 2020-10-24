@@ -99,7 +99,7 @@
 				<view a:if="{{show}}" class="form-row">
 					<view class="form-row-label">
 						<template is="required"></template>处理方案</view>
-					<view class="form-row-content">
+					<view class="form-row-content"> 
 						<textarea auto-height="true" name="TechnicalProposal" maxlength="140" class="input" value="{{table.TechnicalProposal}}" disabled="{{nodeid != 1}}" />
 					</view>
 				</view>
@@ -112,17 +112,17 @@
 						</view>
 					</view>
 				</view>
-				<view class="form-row" a:if="{{nodeid >= 4}}">
+				<view class="form-row" a:if="{{nodeid >= 6}}">
 					<view class="form-row-label">
 						<template is="required"></template>测试项目编号</view>
 					<view class="form-row-content">
-						<textarea maxlength="-1" style="min-height:90rpx;padding:0;" auto-height="true" name="ProjectNo" class="input" placeholder="格式为1234**567或者1234***567，*必须为英文字母" value="{{table.ProjectNo}}" disabled="{{index != 0}}" />
+						<textarea maxlength="-1" style="min-height:90rpx;padding:0;" auto-height="true" name="ProjectNo" class="input" placeholder="测试项目编号" value="{{table.ProjectNo}}" disabled="{{index != 0}}" />
 					</view>
-				</view>
-			</view>
+				</view> 
+			</view> 
 			<!-- 选人组件 -->
 			<template is="test" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length,DingData:DingData,pageNumber:index}}"/>
-			<template is="variousButtons" data="{{nodeInfo:nodeInfo,index:index,nodeid:nodeid,state:state,agree:true,print:true,printAllPDF:false,output:false,ding:true,returnSubmit:true,relaunch:true,rebackAble:rebackAble}}">
+			<template is="variousButtons" data="{{nodeInfo:nodeInfo,index:index,nodeid:nodeid,state:state,agree:true,print:true,printAllPDF:false,output:false,ding:true,returnSubmit:true,relaunch:true,rebackAble:rebackAble,disablePage:disablePage}}">
 				<!-- agree  意见输入框、同意、退回 -->
 				<!-- print 打印表单 -->
 				<!-- printAllPDF 下载所有图纸 -->

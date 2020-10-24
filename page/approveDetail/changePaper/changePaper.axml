@@ -10,19 +10,25 @@
 			<template is = "titleOfApproval" data="{{tableInfo:tableInfo}}"></template>
 			<template is="applymanApproval" data="{{tableInfo:tableInfo}}"></template>
 			<template is="department" data="{{department:tableInfo.Dept}}"/>
-			<view class="form-row">
+			<view class="form-row" a:if="{{tableInfo.ProjectName}}">
 				<view class="form-row-label">项目名称</view>
 				<view class="form-row-content">
 					<input name="title" class="input" value="{{tableInfo.ProjectName}}" disabled="{{true}}" />
 				</view>
 			</view>
+			<view class="form-row" a:if="{{tableInfo.ContractName}}">
+				<view class="form-row-label">合同名称</view>
+				<view class="form-row-content"> 
+					<textarea maxlength="-1" name="ContractName" style="min-height:90rpx;padding:0;" class="input" value="{{tableInfo.ContractName || ''}}" disabled="{{true}}" />
+				</view>
+			</view>  
 			<view class="form-row">
 				<view class="form-row-label">图纸设计人</view>
 				<view class="form-row-content">
 					<input name="applyman" class="input" value="{{tableInfo.counts.Designer}}" disabled="{{true}}" />
 				</view>
 			</view>
-			<view class="form-row">
+			<view class="form-row" a:if="{{tableInfo.ProjectId}}">
 				<view class="form-row-label">项目编号</view>
 				<view class="form-row-content">
 					<input name="title" class="input" value="{{tableInfo.ProjectId}}" disabled="{{true}}" />

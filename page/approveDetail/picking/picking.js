@@ -48,6 +48,11 @@ Page({
             Title: value.title,
             Remark: value.remark,
         };
+
+        // dd.alert({
+        //     content: JSON.stringify(this.data.imageList) + JSON.stringify(this.data.imgUrlList),
+        // });
+        // return;
         if (this.data.imgUrlList.length > 0) {
             param["ImageUrl"] = this.data.imgUrlList.join(",");
         } else if (this.data.nodeid == 3 && this.data.imgUrlList.length == 0) {
@@ -63,6 +68,7 @@ Page({
 
     //上传图片
     uploadImg(e) {
+
         let that = this;
         dd.chooseImage({
             count: 1,
@@ -73,20 +79,26 @@ Page({
                     success: res => {
                         that.setData({ imageList: that.data.imageList });
                         for (let p of res.apFilePaths) {
+                            that.setData({ disablePage: true });
+
                             console.log("imageList:", JSON.stringify(p));
                             that.data.imageList.push(p);
-                            that.setData({ disablePage: true });
                             dd.uploadFile({
-                                url: that.data.dormainName + "drawingupload/Upload",
+                                url: that.data.dormainName + "drawingupload/Upload?IsWaterMark=true",
                                 fileType: "image",
                                 fileName: p.substring(7),
                                 filePath: p,
                                 success: res => {
+                                    // dd.alert({
+                                    //     content: JSON.stringify(res),
+                                    //     buttonText: "ss",
+                                    // });
                                     console.log(
                                         "imgUrlList:",
                                         JSON.stringify(JSON.parse(res.data).Content)
                                     );
                                     that.data.imgUrlList.push(JSON.parse(res.data).Content);
+
                                     that.setData({ disablePage: false });
                                 },
                                 fail: err => {
@@ -102,6 +114,62 @@ Page({
             },
         });
     },
+
+    //上传图片
+    // uploadImg() {
+    //     let that = this;
+    //     //上传图片
+    //     dd.chooseImage({
+    //         count: 1,
+    //         success: res => {
+    //             dd.compressImage({
+    //                 filePaths: res.apFilePaths,
+    //                 compressLevel: 2,
+    //                 success: res => {
+    //                     that.setData({ imageList: that.data.imageList });
+    //                     for (let p of res.apFilePaths) {
+    //                         that.setData({ disablePage: true });
+
+    //                         that.data.imageList.push(p);
+    //                         dd.uploadFile({
+    //                             url: that.data.dormainName + "drawingupload/Upload",
+    //                             fileType: "image",
+    //                             fileName: p.substring(7),
+    //                             // IsWaterMark: true,
+    //                             filePath: p,
+    //                             success: res => {
+    //                                 dd.alert({
+    //                                     content: JSON.stringify(res),
+    //                                     buttonText: "ss",
+    //                                 });
+    //                                 // return;
+    //                                 console.log(
+    //                                     "imgUrlList:",
+    //                                     JSON.stringify(JSON.parse(res.data).Content)
+    //                                 );
+    //                                 that.data.imgUrlList.push(JSON.parse(res.data).Content);
+
+    //                                 that.setData({ disablePage: false });
+    //                             },
+    //                             fail: err => {
+    //                                 dd.alert({ content: "sorry" + JSON.stringify(err) });
+    //                             },
+    //                         });
+    //                     }
+    //                     that.setData({ imageList: that.data.imageList });
+    //                 },
+    //             });
+    //         },
+    //         fail: res => {
+    //             if (res.error == "3") {
+    //                 dd.alert({
+    //                     content: "请在“设置-应用-权限”选项中，允许访问你的照片",
+    //                     buttonText: promptConf.promptConf.Confirm,
+    //                 });
+    //             }
+    //         },
+    //     });
+    // },
 
     deletePhoto(e) {
         dd.confirm({

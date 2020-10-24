@@ -7,10 +7,11 @@ Page({
     ...pub.func,
     onLoad() {
         let that = this;
+        // this.update();
         this.checkLogin2(function() {
             that.getMenu();
         });
-        this.getDepartmentList();
+        this.getDepartmentList();  
         this.getProjectList(); //获取项目列表
         this.getContractNameList(); //获取合同列表
         this.getUserInfo();
@@ -81,7 +82,32 @@ Page({
             fail: function(err) {},
         });
     },
+    update(){
+       const updateManager = dd.getUpdateManager();
 
+        updateManager.onCheckForUpdate(function (res) {
+            // 请求完新版本信息的回调
+            console.log(res.hasUpdate); // 是否有更新
+        });
+
+        updateManager.onUpdateReady(function (ret) {
+            console.log(ret.version) // 更新版本号
+            dd.confirm({
+                title: '更新提示',
+                content: '新版本已经准备好，是否重启应用？',
+                success: function (res) {
+                    if (res.confirm) {
+                        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                        updateManager.applyUpdate();
+                    }
+                }
+            })
+        });
+
+        updateManager.onUpdateFailed(function () {
+            // 新版本下载失败
+        })
+    },
     upLoadFile() {
         dd.uploadAttachmentToDingTalk({
             image: { multiple: true, compress: false, max: 9, spaceId: "12345" },
@@ -144,6 +170,10 @@ Page({
                 {
                     PeopleId: "30426359483381436",
                     NodePeople: "cs",
+                },
+                {
+                    PeopleId: "023300645120473453",
+                    NodePeople: "傅云龙",
                 }
             );
             that.setData({

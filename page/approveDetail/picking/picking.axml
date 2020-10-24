@@ -29,6 +29,7 @@
 			<view a:if="{{index==0}}">
 				<template is="suggest"/>
 				<button type="primary" formType="submit" disabled="{{disablePage}}">同意</button>
+				<!--<button type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button> -->
 				<button a:if="{{nodeid < 3  && nodeInfo.IsBack}}" type="warn" onTap="tapReturn" disabled="{{disablePage}}">退回</button>
 			</view>
 			<view a:if="{{ index!= 0 && state == '已完成' }}">

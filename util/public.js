@@ -10,7 +10,7 @@ let xTap = -90;
 let yTap = -90;
 
 let States = ["在研", "已完成", "终止"];
-let ProjectTypes = ["自研项目", "纵向项目", "横向项目", "测试项目"];
+let ProjectTypes = ["自研项目", "纵向项目", "横向项目", "测试项目"]; 
 let CompanyNames = ["泉州华中科技大学智能制造研究院", "泉州华数机器人有限公司"];
 let IntellectualPropertyTypes = ["发明", "实用新型", "外观", "软件著作权"];
 let localStorage = "";
@@ -19,11 +19,11 @@ export default {
     data: {
         ...lib.data,
         ...template.data,
-        version: "2.1.28",
+        version: "2.1.36",
         DingData: {
             nickName: "",
-            departName: "",
-            userid: "",
+            departName: "",  
+            userid: "", 
         },
         reg: /^-?\d+$/, //只能是整数数字
         reg2: /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$ /, //正浮点数
@@ -645,7 +645,7 @@ export default {
                         break; //成品
                     case "23":
                         url = "PurchaseOrder/QuaryByTaskId";
-                        break; //图纸下单
+                        break; //图纸下单 
                     case "28":
                         url = "Pick/Read";
                         break; //领料
@@ -788,7 +788,7 @@ export default {
                 console.log(this.data.flowid);
                 switch (this.data.flowid) {
                     case "6":
-                        (url = "DrawingUploadNew/PrintAndSend"), (method = "post");
+                        (url = "DrawingUpload/PrintAndSend"), (method = "post");
                         break; //图纸审批
                     case "24":
                         (url = "PurchaseNew/PrintAndSend"), (method = "post");
