@@ -1,5 +1,5 @@
 <!-- 选人控件 -->
-<!-- <template name="choosePeople">
+<template name="choosePeople">
 	<view style="padding:40rpx 0;clear:left;">
 		<view a:for="{{nodeList}}" a:for-item="node">
 			<view class="tag tag-warning" style="width:160rpx;margin-right:10rpx;"> {{node.NodeName}}</view>
@@ -17,7 +17,7 @@
 			<view a:if="{{index< length-1}}" style="font-size:100rpx;line-height:60rpx;color:#409EFF;margin-left:40rpx;padding:10rpx;">﹀</view>
 		</view>
 	</view>
-</template> -->
+</template>
 <!-- 选人控件 发起审批流程 -->
 <template name="choosePeople">
 	<view class="choosePeople">
@@ -61,7 +61,7 @@
 					</view>
 					<view a:if="{{node.AddPeople.length <= 2}}" a:for="{{node.AddPeople}}" a:for-item="ad" a:for-index="index" style="display:inline-block;">
 						<view class="choosePeople-view-right-item">
-							<view a:if="{{ad.name.length == 2}}"> 
+							<view a:if="{{ad.name.length == 2}}">
 									{{ad.name}}
 							</view>
 							<view a:if="{{ad.name.length > 2}}"> 
@@ -108,7 +108,7 @@
 	<view class="choosePeople">
 		<view class="choosePeople-title">审批流程</view>
 		<view a:for="{{nodeList}}" a:for-item="node" a:if="{{node}}">
-			<view class="choosePeople-view-new"  a:if="{{node.NodeName !== '结束'}}">
+			<view class="choosePeople-view-new" a:if="{{node.NodeName !== '结束'}}">
 				<!-- 左边的点和线 -->
 				<view class="choosePeople-view-left">
 					<view class="choosePeople-view-left-icon">
@@ -150,21 +150,23 @@
 				<view a:else = "{{node.ApplyMan == null && node.AddPeople.length == 0 }}" class="choosePeople-view-right-plus-new" style="font-size:30rpx;">
 						待选
 				</view>
-				<view class="choosePeople-view-text">
-					<view class="choosePeople-view-text-top"> 
-                {{node.NodeName}}
+				<view style="margin-top:10px">				
+					<view class="choosePeople-view-text">
+						<view class="choosePeople-view-text-top"> 
+									{{node.NodeName}}
+						</view>
+					<view a:if="{{node.ApplyTime}}" class="choosePeople-view-text-right">{{node.ApplyTime.substring(5,16)}}</view>
+					<view a:if="{{!node.ApplyTime && node.NodeName.indexOf('抄送') == -1 }}" class="choosePeople-view-text-right">未审批</view>
+					<view a:if="{{!node.ApplyTime && node.NodeName.indexOf('抄送') != -1 }}" class="choosePeople-view-text-right">未查看</view>
 					</view>
 					<view a:if="{{node.NodeName !== '抄送'}}" class="choosePeople-view-text-bottom">
-                {{node.Remark}}
+									{{node.Remark}}
 					</view>
 				</view>
-				<view a:if="{{node.ApplyTime}}" class="choosePeople-view-text-right">{{node.ApplyTime.substring(5,16)}}</view>
-				<view a:if="{{!node.ApplyTime && node.NodeName.indexOf('抄送') == -1 }}" class="choosePeople-view-text-right">未审批</view>
-				<view a:if="{{!node.ApplyTime && node.NodeName.indexOf('抄送') != -1 }}" class="choosePeople-view-text-right">未查看</view>
+
 			</view>
 		</view>
-	</view>
-</template>
+	</view></template>
 <!-- 通过选择改变流程配置的人员  -->
 <template name="choosePeopleAndChange">
 	<view class="choosePeople">
@@ -263,25 +265,13 @@
 				<text>操作</text></view>
 			<view class="cell-new cell-title" style="width:100rpx;" a:if="{{tableOperate2}}">
 				<text>操作2</text></view>
-			<view class="cell-new cell-title" style="width:200rpx;" a:if="{{selectOperate}}">
-				<text>{{selectOperate}}</text>
-			</view>
 			<view class="cell-new cell-title" a:for="{{items}}" style="width:{{item.width}}rpx;">
 				<text>{{item.label}}</text></view>
 			<view a:for="{{data}}" a:for-item="d" style="padding:0px;margin:0px">
 				<view class="cell-new" style="width:100rpx;" a:if="{{tableOperate}}">
 					<text class="button" data-row="{{d}}" data-index="{{index}}">{{tableOperate}}</text></view>
 				<view class="cell-new" style="width:100rpx;" a:if="{{tableOperate2}}">
-					<text class="button" data-row="{{d}}" data-index="{{index}}" data-opt2="{{true}}">{{tableOperate2}}</text>
-				</view>
-				<view class="cell-new" style="width:200rpx;" a:if="{{selectOperate}}">
-					<picker onChange="tableSelect" data-index="{{index}}" value="{{d.index}}" range="{{tableOptions}}" range-key="name">
-						<view class="row-picker">
-							<view class="row-extra-picker">{{tableOptions[d.index].name}}</view>
-							<image class="row-arrow-picker" src="/image/arrowright.png" mode="aspectFill" />
-						</view>
-					</picker>
-				</view>
+					<text class="button" data-row="{{d}}" data-index="{{index}}" data-opt2="{{true}}">{{tableOperate2}}</text></view>
 				<view class="cell-new" a:for="{{items}}" style="width:{{item.width}}rpx;">
 					<text a:if="{{d[item.prop].indexOf('删除')>=0}}" style="color:red;">{{(d[item.prop] == null || d[item.prop] == undefined)?'-':d[item.prop]}}</text>
 					<text a:else>{{(d[item.prop] == null || d[item.prop] == undefined)?'-':d[item.prop]}}</text></view></view></scroll-view>
@@ -292,7 +282,11 @@
 				<text style="color:red;">  -  提示：向右滑动显示全部信息</text></view>
 			<view>
 				<button type="primary" size="mini" plain="true" class="table-previous" data-page="{{param.now-1}}" onTap="handleCurrentChange" a:if="{{param.now > 1 }}">上一页</button>
-				<button type="primary" size="mini" plain="true" class="table-next" data-page="{{param.now + 1}}" onTap="handleCurrentChange" a:if="{{param.total/5 > param.now}}">下一页</button></view></view></view></template>
+				<button type="primary" size="mini" plain="true" class="table-next" data-page="{{param.now + 1}}" onTap="handleCurrentChange" a:if="{{param.total/5 > param.now}}">下一页</button>
+			</view>
+		</view>
+	</view> 
+</template>
 <!-- 必填前缀 -->
 <template name="required">
 	<view style="color:red;display:inline-block;vertical-align:middle;
@@ -315,7 +309,7 @@ margin-right:0.1rem;">*
 					<view class="page-section">
 						<view class="page-section-title">退回建议</view>
 						<view class="page-section-demo">
-							<textarea name="remark" placeholder="请输入退回建议" maxlength="20"/>
+							<textarea name="remark" placeholder="请输入退回建议" maxlength="80"/>
 						</view>
 					</view>
 					<view class="buttons">
@@ -339,7 +333,7 @@ margin-right:0.1rem;">*
 					<view class="page-section">
 						<view class="page-section-title">修改意见</view>
 						<view class="page-section-demo">
-							<textarea name="remark" placeholder="输入修改意见" maxlength="20" />
+							<textarea name="remark" placeholder="输入修改意见" maxlength="80" />
 						</view>
 					</view>
 					<button type="warn" style="margin-bottom:0;" disabled="{{disablePage}}" formType="submit">修改</button>
@@ -481,7 +475,7 @@ margin-right:0.1rem;">*
 	<view class="page-section-suggest">
 		<view class="page-section-title">建议</view>
 		<view class="page-section-demo">
-			<textarea name="remark" placeholder="请输入建议" data-name="remark" onInput="inputToTable" maxlength="20" value="{{table.remark}}" />
+			<textarea name="remark" placeholder="请输入建议" data-name="remark" onInput="inputToTable" maxlength="80" value="{{table.remark}}" />
 		</view>
 	</view>
 </template>

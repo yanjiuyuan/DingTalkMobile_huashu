@@ -10,10 +10,27 @@ let xTap = -90;
 let yTap = -90;
 
 let States = ["在研", "已完成", "终止"];
-let ProjectTypes = ["自研项目", "纵向项目", "横向项目", "测试项目"]; 
+let ProjectTypes = ["自研项目", "纵向项目", "横向项目", "测试项目"];
 let CompanyNames = ["泉州华中科技大学智能制造研究院", "泉州华数机器人有限公司"];
 let IntellectualPropertyTypes = ["发明", "实用新型", "外观", "软件著作权"];
 let localStorage = "";
+
+//节流
+// function throttle(fn, wait) {
+//     var timer = null;
+//     return function () {
+//         var context = this;
+//         var args = arguments;
+//         if (!timer) {
+//             console.log('我执行力')
+//             timer = setTimeout(function () {
+//                 fn.apply(context, args);
+//                 timer = null;
+//             }, wait)
+//         }
+//     }
+// }
+
 
 export default {
     data: {
@@ -22,8 +39,8 @@ export default {
         version: "2.1.36",
         DingData: {
             nickName: "",
-            departName: "",  
-            userid: "", 
+            departName: "",
+            userid: "",
         },
         reg: /^-?\d+$/, //只能是整数数字
         reg2: /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$ /, //正浮点数
@@ -85,6 +102,20 @@ export default {
     func: {
         ...lib.func,
         ...template.func,
+        throttle(fn, wait) {
+            var pre = Date.now();
+            return function () {
+                var context = this;
+                var args = arguments;
+                var now = Date.now();
+                if (now - pre >= wait) {
+                    console.log('我执行力')
+
+                    fn.apply(context, args);
+                    pre = Date.now();
+                }
+            }
+        },
 
         start: {
             onLoad(param) {
@@ -94,7 +125,7 @@ export default {
                     flowid: param.flowid,
                     "tableInfo.Title": param.title,
                 });
-                let callBack = function() {
+                let callBack = function () {
                     //临时保存后无需再向服务器请求数据
                     if (
                         app.globalData[`${param.flowid}`] == undefined ||
@@ -140,7 +171,9 @@ export default {
                             that.setData({
                                 addPeopleNodes: [2, 5],
                             });
-                        } else if (that.data.flowid == 30) {
+
+                        }
+                        else if (that.data.flowid == 30) {
                             let placeArr = data.table.Place.split(",");
                             that.setData({
                                 placeArr: placeArr,
@@ -167,7 +200,6 @@ export default {
                                 purchaseList: that.data.purchaseList,
                             });
                         } else {
-                            console.log("sssss");
                             that.setData({
                                 tableParam2: {
                                     total: data.tableParam.total,
@@ -190,6 +222,10 @@ export default {
             },
             //提交审批
             approvalSubmit(param = {}, callBack, param2 = {}) {
+                debugger;
+                throttle(this.approvalSubmitss(param, callBack, param2), 1000);
+            },
+            approvalSubmitss(param = {}, callBack, param2 = {}) {
                 if (!this.data.DingData.userid) {
                     dd.alert({
                         content: promptConf.promptConf.LoginPrompt,
@@ -297,7 +333,7 @@ export default {
                 });
                 that._postData(
                     "FlowInfoNew/CreateTaskInfo",
-                    function(res) {
+                    function (res) {
                         let taskid = res;
                         callBack(taskid);
                     },
@@ -320,7 +356,7 @@ export default {
                 that.requestData(
                     "GET",
                     "Purchase/GetICItem" + that.formatQueryStr({ Key: value.keyWord }),
-                    function(res) {
+                    function (res) {
                         console.log(JSON.parse(res.data));
                         if (JSON.parse(res.data).length == 0) {
                             dd.alert({
@@ -381,7 +417,7 @@ export default {
                     flowname: param.flowname,
                 });
 
-                let callBack = function() {
+                let callBack = function () {
                     that.getFormData();
                     that.getBomInfo(param.flowid);
                     that.getNodeList();
@@ -487,7 +523,7 @@ export default {
                 }
                 that._postData(
                     "FlowInfoNew/SubmitTaskInfo",
-                    function(res) {
+                    function (res) {
                         dd.alert({
                             content: promptConf.promptConf.SuccessfulSubmission,
                             buttonText: promptConf.promptConf.Confirm,
@@ -536,7 +572,7 @@ export default {
                             }
                             that._postData(
                                 "FlowInfoNew/FlowBack",
-                                function(res) {
+                                function (res) {
                                     dd.alert({
                                         content: promptConf.promptConf.ApplicationWithdrawn,
                                         buttonText: promptConf.promptConf.Confirm,
@@ -587,7 +623,7 @@ export default {
                             }
                             that._postData(
                                 "FlowInfoNew/FlowBack",
-                                function(res) {
+                                function (res) {
                                     dd.alert({
                                         content: promptConf.promptConf.ApplicationReturned,
                                         buttonText: promptConf.promptConf.Confirm,
@@ -614,7 +650,7 @@ export default {
                 };
                 this._getData(
                     "FlowInfoNew/GetApproveInfo" + this.formatQueryStr(param),
-                    function(res) {
+                    function (res) {
                         that.setData({
                             tableInfo: res,
                         });
@@ -699,7 +735,7 @@ export default {
                 }
                 this._getData(
                     url + this.formatQueryStr({ TaskId: this.data.taskid }),
-                    function(res) {
+                    function (res) {
                         if (flowid == "33") {
                             res = res.DrawingChangeList;
                             for (let r of res) {
@@ -883,7 +919,7 @@ export default {
 
                 //GET方法
                 if (method == "get") {
-                    this._getData(url + this.formatQueryStr(obj), function(res) {
+                    this._getData(url + this.formatQueryStr(obj), function (res) {
                         dd.alert({
                             content: promptConf.promptConf.PrintFrom,
                             buttonText: promptConf.promptConf.Confirm,
@@ -894,7 +930,7 @@ export default {
                 if (method == "post") {
                     this._postData(
                         url,
-                        function(res) {
+                        function (res) {
                             dd.alert({
                                 content: promptConf.promptConf.PrintFrom,
                                 buttonText: promptConf.promptConf.Confirm,
@@ -952,7 +988,7 @@ export default {
                             taskId: this.data.taskid,
                         };
                     }
-                    this._getData(url + this.formatQueryStr(obj), function(res) {
+                    this._getData(url + this.formatQueryStr(obj), function (res) {
                         dd.alert({
                             content: promptConf.promptConf.OutPutBom,
                             buttonText: promptConf.promptConf.Confirm,
@@ -966,7 +1002,7 @@ export default {
                     };
                     this._postData(
                         url,
-                        function(res) {
+                        function (res) {
                             dd.alert({
                                 content: promptConf.promptConf.OutPutBom,
                                 buttonText: promptConf.promptConf.Confirm,
@@ -1142,17 +1178,18 @@ export default {
                         if (this.data.nodeList[i].NodePeople == undefined) {
                             break;
                         }
+                        debugger;
                         if (
                             this.data.nodeList[i].NodeName != "结束" &&
                             this.data.nodeList[i].NodePeople.length > 0 &&
-                            tempNodeList[i].ApplyMan == null
+                            !tempNodeList[this.data.nodeList[i].NodeId].ApplyMan
                         ) {
-                            tempNodeList[i].AddPeople = [
+                            tempNodeList[this.data.nodeList[i].NodeId].AddPeople.push(
                                 {
                                     name: this.data.nodeList[i].ApplyMan,
                                     userId: this.data.nodeList[i].ApplyManId,
                                 },
-                            ];
+                            );
                         }
                     }
                 }
@@ -1168,8 +1205,8 @@ export default {
             let that = this;
             this._getData(
                 "FlowInfoNew/LoadFlowSort" +
-                    that.formatQueryStr({ userid: app.userInfo.userid, IsAll: isAll }),
-                function(data) {
+                that.formatQueryStr({ userid: app.userInfo.userid, IsAll: isAll }),
+                function (data) {
                     let sorts = data;
                     app.globalData.ALLsort = JSON.parse(JSON.stringify(data));
                     that.setData({ sort: data });
@@ -1210,7 +1247,7 @@ export default {
                 }
             );
         },
-        getNodeList_done(nodeList) {},
+        getNodeList_done(nodeList) { },
         //获取项目列表
         getProjectList() {
             let that = this;
@@ -1236,7 +1273,7 @@ export default {
             let that = this;
             this._getData(
                 "FlowInfoNew/getnodeinfo" +
-                    this.formatQueryStr({ FlowId: this.data.flowid, nodeId: this.data.nodeid }),
+                this.formatQueryStr({ FlowId: this.data.flowid, nodeId: this.data.nodeid }),
                 res => {
                     that.setData({
                         nodeInfo: res[0],
@@ -1458,7 +1495,7 @@ export default {
             this.requestData(
                 "POST",
                 url,
-                function(res) {
+                function (res) {
                     if (JSON.parse(res.data).errmsg == "ok") {
                         dd.alert({
                             content: promptConf.promptConf.Download,
@@ -1594,7 +1631,7 @@ export default {
                                     "Content-Type": "application/json; charset=utf-8",
                                     Accept: "application/json",
                                 },
-                                success: function(res) {
+                                success: function (res) {
                                     console.log(res);
                                     let name = res.data.name;
                                     if (!result.userid) {
@@ -1665,10 +1702,10 @@ export default {
             for (let i = 0, len = imageList.length; i < len; i++) {
                 arr.push(
                     "~\\" +
-                        imageList[i]
-                            .slice(this.data.dormainName.length)
-                            .replace("/", "\\")
-                            .replace("/", "\\")
+                    imageList[i]
+                        .slice(this.data.dormainName.length)
+                        .replace("/", "\\")
+                        .replace("/", "\\")
                 );
                 this.setData({
                     imgUrlList: arr,
@@ -1775,7 +1812,7 @@ export default {
                 data: {
                     data: that.data,
                 },
-                success: function() {
+                success: function () {
                     app.globalData[`${that.data.flowid}`] = true;
                     dd.alert({
                         content: promptConf.promptConf.TemporaryPreservation,
@@ -1788,7 +1825,7 @@ export default {
             let that = this;
             dd.getStorage({
                 key: `${flowid}`,
-                success: function(res) {
+                success: function (res) {
                     that.data = res.data.data;
                     for (let d in that.data) {
                         that.setData({
@@ -1797,12 +1834,12 @@ export default {
                     }
                     dd.removeStorage({
                         key: `${flowid}`,
-                        success: function() {
+                        success: function () {
                             app.globalData[`${flowid}`] = false;
                         },
                     });
                 },
-                fail: function(res) {},
+                fail: function (res) { },
             });
         },
         //流程图

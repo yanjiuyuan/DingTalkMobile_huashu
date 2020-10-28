@@ -337,6 +337,7 @@ Page({
         this.createMaskShowAnim();
         this.createContentShowAnim();
     },
+    //编辑选人
     choosePeople(e) {
         let that = this;
         console.log("start choose people");
@@ -348,8 +349,9 @@ Page({
             ...that.data.chooseParam,
             title: "选择审批人",
             pickedUsers: PeopleId || [],
-            multiple: NodeName.indexOf("抄送") != -1 ? true : false,
-            success: function(res) {
+            // multiple: NodeName.indexOf("抄送") != -1 ? true : false,
+            multiple: true,
+            success: function (res) {
                 console.log(res);
                 let names = []; //userId
                 let userids = [];
@@ -366,7 +368,15 @@ Page({
                     that.setData({
                         nodeList: that.data.nodeList,
                     });
-                } else if (res.departments.length > 0 && res.users.length == 0) {
+                }
+                else if (res.departments.length == 0 && res.users.length == 0) {
+                    that.data.nodeList[NodeId].NodePeople = "";
+                    that.data.nodeList[NodeId].PeopleId = "";
+                    that.setData({
+                        nodeList: that.data.nodeList,
+                    });
+                }
+                else if (res.departments.length > 0 && res.users.length == 0) {
                     let deptId = [];
                     for (let i of res.departments) {
                         deptId.push(i.id);
@@ -444,7 +454,6 @@ Page({
                         deptId
                     );
                 }
-                return;
                 ///////////////////////////////////
                 if (res.departments.length == 0) {
                     for (let d of res.users) {
@@ -485,80 +494,194 @@ Page({
                                 ["nodeList[NodeId].NodePeople"]: names,
                                 ["nodeList[NodeId].PeopleId"]: ids,
                             });
-                        },
+                        },  
                         deptId
                     );
                 }
             },
-            fail: function(err) {},
+            fail: function (err) { },
         });
     },
     choosePeoples(e) {
-        let that = this;
         console.log("start choose people");
+        let nodeId = e.target.targetDataset.NodeId;
+        let that = this;
         dd.complexChoose({
             ...that.data.chooseParam,
-            title: "选择审批人",
-            multiple: that.data.multiple || false,
-            success: function(res) {
+            pickedUsers: that.data.pickedUsers || [], //已选用户
+            multiple: true, 
+            title: "权限成员",
+            success: function (res) { 
                 console.log(res);
-                let names = [];
-                let ids = [];
-                let addPeoples = [];
-                if (res.departments.length == 0) {
+                let names = []; //userId
+                let userids = [];
+                if (res.departments.length == 0 && res.users.length > 0) {
+                    that.data.pickedUsers = [];
                     for (let d of res.users) {
+                        that.data.pickedUsers.push(d.userId);
                         names.push(d.name);
-                        ids.push(d.userId);
-                        addPeoples.push({
-                            name: d.name,
-                            userId: d.userId,
-                        });
+                        userids.push(d.userId);
                     }
                     that.setData({
                         Approver: names.join(","),
-                        PeopleId: ids.join(","),
+                        PeopleId: userids.join(","),
                     });
-                } else {
+
+                }
+                else if (res.departments.length == 0 && res.users.length == 0) {
+                    that.setData({
+                        Approver: names.join(","),
+                        PeopleId: userids.join(","),
+                    });
+                }
+                else if (res.departments.length > 0 && res.users.length == 0) {
                     let deptId = [];
                     for (let i of res.departments) {
                         deptId.push(i.id);
                     }
+
                     that.postDataReturnData(
                         "DingTalkServers/GetDeptAndChildUserListByDeptId",
-                        res => {
-                            console.log(res.data);
+                        result => {
+                            console.log(result.data);
                             that.data.pickedUsers = [];
                             that.data.pickedDepartments = [];
                             let userlist = [];
-                            for (let i in res.data) {
-                                let data = JSON.parse(res.data[i]);
+                            for (let i in result.data) {
+                                let data = JSON.parse(result.data[i]);
                                 that.data.pickedDepartments.push(i);
                                 userlist.push(...data.userlist);
                                 for (let d of data.userlist) {
                                     that.data.pickedUsers.push(d.userid);
                                     names.push(d.name);
-                                    ids.push(d.userid);
-                                    addPeoples.push({
-                                        name: d.name,
-                                        userId: d.userId,
-                                    });
+                                    userids.push(d.userid);
                                     d.userId = d.userid;
                                 }
                             }
+                            that.data.pickedUsers = [...new Set(that.data.pickedUsers)];
                             names = [...new Set(names)]; //数组去重
-                            ids = [...new Set(ids)]; //数组去重
+                            userids = [...new Set(userids)]; //数组去重
+
                             that.setData({
                                 Approver: names.join(","),
-                                PeopleId: ids.join(","),
+                                PeopleId: userids.join(","),
+                            });
+                        },
+                        deptId
+                    );
+                }
+                else if (res.departments.length > 0 && res.users.length > 0) {
+                    let deptId = [];
+                    for (let i of res.departments) {
+                        deptId.push(i.id);
+                    }
+
+                    that.postDataReturnData(
+                        "DingTalkServers/GetDeptAndChildUserListByDeptId",
+                        result => {
+                            console.log(result.data);
+                            that.data.pickedUsers = [];
+                            that.data.pickedDepartments = [];
+                            let userlist = [];
+                            for (let i in result.data) {
+                                let data = JSON.parse(result.data[i]);
+                                that.data.pickedDepartments.push(i);
+                                userlist.push(...data.userlist);
+                                for (let d of data.userlist) {
+                                    that.data.pickedUsers.push(d.userid);
+                                    names.push(d.name);
+                                    userids.push(d.userid);
+                                    d.userId = d.userid;
+                                }
+                            }
+                            for (let i of res.users) {
+                                that.data.pickedUsers.push(i.userId);
+                                names.push(i.name);
+                                userids.push(i.userId);
+                            }
+                            that.data.pickedUsers = [...new Set(that.data.pickedUsers)];
+                            names = [...new Set(names)]; //数组去重
+                            userids = [...new Set(userids)]; //数组去重
+
+                            that.setData({
+                                Approver: names.join(","),
+                                PeopleId: userids.join(","),
                             });
                         },
                         deptId
                     );
                 }
             },
-            fail: function(err) {},
+            fail: function (err) { },
         });
     },
+    // choosePeoples(e) {
+    //     let that = this;
+    //     console.log("start choose people");
+    //     dd.complexChoose({
+    //         ...that.data.chooseParam,
+    //         title: "选择审批人",
+    //         multiple: that.data.multiple || false,
+    //         success: function(res) {
+    //             console.log(res);
+    //             let names = [];
+    //             let ids = [];
+    //             let addPeoples = [];
+
+    //             if (res.departments.length == 0) {
+    //                 for (let d of res.users) {
+    //                     names.push(d.name);
+    //                     ids.push(d.userId);
+    //                     addPeoples.push({
+    //                         name: d.name,
+    //                         userId: d.userId,
+    //                     });
+    //                 }
+    //                 that.setData({
+    //                     Approver: names.join(","),
+    //                     PeopleId: ids.join(","),
+    //                 });
+    //             } else {
+    //                 let deptId = [];
+    //                 for (let i of res.departments) {
+    //                     deptId.push(i.id);
+    //                 }
+    //                 that.postDataReturnData(
+    //                     "DingTalkServers/GetDeptAndChildUserListByDeptId",
+    //                     res => {
+    //                         console.log(res.data);
+    //                         that.data.pickedUsers = [];
+    //                         that.data.pickedDepartments = [];
+    //                         let userlist = [];
+    //                         for (let i in res.data) {
+    //                             let data = JSON.parse(res.data[i]);
+    //                             that.data.pickedDepartments.push(i);
+    //                             userlist.push(...data.userlist);
+    //                             for (let d of data.userlist) {
+    //                                 that.data.pickedUsers.push(d.userid);
+    //                                 names.push(d.name);
+    //                                 ids.push(d.userid);
+    //                                 addPeoples.push({
+    //                                     name: d.name,
+    //                                     userId: d.userId,
+    //                                 });
+    //                                 d.userId = d.userid;
+    //                             }
+    //                         }
+    //                         names = [...new Set(names)]; //数组去重
+    //                         ids = [...new Set(ids)]; //数组去重
+    //                         that.setData({
+    //                             Approver: names.join(","),
+    //                             PeopleId: ids.join(","),
+    //                         });
+    //                     },
+    //                     deptId
+    //                 );
+    //             }
+    //         },
+    //         fail: function(err) {},
+    //     });
+    // },
     //添加--取消
     cancel() {
         this.setData({
@@ -896,7 +1019,7 @@ Page({
                 }
             }
         }
-        console.log(this.data.nodeList);
+        console.log(this.data.nodeList); 
         this.setData({
             nodeList: this.data.nodeList,
             IsSend: false,
@@ -993,7 +1116,7 @@ Page({
         console.log(this.data.nodeList);
         let nodeArray = this.data.nodeList;
         for (let i = 0, length = this.data.nodeList.length; i < length; i++) {
-            console.log(nodeArray[i].NodePeople);
+            console.log(i);
             nodeArray[i].NodePeople = nodeArray[i].NodePeople
                 ? nodeArray[i].NodePeople.join(",")
                 : "";

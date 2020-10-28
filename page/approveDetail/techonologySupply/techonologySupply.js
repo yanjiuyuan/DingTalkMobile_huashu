@@ -281,7 +281,13 @@ Page({
 
     onReady() {
         var that = this;
-
+        if(this.data.nodeid == 1 && this.data.index == 0){
+                dd.alert({
+                    content: "小程序暂无上传文件功能，请移步PC端上传文件！",
+                    buttonText: promptConf.promptConf.Confirm
+                }); 
+                return;
+        }
         this._getData("TechnicalSupport/Read" + this.formatQueryStr({ TaskId: this.data.taskid }), res => {
             for (let r in res) {
                 if (res[r] === null) res[r] = "";

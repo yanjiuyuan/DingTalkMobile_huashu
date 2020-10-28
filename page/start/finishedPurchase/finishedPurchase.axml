@@ -12,7 +12,7 @@
                 <view class="form-row-label">
                   <template is="required"></template>单位</view>
                 <view class="form-row-content">
-                  <input name="Unit" class="input" placeholder="单位" />
+                  <input name="Unit" class="input" placeholder="单位" value="{{t.Unit}}"/>
                 </view>
               </view>
             </view>
@@ -20,7 +20,7 @@
               <view class="form-row">
                 <view class="form-row-label">单价</view>
                 <view class="form-row-content">
-                  <input name="Price" class="input" placeholder="单价" />
+                  <input name="Price" class="input" placeholder="单价" value="{{t.Price}}" />
                 </view>
               </view>
             </view>
@@ -29,7 +29,7 @@
                 <view class="form-row-label">
                   <template is="required"></template>数量</view>
                 <view class="form-row-content">
-                  <input name="Count" class="input" placeholder="数量" />
+                  <input name="Count" class="input" placeholder="数量" value="{{t.Count}}"/>
                 </view>
               </view>
             </view>
@@ -58,7 +58,7 @@
                 <view class="form-row-label">
                   <template is="required"></template>用途</view>
                 <view class="form-row-content">
-                  <input name="Purpose" class="input" placeholder="用途" />
+                  <input name="Purpose" class="input" placeholder="用途" value="{{t.Purpose}}"/>
                 </view>
               </view>
             </view>
@@ -66,13 +66,14 @@
               <view class="form-row">
                 <view class="form-row-label">备注</view>
                 <view class="form-row-content">
-                  <input name="Mark" class="input" placeholder="备注" />
+                  <input name="Mark" class="input" placeholder="备注" value="{{t.Mark}}"/>
                 </view>
               </view>
             </view>
           </scroll-view>
           <view class="buttons">
-            <button type="primary" class="button-size" formType="submit">添加</button>
+            <button a:if="{{!ifedit}}" type="primary" class="button-size" formType="submit">添加</button>
+            <button a:if="{{ifedit}}" type="primary" class="button-size" formType="submit">编辑</button>
             <button type="warn" class="button-size" onTap="onModalCloseTap">取消</button></view>
           <!--<view class="buttons"><button a:if="{{!ifedit}}" type="primary" class="button-size" formType="submit">添加</button><button a:if="{{ifedit}}" type="primary" class="button-size" formType="submit">编辑</button><button type="warn" class="button-size" onTap="onModalCloseTap">取消</button></view> -->
         </form>
@@ -94,7 +95,7 @@
           <my-picker index="{{departmentIdnex}}" range ="{{DingData.departmentList}}" onChange="bindObjPickerChange" value="{{tableInfo.Dept}}"/>
         </view>
       </view>
-      <view class="form-row">
+      <!-- <view class="form-row">
         <view class="form-row-label">合同名称</view>
         <picker onChange="bindPickerContractChange" value="{{ContractNameIndex}}" range="{{ContractNameList}}" range-key="ContractName">
           <view class="row">
@@ -102,6 +103,10 @@
             <image class="row-arrow" src="/image/arrowright.png" mode="aspectFill" />
           </view>
         </picker>
+      </view> -->
+      <view class="form-row">
+        <view class="form-row-label">合同名称</view>
+        <my-picker onChange="bindPickerContractChange" index="{{ContractNameIndex}}" range="{{ContractNameList}}" value="{{tableInfo.ProjectName}}" rangeKey="ContractName"></my-picker>
       </view>
       <!-- 搜索 -->
       <form onSubmit="search">
@@ -123,7 +128,7 @@
       <!-- 已选物料表单 -->
       <view onTap="deleteItem">
         <text>已选物料表单</text>
-        <template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2}}"/>
+        <template is="datatable" data="{{items:tableItems2,data:purchaseList,param:tableParam2,tableOperate:tableOperate2,tableOperate2:tableOperate3}}"/>
       </view>
       <!-- 选人组件 -->
       <template is="choosePeople" data="{{nodeList:nodeList,nodedata:nodeInfo,length:nodeList.length}}"/>

@@ -1,9 +1,6 @@
 <!-- 排序页面 -->
-<view class="top">
-	<view class="text">
+<view class="text">
   按住拖动排序
-	</view>
-	<!--<view><button type="primary" onTap="update" disabled="{{disablePage}}" class="button-inline" style="margin:20rpx 20rpx 0 0">更新</button></view> -->
 </view>
 <view class='item_container'>
 	<view a:for='{{all_list}}' a:for-index="a" a:for-item="m" class="item" longTap="longTab" style="left:{{m.left}}px;top:{{m.top}}px">

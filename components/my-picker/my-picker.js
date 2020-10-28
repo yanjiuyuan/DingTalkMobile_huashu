@@ -40,12 +40,13 @@ Component({
     },
     //组件传入动态获取的数据
     didUpdate() {
-        // if (typeof this.props.rangeKey == "string") {
-        //     this.ObjectValueToIndex();
-        // }
-        // if (typeof this.props.rangeKey == "object") {
-        //     this.StringValueToIndex();
-        // }
+        if (typeof this.props.rangeKey == "string") {
+            console.log(this.props);
+            this.ObjectValueToIndex();
+        }
+        if (typeof this.props.rangeKey == "object") {
+            this.StringValueToIndex();
+        }
     },
     didUnmount() {},
     methods: {

@@ -7,7 +7,7 @@
 	<view a:for="{{nodeList}}">
 		<view class="box">
 			<view class="text" onTap="editor" data-NodeId="{{item.NodeId}}">{{item.NodeName}}</view>
-			<view class="people" a:if="{{item.NodeName != '结束'}}">
+			<view class="people" a:if="{{item.NodeName != '结束'  && item.NodeName != '申请人发起'}}">
 				<view a:if="{{item.NodePeople}}" class="peoples">
 					<view a:if="{{item.NodePeople.length > 2}}">
 						<text class="people-item">多人</text>
@@ -19,8 +19,8 @@
 					</view>
 				</view>
 			</view>
-			<view onTap="choosePeople" data-NodeName="{{item.NodeName}}" data-NodeId="{{item.NodeId}}" data-PeopleId="{{item.PeopleId}}" a:if="{{item.NodeName != '结束'}}">选人</view>
-			<view class="delete" onTap="delete" data-NodeId="{{item.NodeId}}" a:if="{{item.NodeName != '结束'}}"></view>
+			<view onTap="choosePeople" data-NodeName="{{item.NodeName}}" data-NodeId="{{item.NodeId}}" data-PeopleId="{{item.PeopleId}}" a:if="{{item.NodeName != '结束' && item.NodeName != '申请人发起'}}">选人</view>
+			<view class="delete" onTap="delete" data-NodeId="{{item.NodeId}}" a:if="{{item.NodeName != '结束' && item.NodeName != '申请人发起'}}"></view>
 		</view>
 		<view class="line" a:if="{{item.NodeName != '结束'}}"></view>
 		<view class="circular" onTap="add" data-NodeId="{{item.NodeId}}" a:if="{{item.NodeName != '结束'}}">
@@ -155,7 +155,7 @@
 				<view class="page-section">
 					<view class="title">编辑节点</view>
 					<scroll-view scroll-y="{{true}}" style="max-height:361px">
-						<view class="form-row-s">
+						<view class="form-row-s" a:if="{{NodeId != 0}}">
 							<view class="form-row-label-s">
 								<template is="required"></template>节点名称</view>
 							<view class="form-row-content">
@@ -170,7 +170,7 @@
 								</label>
 							</radio-group>
 						</view>
-						<view class="form-row-s">
+						<view class="form-row-s" a:if="{{NodeId != 0}}">
 							<view class="form-row-label-s">
 								<!--<template is="required"></template> -->
 								审批人配置

@@ -321,7 +321,7 @@ Page({
         //第二方法，编辑选项
         else {
             good = e.target.targetDataset.row;
-            if (!good) return;
+            if (!good) return; 
             this.setData({
                 hidden: !this.data.hidden,
                 ifedit: true,

@@ -25,7 +25,7 @@ Page({
         moveable: false, //是否开启移动功能
         showOrClose: [],
     },
-    onLoad: function() {
+    onLoad() {
         let that = this;
         let processedSort = []; //存储父级元素和子级元素
         let sort = []; //小程序端拥有的流程
@@ -51,7 +51,7 @@ Page({
 
         //计算父级节点的位置
         dd.getSystemInfo({
-            success: function(res) {
+            success: res => {
                 let width = (that.data.all_width = res.windowWidth),
                     _w = 0,
                     row = 0,
@@ -61,7 +61,7 @@ Page({
                 //项和下标
                 // row是列，colum是列
                 let sonHeight = 0;
-                arr.forEach(function(n, i) {
+                arr.forEach((n, i) => {
                     n.left =
                         (that.data.fatherWidth + that.data.fatherLeftDistance) * row +
                         that.data.fatherLeftDistance;
@@ -130,7 +130,7 @@ Page({
         }
     },
     //onTouchStart
-    moveStart: function(e) {
+    moveStart(e) {
         console.log("moveStart");
 
         //闭合父级
@@ -166,7 +166,7 @@ Page({
         });
     },
     //onTouchMove
-    move: function(e) {
+    move(e) {
         console.log("move");
 
         let that = this;
@@ -181,7 +181,7 @@ Page({
             });
         }
 
-        arr.forEach(function(n, i) {
+        arr.forEach((n, i) => {
             if (i == that.data.current) {
                 n.left = x2;
                 n.top = y2;
@@ -196,14 +196,14 @@ Page({
     },
 
     //onTouchEnd
-    moveEnd: function(e) {
+    moveEnd(e) {
         console.log("moveEnd");
         let underIndex = this.getCurrnetUnderIndex();
         let arr = [].concat(this.data.all_list);
         if (underIndex != null && underIndex != this.data.current) {
             this.changeArrayData(arr, underIndex, this.data.current);
         }
-        arr.forEach(function(n, i) {
+        arr.forEach((n, i) => {
             //重置
             n.left = n._left;
             n.top = n._top;
@@ -212,6 +212,7 @@ Page({
         this.SplicingFather(arr);
         this.setData({
             all_list: arr,
+            current: -1,
         });
     },
     //拼接数组
@@ -242,16 +243,16 @@ Page({
             "FlowInfoNew/LoadFlowModify",
             res => {
                 console.log(res);
-                dd.alert({
-                    content: promptConf.promptConf.UpdateSuccess,
-                    buttonText: promptConf.promptConf.Confirm,
-                });
+                // dd.alert({
+                //     content: promptConf.promptConf.UpdateSuccess,
+                //     buttonText: promptConf.promptConf.Confirm,
+                // });
             },
             obj
         );
     },
     //更换位置：数组，下标一，下标二
-    changeArrayData: function(arr, i1, i2) {
+    changeArrayData(arr, i1, i2) {
         let temp = arr[i1];
         arr[i1] = arr[i2];
         arr[i2] = temp;
@@ -270,7 +271,7 @@ Page({
     },
 
     //获取当前移动下方index
-    getCurrnetUnderIndex: function(endx, endy) {
+    getCurrnetUnderIndex(endx, endy) {
         var endx = x2 + this.data.fatherWidth / 2,
             endy = y2 + this.data.fatherHeight / 2;
         var v_judge = false,
@@ -404,7 +405,7 @@ Page({
             });
         }
 
-        arr[fatherIndex].flows.forEach(function(n, i) {
+        arr[fatherIndex].flows.forEach((n, i) => {
             if (i == that.data.sonCurrent) {
                 n.left = a2;
                 n.top = b2;
@@ -422,11 +423,12 @@ Page({
         let fatherIndex = e.target.dataset.fatherIndex;
         let Id = e.target.dataset.Id;
         let underIndex = this.getSonCurrnetUnderIndex(fatherIndex);
+        console.log(underIndex);
         let arr = [].concat(this.data.all_list);
         if (underIndex != null && underIndex != this.data.sonCurrent) {
             this.changeSonArrayData(arr[fatherIndex].flows, underIndex, this.data.sonCurrent);
         }
-        arr[fatherIndex].flows.forEach(function(n, i) {
+        arr[fatherIndex].flows.forEach((n, i) => {
             //重置
             n.left = n._left;
             n.top = n._top;
@@ -434,6 +436,7 @@ Page({
         this.SplicingSon(arr[fatherIndex].flows, Id);
         this.setData({
             all_list: arr,
+            sonCurrent: -1,
         });
     },
 
@@ -463,10 +466,11 @@ Page({
         this._postData(
             "FlowInfoNew/FlowModify",
             res => {
-                dd.alert({
-                    content: promptConf.promptConf.UpdateSuccess,
-                    buttonText: promptConf.promptConf.Confirm,
-                });
+                console.log(res);
+                // dd.alert({
+                //     content: promptConf.promptConf.UpdateSuccess,
+                //     buttonText: promptConf.promptConf.Confirm,
+                // });
             },
             obj
         );
@@ -489,7 +493,7 @@ Page({
     },
 
     //获取子节点的下一个index
-    getSonCurrnetUnderIndex: function(fatherIndex) {
+    getSonCurrnetUnderIndex(fatherIndex) {
         var endx = a2 + this.data.sonWidth / 2,
             endy = b2 + this.data.sonHeight / 2;
         var v_judge = false,
@@ -532,6 +536,3 @@ Page({
         }
     },
 });
-//  大
-
-// FlowInfoNew/FlowModify 小

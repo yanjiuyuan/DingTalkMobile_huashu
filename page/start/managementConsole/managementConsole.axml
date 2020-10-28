@@ -20,7 +20,7 @@
 <view>
 	<view a:for="{{sort}}" a:for-item="m" class="sort">
 		<view onTap="showOrClose" data-index="{{index}}">
-			<text class="sort-name"> {{m.SORT_NAME}}
+			<text class="sort-name"> {{m.SORT_NAME}}({{m.Sort_ID}})
 				<image data-item="{{m}}" onTap="modifyName" mode="scaleToFill" class="modify" src="/image/modify.png" />
 			</text>
 			<text class="sort-open">
@@ -69,7 +69,7 @@
 							<view class="form-row-label-s">
 								<template is="required"></template>类别Id</view>
 							<view class="form-row-content">
-								<input name="Sort_ID" class="input-s" placeholder="类别Id" value="{{tableInfo.Sort_ID}}" />
+								<input name="Sort_ID" class="input-s" placeholder="类别Id" value="{{tableInfo.Sort_ID}}" disabled="{{editor}}" />
 							</view>
 						</view>
 						<view class="form-row-s">
@@ -86,6 +86,7 @@
 							<view class="form-row-content">
 								<textarea auto-height="true" name="ApplyMan" style="min-height:70rpx;padding:0;font-size:25rpx" maxlength="-1" style="resize: none;" class="input" disabled="{{true}}" value="{{tableInfo.ApplyMan}}"></textarea>
 							</view>
+							<view></view>
 							<view onTap="choosePeoples" class="ViewButton">选人</view>
 						</view>
 						<view class="form-row-s">

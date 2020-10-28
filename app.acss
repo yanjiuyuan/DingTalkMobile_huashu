@@ -39,7 +39,7 @@ page {
 
 .choosePeople-view-new {
     background-color: #fff;
-    height: 150rpx;
+    min-height: 150rpx;
     border-bottom: 1px solid #f7f7f7;
     display: flex;
     align-items: center;
@@ -63,6 +63,7 @@ page {
 }
 
 .choosePeople-view-text {
+    display: flex;
     font-family: "微软雅黑";
     /* border: 1px red solid; */
     /* display: flex;s */
@@ -70,7 +71,7 @@ page {
 
 .choosePeople-view-text-top {
     font-size: 30rpx;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.01rem;
 }
 
 .choosePeople-view-text-right {

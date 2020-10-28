@@ -13,16 +13,18 @@ Page({
         editor: false,
         SecondArray: [
             { name: "是", label: 1, checked: true },
-            { name: "否", label: 0 }
+            { name: "否", label: 0 },
         ],
-        animMaskData: [] //遮罩层
+        animMaskData: [], //遮罩层
     },
-    onLoad() {
+    onLoad() {},
+
+    onShow() {
         this.getMenu(true);
         this.setData({
             sort: app.globalData.sort,
             menu: app.globalData.menu,
-            sortItems: app.globalData.sortItem
+            sortItems: app.globalData.sortItem,
         });
     },
 
@@ -32,7 +34,7 @@ Page({
         let item = JSON.stringify(e.target.dataset.item);
         dd.navigateTo({
             // url: "/page/managementConsole/addShortcut/addShortcut?item=" + item
-            url: "/page/start/managementConsole/addFlow/addFlow?item=" + item
+            url: "/page/start/managementConsole/addFlow/addFlow?item=" + item,
         });
     },
 
@@ -43,7 +45,7 @@ Page({
         this.setData({
             tableInfo: item,
             editor: !this.data.editor,
-            ifName: !this.data.ifName
+            ifName: !this.data.ifName,
         });
         this.createMaskShowAnim();
         this.createContentShowAnim();
@@ -56,6 +58,7 @@ Page({
         console.log(item);
 
         dd.confirm({
+            title: "友情提示",
             content: "是否删除" + item.SORT_NAME + "整个分组",
             confirmButtonText: promptConf.promptConf.Confirm,
             cancelButtonText: promptConf.promptConf.Cancel,
@@ -63,7 +66,7 @@ Page({
                 if (result.confirm == true) {
                     let obj = {
                         FlowSortList: [item],
-                        applyManId: app.userInfo.userid
+                        applyManId: app.userInfo.userid,
                     };
                     console.log(item);
                     this._postData(
@@ -72,13 +75,13 @@ Page({
                             this.getMenu(true);
                             dd.alert({
                                 content: promptConf.promptConf.DeleteSuccess,
-                                buttonText: promptConf.promptConf.Confirm
+                                buttonText: promptConf.promptConf.Confirm,
                             });
                         },
                         obj
                     );
                 }
-            }
+            },
         });
     },
     //删除这一项
@@ -87,7 +90,7 @@ Page({
         let item = e.target.dataset.item;
         let obj = {
             applyManId: app.userInfo.userid,
-            flowsList: [item]
+            flowsList: [item],
         };
         console.log(obj);
         dd.confirm({
@@ -103,20 +106,20 @@ Page({
                             this.getMenu(true);
                             dd.alert({
                                 content: promptConf.promptConf.DeleteSuccess,
-                                buttonText: promptConf.promptConf.Confirm
+                                buttonText: promptConf.promptConf.Confirm,
                             });
                         },
                         obj
                     );
                 }
-            }
+            },
         });
     },
 
     // 新增
     increase() {
         this.setData({
-            ifName: !this.data.ifName
+            ifName: !this.data.ifName,
         });
         this.createMaskShowAnim();
         this.createContentShowAnim();
@@ -126,7 +129,7 @@ Page({
     sort() {
         dd.navigateTo({
             // url: "/page/managementConsole/sort/sort"
-            url: "/page/start/managementConsole/sortTest/sortTest"
+            url: "/page/start/managementConsole/sortTest/sortTest",
             // url: "/page/managementConsole/sortTest_1/sortTest_1"
         });
     },
@@ -137,14 +140,14 @@ Page({
         if (value.Sort_ID == "") {
             dd.alert({
                 content: "类别Id不允许为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         if (value.SORT_NAME == "") {
             dd.alert({
                 content: "类别名称不允许为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
@@ -165,7 +168,7 @@ Page({
                     this.getMenu(true);
                     dd.alert({
                         content: promptConf.promptConf.UpdateSuccess,
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                 },
                 obj
@@ -182,11 +185,13 @@ Page({
                         SORT_NAME: value.SORT_NAME,
                         ApplyMan: "",
                         ApplyManId: "",
-                        Sort_ID: (app.globalData.sort[app.globalData.sort.length - 1].Sort_ID - 0 + 1).toString(),
-                        State: 1
-                    }
+                        // Sort_ID: (app.globalData.sort[app.globalData.sort.length - 1].Sort_ID - 0 + 1).toString(),
+                        Sort_ID: value.Sort_ID,
+
+                        State: 1,
+                    },
                 ],
-                applyManId: app.userInfo.userid
+                applyManId: app.userInfo.userid,
             };
             this._postData(
                 "FlowInfoNew/FlowSortAdd",
@@ -194,7 +199,7 @@ Page({
                     this.getMenu(true);
                     dd.alert({
                         content: promptConf.promptConf.AddSuccess,
-                        buttonText: promptConf.promptConf.Confirm
+                        buttonText: promptConf.promptConf.Confirm,
                     });
                 },
                 obj
@@ -203,7 +208,7 @@ Page({
 
         this.setData({
             ifName: !this.data.ifName,
-            editor: !this.data.editor
+            editor: false,
         });
     },
 
@@ -211,7 +216,8 @@ Page({
         this.setData({
             ifName: !this.data.ifName,
             editor: false,
-            tableInfo: {}
+            tableInfo: {},
+            pickedUsers: [],
         });
     },
     //跳转到流程详细信息
@@ -222,7 +228,7 @@ Page({
         delete sort.flows;
         dd.navigateTo({
             // url: "flowDetail/flowDetail?item=" + JSON.stringify(item) + "&sort=" + JSON.stringify(sort)
-            url: "flowDetail/flowDetail?FlowId=" + item.FlowId + "&Sort_ID=" + sort.Sort_ID
+            url: "flowDetail/flowDetail?FlowId=" + item.FlowId + "&Sort_ID=" + sort.Sort_ID,
         });
     },
 
@@ -234,7 +240,7 @@ Page({
             ...that.data.chooseParam,
             pickedUsers: that.data.pickedUsers || [], //已选用户
             multiple: true,
-            title: "同行人",
+            title: "权限成员",
             success: function(res) {
                 console.log(res);
                 let names = []; //userId
@@ -248,9 +254,17 @@ Page({
                     }
                     that.setData({
                         "tableInfo.ApplyMan": names.join(","),
-                        "tableInfo.ApplyManId": userids.join(",")
+                        "tableInfo.ApplyManId": userids.join(","),
                     });
-                } else if (res.departments.length > 0 && res.users.length == 0) {
+
+                }
+                else if(res.departments.length == 0 && res.users.length == 0){
+                    that.setData({
+                            "tableInfo.ApplyMan": "",
+                            "tableInfo.ApplyManId": "",
+                    });
+                } 
+                else if (res.departments.length > 0 && res.users.length == 0) {
                     let deptId = [];
                     for (let i of res.departments) {
                         deptId.push(i.id);
@@ -280,12 +294,13 @@ Page({
 
                             that.setData({
                                 "tableInfo.ApplyMan": names.join(","),
-                                "tableInfo.ApplyManId": userids.join(",")
+                                "tableInfo.ApplyManId": userids.join(","),
                             });
                         },
                         deptId
                     );
-                } else if (res.departments.length > 0 && res.users.length > 0) {
+                } 
+                else if (res.departments.length > 0 && res.users.length > 0) {
                     let deptId = [];
                     for (let i of res.departments) {
                         deptId.push(i.id);
@@ -320,14 +335,14 @@ Page({
 
                             that.setData({
                                 "tableInfo.ApplyMan": names.join(","),
-                                "tableInfo.ApplyManId": userids.join(",")
+                                "tableInfo.ApplyManId": userids.join(","),
                             });
                         },
                         deptId
                     );
                 }
             },
-            fail: function(err) {}
+            fail: function(err) {},
         });
-    }
+    },
 });

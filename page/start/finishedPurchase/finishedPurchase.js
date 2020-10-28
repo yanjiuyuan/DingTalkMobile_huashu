@@ -132,7 +132,7 @@ Page({
             ProjectName: that.data.ContractNameList[that.data.ContractNameIndex].ContractName,
             ProjectId: that.data.ContractNameList[that.data.ContractNameIndex].ContractNo,
         };
-        let callBack = function(taskId) {
+        let callBack = function (taskId) {
             that.bindAll(taskId);
         };
         console.log(param);
@@ -166,6 +166,7 @@ Page({
 
         this.setData({
             hidden: !this.data.hidden,
+            ifedit: false,
         });
         this.createMaskShowAnim();
         this.createContentShowAnim();
@@ -175,13 +176,31 @@ Page({
         console.log(e);
         let index = e.target.targetDataset.index;
         if (!index && index != 0) return;
-        console.log(this.data.purchaseList);
-        this.data.purchaseList.splice(index, 1);
-        this.setData({
-            purchaseList: this.data.purchaseList,
-            "tableParam2.total": this.data.purchaseList.length,
-        });
-        console.log(this.data.purchaseList);
+        if (!e.target.targetDataset.opt2) {
+            console.log('刪除')
+            console.log(this.data.purchaseList);
+            this.data.purchaseList.splice(index, 1);
+            this.setData({
+                purchaseList: this.data.purchaseList,
+                "tableParam2.total": this.data.purchaseList.length,
+            });
+            console.log(this.data.purchaseList);
+        }
+        else {
+            console.log('編輯')
+            good = e.target.targetDataset.row;
+            if (!good) return;
+            this.setData({
+                t: good,
+                dateStr: good.UrgentDate,
+                hidden: !this.data.hidden,
+                ifedit: true,
+            });
+            this.createMaskShowAnim();
+            this.createContentShowAnim();
+
+        }
+
     },
     selectDate() {
         dd.datePicker({
@@ -214,27 +233,60 @@ Page({
             });
             return;
         }
-        let param = {
-            CodeNo: good.FNumber,
-            Name: good.FName,
-            Standard: good.FModel,
-            SendPosition: value.SendPosition,
-            Unit: value.Unit,
-            Price: value.Price ? value.Price + "" : "0",
-            Count: value.Count,
-            Purpose: value.Purpose,
-            UrgentDate: value.UrgentDate,
-            Mark: value.Mark,
-        };
-        let length = this.data.purchaseList.length;
+        if (this.data.ifedit) {
+            console.log("編輯");
+            let param = {
+                CodeNo: good.CodeNo,
+                Name: good.Name,
+                Standard: good.Standard,
+                SendPosition: value.SendPosition,
+                Unit: value.Unit,
+                Price: value.Price ? value.Price + "" : "0",
+                Count: value.Count,
+                Purpose: value.Purpose,
+                UrgentDate: value.UrgentDate,
+                Mark: value.Mark,
+                SendPosition:value.SendPosition
+            };
+            for (let i of this.data.purchaseList) {
+                if (param.CodeNo == i.CodeNo) {
+                    
+                    i.Count = param.Count;
+                    i.Mark = param.Mark;
+                    i.Price = param.Price;
+                    i.Purpose = param.Purpose;
+                    i.Unit = param.Unit;
+                    i.UrgentDate = param.UrgentDate;
+                    i.SendPosition = param.SendPosition
+                }
+            }
+            this.setData({
+                purchaseList: this.data.purchaseList,
+            });
+        }
+        else {
+            let param = {
+                CodeNo: good.FNumber,
+                Name: good.FName,
+                Standard: good.FModel,
+                SendPosition: value.SendPosition,
+                Unit: value.Unit,
+                Price: value.Price ? value.Price + "" : "0",
+                Count: value.Count,
+                Purpose: value.Purpose,
+                UrgentDate: value.UrgentDate,
+                Mark: value.Mark,
+            };
+            let length = this.data.purchaseList.length;
 
-        let setStr = "purchaseList[" + length + "]";
-        this.setData({
-            [`purchaseList[${length}]`]: param,
-            "tableParam2.total": length + 1,
-            totalPrice: this.data.totalPrice + param.Price * param.Count + "",
-        });
-        console.log(param.Purpose);
+            let setStr = "purchaseList[" + length + "]";
+            this.setData({
+                [`purchaseList[${length}]`]: param,
+                "tableParam2.total": length + 1,
+                totalPrice: this.data.totalPrice + param.Price * param.Count + "",
+            });
+        }
+
         this.onModalCloseTap();
     },
     //隐藏弹窗表单
@@ -243,6 +295,8 @@ Page({
         this.createContentHideAnim();
         setTimeout(() => {
             this.setData({
+                t: {},
+                dateStr: "",
                 hidden: true,
             });
         }, 210);

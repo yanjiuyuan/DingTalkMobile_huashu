@@ -8,154 +8,154 @@ Page({
 
         background: [
             {
-                url: "/image/icons/1-1.png"
+                url: "/image/icons/1-1.png",
             },
             {
-                url: "/image/icons/1-2.png"
+                url: "/image/icons/1-2.png",
             },
             {
-                url: "/image/icons/1-3.png"
+                url: "/image/icons/1-3.png",
             },
             {
-                url: "/image/icons/1-4.png"
+                url: "/image/icons/1-4.png",
             },
             {
-                url: "/image/icons/1-5.png"
+                url: "/image/icons/1-5.png",
             },
             {
-                url: "/image/icons/1-6.png"
+                url: "/image/icons/1-6.png",
             },
             {
-                url: "/image/icons/1-7.png"
+                url: "/image/icons/1-7.png",
             },
             {
-                url: "/image/icons/1-8.png"
+                url: "/image/icons/1-8.png",
             },
             {
-                url: "/image/icons/1-9.png"
+                url: "/image/icons/1-9.png",
             },
             {
-                url: "/image/icons/2-1.png"
+                url: "/image/icons/2-1.png",
             },
             {
-                url: "/image/icons/2-2.png"
+                url: "/image/icons/2-2.png",
             },
             {
-                url: "/image/icons/2-3.png"
+                url: "/image/icons/2-3.png",
             },
             {
-                url: "/image/icons/2-4.png"
+                url: "/image/icons/2-4.png",
             },
             {
-                url: "/image/icons/2-5.png"
+                url: "/image/icons/2-5.png",
             },
             {
-                url: "/image/icons/2-6.png"
+                url: "/image/icons/2-6.png",
             },
             {
-                url: "/image/icons/2-7.png"
+                url: "/image/icons/2-7.png",
             },
             {
-                url: "/image/icons/2-8.png"
+                url: "/image/icons/2-8.png",
             },
             {
-                url: "/image/icons/2-9.png"
+                url: "/image/icons/2-9.png",
             },
             {
-                url: "/image/icons/3-1.png"
+                url: "/image/icons/3-1.png",
             },
             {
-                url: "/image/icons/3-2.png"
+                url: "/image/icons/3-2.png",
             },
             {
-                url: "/image/icons/3-3.png"
+                url: "/image/icons/3-3.png",
             },
             {
-                url: "/image/icons/3-4.png"
+                url: "/image/icons/3-4.png",
             },
             {
-                url: "/image/icons/3-5.png"
+                url: "/image/icons/3-5.png",
             },
             {
-                url: "/image/icons/3-6.png"
+                url: "/image/icons/3-6.png",
             },
             {
-                url: "/image/icons/3-7.png"
+                url: "/image/icons/3-7.png",
             },
             {
-                url: "/image/icons/3-8.png"
+                url: "/image/icons/3-8.png",
             },
             {
-                url: "/image/icons/3-9.png"
+                url: "/image/icons/3-9.png",
             },
             {
-                url: "/image/icons/4-1.png"
+                url: "/image/icons/4-1.png",
             },
             {
-                url: "/image/icons/4-2.png"
+                url: "/image/icons/4-2.png",
             },
             {
-                url: "/image/icons/4-3.png"
+                url: "/image/icons/4-3.png",
             },
             {
-                url: "/image/icons/4-4.png"
+                url: "/image/icons/4-4.png",
             },
             {
-                url: "/image/icons/4-5.png"
+                url: "/image/icons/4-5.png",
             },
             {
-                url: "/image/icons/4-6.png"
+                url: "/image/icons/4-6.png",
             },
             {
-                url: "/image/icons/4-7.png"
+                url: "/image/icons/4-7.png",
             },
             {
-                url: "/image/icons/4-8.png"
+                url: "/image/icons/4-8.png",
             },
             {
-                url: "/image/icons/4-9.png"
+                url: "/image/icons/4-9.png",
             },
             {
-                url: "/image/icons/5-1.png"
+                url: "/image/icons/5-1.png",
             },
             {
-                url: "/image/icons/5-2.png"
+                url: "/image/icons/5-2.png",
             },
             {
-                url: "/image/icons/5-3.png"
+                url: "/image/icons/5-3.png",
             },
             {
-                url: "/image/icons/5-4.png"
+                url: "/image/icons/5-4.png",
             },
             {
-                url: "/image/icons/5-5.png"
+                url: "/image/icons/5-5.png",
             },
             {
-                url: "/image/icons/5-6.png"
+                url: "/image/icons/5-6.png",
             },
             {
-                url: "/image/icons/5-7.png"
+                url: "/image/icons/5-7.png",
             },
             {
-                url: "/image/icons/5-8.png"
+                url: "/image/icons/5-8.png",
             },
             {
-                url: "/image/icons/5-9.png"
-            }
+                url: "/image/icons/5-9.png",
+            },
         ],
         activeColor: "#4796fa",
         IsEnableArray: [
             { name: "是", label: 1 },
-            { name: "否", label: 0 }
+            { name: "否", label: 0 },
         ],
         IsSupportMobileArray: [
             { name: "是", label: true },
-            { name: "否", label: false }
+            { name: "否", label: false },
         ],
         IsFlowArray: [
             { name: "是", label: true },
-            { name: "否", label: false }
-        ]
+            { name: "否", label: false },
+        ],
     },
 
     onLoad(option) {
@@ -168,7 +168,8 @@ Page({
         let FlowId = option.FlowId;
 
         this._getData(
-            "FlowInfoNew/LoadFlowSort" + that.formatQueryStr({ userid: app.userInfo.userid, IsAll: true }),
+            "FlowInfoNew/LoadFlowSort" +
+                that.formatQueryStr({ userid: app.userInfo.userid, IsAll: true }),
             function(res) {
                 console.log(res);
                 let item, sort;
@@ -187,7 +188,6 @@ Page({
                 for (let i of that.data.IsEnableArray) {
                     if (item.IsEnable == i.label) {
                         i.checked = true;
-                        break;
                     } else {
                         i.checked = false;
                     }
@@ -215,7 +215,7 @@ Page({
                     sort: sort,
                     IsEnableArray: that.data.IsEnableArray,
                     IsSupportMobileArray: that.data.IsSupportMobileArray,
-                    IsFlowArray: that.data.IsFlowArray
+                    IsFlowArray: that.data.IsFlowArray,
                 });
             }
         );
@@ -223,7 +223,7 @@ Page({
     //配置节点信息
     setNodeInfo() {
         dd.navigateTo({
-            url: "setNodeInfo/setNodeInfo?flowId=" + this.data.tableInfo.FlowId
+            url: "setNodeInfo/setNodeInfo?flowId=" + this.data.tableInfo.FlowId,
         });
     },
     choosePeople(e) {
@@ -247,7 +247,7 @@ Page({
                     }
                     that.setData({
                         "tableInfo.ApplyMan": names.join(","),
-                        "tableInfo.ApplyManId": ids.join(",")
+                        "tableInfo.ApplyManId": ids.join(","),
                     });
                 } else {
                     let deptId = [];
@@ -279,24 +279,24 @@ Page({
 
                             that.setData({
                                 "tableInfo.ApplyMan": names.join(","),
-                                "tableInfo.ApplyManId": ids.join(",")
+                                "tableInfo.ApplyManId": ids.join(","),
                             });
                         },
                         deptId
                     );
                 }
             },
-            fail: function(err) {}
+            fail: function(err) {},
         });
     },
     radioChangeTwo(e) {
         this.setData({
-            ["tableInfo.IsSupportMobile"]: !this.data.tableInfo.IsSupportMobile
+            ["tableInfo.IsSupportMobile"]: !this.data.tableInfo.IsSupportMobile,
         });
     },
     radioChangeThree(e) {
         this.setData({
-            ["tableInfo.IsFlow"]: !this.data.tableInfo.IsFlow
+            ["tableInfo.IsFlow"]: !this.data.tableInfo.IsFlow,
         });
     },
     submit(e) {
@@ -305,21 +305,21 @@ Page({
         if (value.FlowName.trim() == "") {
             dd.alert({
                 content: "流程名称不允许为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         if (value.PcUrl.trim() == "") {
             dd.alert({
                 content: "PC页面路径不允许为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
         if (value.hasOwnProperty("ApproveUrl") && value.ApproveUrl.trim() == "") {
             dd.alert({
                 content: "移动端通知路径不允许为空，请输入！",
-                buttonText: promptConf.promptConf.Confirm
+                buttonText: promptConf.promptConf.Confirm,
             });
             return;
         }
@@ -335,21 +335,21 @@ Page({
         this.data.sort.flows = [this.data.tableInfo];
         let obj = {
             applyManId: app.userInfo.userid,
-            FlowSortList: [this.data.sort]
+            FlowSortList: [this.data.sort],
         };
         this._postData(
             "FlowInfoNew/LoadFlowModify",
             res => {
                 dd.alert({
                     content: promptConf.promptConf.UpdateSuccess,
-                    buttonText: promptConf.promptConf.Confirm
+                    buttonText: promptConf.promptConf.Confirm,
                 });
                 setTimeout(() => {
                     // dd.redirectTo({
                     //     url: "/page/start/managementConsole/managementConsole"
                     // });
                     dd.navigateBack({
-                        delta: 1
+                        delta: 1,
                     });
                 }, 500);
             },
@@ -373,7 +373,7 @@ Page({
         let position = x + " " + y;
         this.setData({
             current: index,
-            "tableInfo.position": position
+            "tableInfo.position": position,
         });
-    }
+    },
 });

@@ -1,6 +1,6 @@
-// let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
-let dormainName = "http://47.96.172.122:8092/"; //线上华数
- 
+let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
+// let dormainName = "http://47.96.172.122:8092/"; //线上华数
+
 function doWithErrcode(result) {
     if (!result) {
         return 1;
@@ -9,11 +9,11 @@ function doWithErrcode(result) {
         dd.alert({
             content: result.error.errorMessage,
             buttonText: "确认",
-        }); 
+        });
         return 1;
     }
     return;
-} 
+}
 let d = new Date();
 let year = d.getFullYear();
 let month = d.getMonth() + 1;
@@ -37,9 +37,23 @@ export default {
         TimeStr: hour + ":" + minutes,
     },
     func: {
-        checkLogin() {},
-        goHome() {},
-        goError() {},
+        checkLogin() { },
+        goHome() { },
+        goError() { },
+        //节流      
+        throttle(fn, wait) {
+            var pre = Date.now();
+            return function () {
+                var context = this;
+                var args = arguments;
+                var now = Date.now();
+                if (now - pre >= wait) {
+                    console.log('我执行力')
+                    fn.apply(context, args);
+                    pre = Date.now();
+                }
+            }
+        },
         //http 请求
         _getData(url, succe, userInfo = {}) {
             dd.httpRequest({
@@ -48,7 +62,7 @@ export default {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
                 },
-                success: function(res) {
+                success: function (res) {
                     let app = getApp();
                     //检查登录
                     if (app.userInfo) {
@@ -62,7 +76,7 @@ export default {
 
                     succe(res.data.data);
                 },
-                fail: function(res) {
+                fail: function (res) {
                     if (JSON.stringify(res) == "{}") return;
                     postErrorMsg("GET", url, res, userInfo);
                     dd.alert({
@@ -83,7 +97,7 @@ export default {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
                 },
-                success: function(res) {
+                success: function (res) {
                     let app = getApp();
                     //检查登录
                     if (app.userInfo) {
@@ -96,7 +110,7 @@ export default {
                     }
                     succe(res);
                 },
-                fail: function(res) {
+                fail: function (res) {
                     if (JSON.stringify(res) == "{}") return;
                     postErrorMsg("GET", url, res, userInfo);
                     dd.alert({
@@ -119,7 +133,7 @@ export default {
                     "Content-Type": "application/json; charset=utf-8",
                     Accept: "application/json",
                 },
-                success: function(res) {
+                success: function (res) {
                     let app = getApp();
                     //检查登录
                     if (app.userInfo) {
@@ -135,7 +149,7 @@ export default {
                     }
                     succe(res.data.data);
                 },
-                fail: function(res) {
+                fail: function (res) {
                     if (JSON.stringify(res) == "{}") return;
                     postErrorMsg("GET", url, res, userInfo);
                     dd.alert({
@@ -158,7 +172,7 @@ export default {
                     "Content-Type": "application/json; charset=utf-8",
                     Accept: "application/json",
                 },
-                success: function(res) {
+                success: function (res) {
                     let app = getApp();
                     //检查登录
                     if (app.userInfo) {
@@ -171,7 +185,7 @@ export default {
                     }
                     succe(res);
                 },
-                fail: function(res) {
+                fail: function (res) {
                     if (JSON.stringify(res) == "{}") return;
                     postErrorMsg("GET", url, res, userInfo);
                     dd.alert({
@@ -194,13 +208,13 @@ export default {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
                 },
-                success: function(res) {
+                success: function (res) {
                     console.log(url);
                     if (type == "POST" || type == "post") console.log(param);
                     console.log(res);
                     succe(res);
                 },
-                fail: function(res) {
+                fail: function (res) {
                     if (JSON.stringify(res) == "{}") return;
                     dd.alert({
                         content:
@@ -211,7 +225,7 @@ export default {
                             errorMessage(res),
                     });
                 },
-                complete: function(res) {},
+                complete: function (res) { },
             });
         },
         requestJsonData(type, url, succe, param = {}, userInfo) {
@@ -223,13 +237,13 @@ export default {
                     "Content-Type": "application/json; charset=utf-8",
                     Accept: "application/json",
                 },
-                success: function(res) {
+                success: function (res) {
                     console.log(url);
                     if (type == "POST" || type == "post") console.log(param);
                     console.log(res);
                     succe(res);
                 },
-                fail: function(res) {
+                fail: function (res) {
                     dd.alert({
                         content:
                             "获取数据失败-" +
@@ -250,7 +264,7 @@ export default {
                     "Content-Type": "application/json; charset=utf-8",
                     Accept: "application/json",
                 },
-                success: function(res) {
+                success: function (res) {
                     console.log(url);
                     if (type == "POST" || type == "post") console.log(param);
                     console.log(res);
@@ -265,7 +279,7 @@ export default {
                     }
                     succe(res);
                 },
-                complete: function(res) {
+                complete: function (res) {
                     if (res && res.error) {
                         dd.alert({
                             content: "系统正在维护，请联系管理员~~~~~~~~~~~~~",
@@ -363,7 +377,7 @@ function postErrorMsg(type, url, error, userInfo = {}, param = {}) {
             "Content-Type": "application/json; charset=utf-8",
             Accept: "application/json",
         },
-        success: function(res) {
+        success: function (res) {
             console.log("提交错误信息~~~~~~~~~~~~~~~~~~~~~~");
             console.log(postUrl);
             console.log(postParam);
