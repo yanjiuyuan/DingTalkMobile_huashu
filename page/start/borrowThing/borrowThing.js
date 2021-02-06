@@ -212,10 +212,7 @@ Page({
 
     //提交弹窗表单
     addGood(e) {
-        this.setData({
-            startDateStr: "",
-            endDateStr: "",
-        });
+
         let value = e.detail.value;
         console.log(value);
         if (value.Supplier.trim() == "") {
@@ -279,6 +276,8 @@ Page({
         this.setData({
             [`purchaseList[${length}]`]: param,
             "tableParam2.total": length + 1,
+            startDateStr: "",
+            endDateStr: "",
         });
         this.onModalCloseTap();
     },

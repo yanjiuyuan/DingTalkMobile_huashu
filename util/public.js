@@ -9,7 +9,7 @@ let y = -47;
 let xTap = -90;
 let yTap = -90;
 
-let States = ["在研", "已完成", "终止"];
+let States = ["在研", "已完成", "终止"]; 
 let ProjectTypes = ["自研项目", "纵向项目", "横向项目", "测试项目"];
 let CompanyNames = ["泉州华中科技大学智能制造研究院", "泉州华数机器人有限公司"];
 let IntellectualPropertyTypes = ["发明", "实用新型", "外观", "软件著作权"];
@@ -102,20 +102,6 @@ export default {
     func: {
         ...lib.func,
         ...template.func,
-        throttle(fn, wait) {
-            var pre = Date.now();
-            return function () {
-                var context = this;
-                var args = arguments;
-                var now = Date.now();
-                if (now - pre >= wait) {
-                    console.log('我执行力')
-
-                    fn.apply(context, args);
-                    pre = Date.now();
-                }
-            }
-        },
 
         start: {
             onLoad(param) {
@@ -215,17 +201,14 @@ export default {
                             });
                         }
 
+                        app.globalData.data = null;
                         app.globalData.valid = false;
                     }
                 };
                 this.checkLogin(callBack);
             },
             //提交审批
-            approvalSubmit(param = {}, callBack, param2 = {}) {
-                debugger;
-                throttle(this.approvalSubmitss(param, callBack, param2), 1000);
-            },
-            approvalSubmitss(param = {}, callBack, param2 = {}) {
+            approvalSubmit:lib.func.throttle(function(param = {}, callBack, param2 = {}) {
                 if (!this.data.DingData.userid) {
                     dd.alert({
                         content: promptConf.promptConf.LoginPrompt,
@@ -339,7 +322,7 @@ export default {
                     },
                     paramArr
                 );
-            },
+            },5000),
 
             //搜索物料编码
             searchCode(e) {
@@ -428,7 +411,7 @@ export default {
             },
 
             //审批-同意
-            aggreSubmit(param, param2 = {}) {
+            aggreSubmit:lib.func.throttle(function(param, param2 = {}) {
                 if (!this.data.DingData.userid) {
                     dd.alert({
                         content: promptConf.promptConf.LoginPrompt,
@@ -536,7 +519,7 @@ export default {
                     },
                     paramArr
                 );
-            },
+            },5000),
 
             //撤回审批
             returnSubmit(e) {
@@ -796,7 +779,7 @@ export default {
                 });
             },
             //钉一下功能
-            ding() {
+            ding:lib.func.throttle(function() {
                 console.log(this.data);
                 let param = {
                     userId: this.data.dingList[0],
@@ -815,9 +798,9 @@ export default {
                         });
                     }
                 );
-            },
+            },5000),
             //打印流程表单
-            print(flowid) {
+            print:lib.func.throttle(function(flowid) {
                 let that = this;
                 let url = "";
                 let method = "";
@@ -939,9 +922,9 @@ export default {
                         obj
                     );
                 }
-            },
+            },5000),
             //导出bom表
-            output() {
+            output:lib.func.throttle(function() {
                 let that = this;
                 let url = "";
                 let method = "";
@@ -1011,7 +994,7 @@ export default {
                         obj
                     );
                 }
-            },
+            },5000),
 
             //处理表单中的图片、PDF等文件显示
             handleUrlData(data) {
@@ -1392,7 +1375,7 @@ export default {
                         dd.uploadFile({
                             url: that.data.dormainName + "drawingupload/Upload",
                             fileType: "image",
-                            fileName: p.substring(7),
+                            fileName: p.substring(7).replace(/\//g,""),
                             filePath: p,
                             success: res => {
                                 console.log(
@@ -1682,20 +1665,19 @@ export default {
                 app.globalData.DeptNames = department;
             });
         },
-
         //重新发起审批
         relaunch(e) {
             app.globalData.table = this.data.table;
             app.globalData.valid = true;
-            let str = JSON.stringify(this.data).replace(/%/g, "%25");
+            app.globalData.data = this.data;
+            // let str = JSON.stringify(this.data).replace(/%/g, "%25");
             let arr = this.route.split("/");
             let url = "/page/start/" + arr[2] + "/" + arr[3];
             console.log(url);
             dd.redirectTo({
-                url: url + "?" + "flowid=" + this.data.tableInfo.FlowId + "&" + "data=" + str,
+                url: url + "?" + "flowid=" + this.data.tableInfo.FlowId,
             });
         },
-
         // 转imageList成imgUrlList
         imageListToImgUrlList(imageList) {
             let arr = [];
@@ -1718,9 +1700,9 @@ export default {
             let aDate, oDate1, oDate2, iDays;
 
             aDate = sDate1.split("-");
-            oDate1 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]); //转换为9-25-2017格式
+            oDate1 = new Date(aDate[1] + "/" + aDate[2] + "/" + aDate[0]); //转换为9-25-2017格式
             aDate = sDate2.split("-");
-            oDate2 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]);
+            oDate2 = new Date(aDate[1] + "/" + aDate[2] + "/" + aDate[0]);
 
             iDays = parseInt((oDate1 - oDate2) / 1000 / 60 / 60 / 24);
 
@@ -1803,10 +1785,17 @@ export default {
                 departIndex: e.detail.value,
             });
         },
-
+        
         //临时保存
         temporaryPreservation(e) {
             let that = this;
+            that.data.data = [];
+            that.data.tableData = []; 
+            that.data.tableParam = {
+                size: 5,
+                now: 1,
+                total: 0, 
+            };
             dd.setStorage({
                 key: `${that.data.flowid}`,
                 data: {

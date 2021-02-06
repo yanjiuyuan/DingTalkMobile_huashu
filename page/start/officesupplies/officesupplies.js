@@ -105,7 +105,7 @@ Page({
             url: url,
             method: "GET",
             headers: { "Content-Type": "application/x-www-form-urlencoded; charset=utf-8" },
-            success: function(res) {
+            success: function (res) {
                 let data = res.data.data;
                 console.log(url);
                 console.log(data);
@@ -122,13 +122,13 @@ Page({
                 that.data.data = data;
                 that.getData();
             },
-            fail: function(res) {
+            fail: function (res) {
                 if (JSON.stringify(res) == "{}") return;
                 dd.alert({ content: "获取数据失败-" + url + "报错:" + JSON.stringify(res) });
             }
         });
         return;
-        that.requestData("GET", "OfficeSupplies/GetICItem" + that.formatQueryStr({ Key: value.keyWord }), function(
+        that.requestData("GET", "OfficeSupplies/GetICItem" + that.formatQueryStr({ Key: value.keyWord }), function (
             res
         ) {
             console.log(JSON.parse(res.data));
@@ -160,7 +160,7 @@ Page({
             });
             return;
         }
-        let callBack = function(taskId) {
+        let callBack = function (taskId) {
             that.bindAll(taskId);
         };
         console.log(param);
@@ -179,7 +179,7 @@ Page({
         that.requestJsonData(
             "POST",
             "OfficeSupplies/SaveTable",
-            function(res) {
+            function (res) {
                 that.doneSubmit();
             },
             JSON.stringify(paramArr)
@@ -250,10 +250,18 @@ Page({
             if (p.CodeNo == good.FNumber) return;
         }
 
-        let reg = /^-?\d+$/;
+        // let reg = /^-?\d+$/;
+        let reg=/^(\-|\+)?\d+(\.\d+)?$/;
+        if (!value || !value.Count) {
+            dd.alert({
+                content: `数量不允许为空，请输入！`,
+                buttonText: promptConf.promptConf.Confirm
+            });
+            return; 
+        }
         if (!reg.test(value.Count)) {
             dd.alert({
-                content: `数量必须为整数，请重新输入！`,
+                content: `数量必须为数字且为正数，请重新输入！`,
                 buttonText: promptConf.promptConf.Confirm
             });
             return;
@@ -266,13 +274,7 @@ Page({
             return;
         }
 
-        if (!value || !value.Count) {
-            dd.alert({
-                content: `数量不允许为空，请输入！`,
-                buttonText: promptConf.promptConf.Confirm
-            });
-            return;
-        }
+
 
         let param = {
             CodeNo: good.fNumber,

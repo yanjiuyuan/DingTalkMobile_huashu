@@ -145,7 +145,7 @@
 					</view>
 				</view>
 				<view class="{{show}}">
-					<view a:for="{{uploadFileConfig}}" a:if="{{item.fileList != null && ( item.attribute == 'Bom6' ||  nodeid > 3  || Ind == 2 )    }}">
+					<view a:for="{{uploadFileConfig}}" a:if="{{item.fileList.length > 0 && ( item.attribute == 'Bom6' ||  nodeid > 3  || Ind == 2 )    }}">
 						<view class="form-row" style="height:auto;">
 							<view class="form-row-label">{{item.label}}</view>
 							<view class="form-row-content">

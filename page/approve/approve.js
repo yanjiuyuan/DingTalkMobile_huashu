@@ -226,11 +226,11 @@ Page({
                 case 100:
                     url = "/page/approveDetail/maintain/maintain";
                     break;
-                case 101:
+                case 101: 
                     url = "/page/approveDetail/maintain/maintain";
                     break;
                 case 102:
-                    url = "/page/approveDetail/maintain/maintain";
+                    url = "/page/approveDetail/maintain/maintain"; 
                     break;
                 case 110:
                     url = "/page/approveDetail/borrowBook/borrowBook";

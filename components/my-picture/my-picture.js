@@ -46,7 +46,7 @@ Component({
                         dd.uploadFile({
                             url: that.props.url,
                             fileType: "image",
-                            fileName: p.substring(7),
+                            fileName: p.substring(7).replace(/\//g,""),
                             filePath: p,
                             success: res => {
                                 console.log("imgUrlList:", JSON.parse(res.data).Content);

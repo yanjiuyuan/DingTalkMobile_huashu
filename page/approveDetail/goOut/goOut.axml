@@ -40,7 +40,7 @@
 			<view class="form-row">
 				<view class="form-row-label">外出事由</view>
 				<view class="form-row-content">
-					<textarea auto-height="true" name="Content" class="input" value="{{table.Content}}" disabled="{{true}}" />
+					<textarea auto-height="true" name="Content" maxlength="120" class="input" value="{{table.Content}}" disabled="{{true}}" />
 				</view>
 			</view>
 			<!-- <view class="form-row" a:if="{{(nodeid == 2 && index == 0) || nodeid > 2 }}">

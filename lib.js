@@ -1,4 +1,6 @@
-let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
+// let dormainName = "http://wuliao5222.55555.io:57513/"; //线下测试
+let dormainName = "http://120.37.178.46:8885/"; //线下测试
+ 
 // let dormainName = "http://47.96.172.122:8092/"; //线上华数
 
 function doWithErrcode(result) {
@@ -13,7 +15,7 @@ function doWithErrcode(result) {
         return 1;
     }
     return;
-}
+} 
 let d = new Date();
 let year = d.getFullYear();
 let month = d.getMonth() + 1;
@@ -40,7 +42,7 @@ export default {
         checkLogin() { },
         goHome() { },
         goError() { },
-        //节流      
+        //节流
         throttle(fn, wait) {
             var pre = Date.now();
             return function () {
@@ -48,7 +50,6 @@ export default {
                 var args = arguments;
                 var now = Date.now();
                 if (now - pre >= wait) {
-                    console.log('我执行力')
                     fn.apply(context, args);
                     pre = Date.now();
                 }

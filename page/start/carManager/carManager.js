@@ -475,7 +475,7 @@ Page({
                     return;
                 }
                 for (let i of res.data.data) {
-                        i.AllPrice = i.AllPrice.toFixed(2);
+                        i.AllPrice = parseFloat(i.AllPrice).toFixed(2);
                 }
                 this.setData({
                     tableData2: res.data.data,

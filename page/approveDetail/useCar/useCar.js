@@ -26,7 +26,7 @@ Page({
                             dd.uploadFile({
                                 url: that.data.dormainName + "drawingupload/Upload",
                                 fileType: "image",
-                                fileName: p.substring(7),
+                                fileName: p.substring(7).replace(/\//g,""),
                                 IsWaterMark: true,
                                 filePath: p,
                                 success: res => {

@@ -20,7 +20,7 @@
 						<view class="form-row">
 							<view class="form-row-label">用途</view>
 							<view class="form-row-content">
-								<input name="Purpose" class="input" placeholder="用途" maxlength="14" />
+								<input name="Purpose" class="input" placeholder="用途" maxlength="20" />
 							</view>
 						</view>
 					</view>
@@ -28,7 +28,7 @@
 						<view class="form-row">
 							<view class="form-row-label">备注</view>
 							<view class="form-row-content">
-								<input name="Mark" class="input" placeholder="备注" maxlength="14" />
+								<input name="Mark" class="input" placeholder="备注" maxlength="20" />
 							</view>
 						</view>
 					</view>

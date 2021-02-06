@@ -15,10 +15,12 @@ Page({
         this.getProjectList(); //获取项目列表
         this.getContractNameList(); //获取合同列表
         this.getUserInfo();
+        this.getAllAdmin();
     },
+
     data: {
         ...pub.data,
-        pageName: "component/index",
+        pageName: "component/index", 
         pageInfo: {
             pageId: 0,
         },
@@ -27,6 +29,25 @@ Page({
         userList: [],
         sort: [],
         sortItems: [],
+        adminRoleList:[],
+    },
+        //获取超级管理员
+    getAllAdmin() {
+        let that = this;
+        let obj = {
+            RoleName: "超级管理员"
+        }
+        this.getDataReturnData("Role/GetRoleInfo" + lib.func.formatQueryStr(obj), function (res) {
+            let a = res.data.map(item=>{
+                return item.emplId;
+            })
+            that.setData({
+                adminRoleList: a,
+            })
+
+        })
+
+
     },
     //选人控件方法
     choosePeople(e) {

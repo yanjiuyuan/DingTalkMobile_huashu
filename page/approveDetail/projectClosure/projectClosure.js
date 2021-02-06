@@ -180,7 +180,7 @@ Page({
                 prop: "ApplicationUnitName",
                 label: "转化/应用单位",
                 width: 200
-            },
+            },  
             {
                 prop: "Customer",
                 label: "客户/联系人",
@@ -190,17 +190,17 @@ Page({
                 prop: "Post",
                 label: "职务",
                 width: 200
-            },
+            }, 
             {
                 prop: "Tel",
                 label: "联系方式",
                 width: 200
             }
-        ],
+        ], 
 
         tableItems3: [
             {
-                prop: "Name",
+                prop: "Name", 
                 label: "申报政策名称",
                 width: 200
             },

@@ -21,41 +21,41 @@
 				<view class="form-row-label">
 					<template is="required"></template>单位名称</view>
 				<view class="form-row-content">
-					<my-picker onChange="changeCompany" index="{{companyIndex}}" range="{{CompanyNames}}" value="{{table.Company}}"></my-picker>
+					<my-picker onChange="changeCompany"  maxlength="50" index="{{companyIndex}}" range="{{CompanyNames}}" value="{{table.Company}}"></my-picker>
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">车牌号</view>
 				<view class="form-row-content">
-					<input name="CarNo" class="input" placeholder="请输入车牌号" data-name="CarNo" onInput="inputToTable" value="{{table.CarNo}}"/>
+					<input name="CarNo" class="input"  maxlength="50" placeholder="请输入车牌号" data-name="CarNo" onInput="inputToTable" value="{{table.CarNo}}"/>
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
 					<template is="required"></template>联系方式</view>
 				<view class="form-row-content">
-					<input name="Tel" class="input" placeholder="请输入联系方式" value="{{table.Tel}}" data-name="Tel" onInput="inputToTable"/>
+					<input name="Tel" class="input"  maxlength="50" placeholder="请输入联系方式" value="{{table.Tel}}" data-name="Tel" onInput="inputToTable"/>
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
 					<template is="required"></template>物品名称</view>
 				<view class="form-row-content">
-					<input name="Name" class="input" placeholder="请输入物品名称" value="{{table.Name}}" data-name="Name" onInput="inputToTable"/>
+					<input name="Name" class="input"  maxlength="50" placeholder="请输入物品名称" value="{{table.Name}}" data-name="Name" onInput="inputToTable"/>
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
 					<template is="required"></template>数量</view>
 				<view class="form-row-content">
-					<input name="Count" class="input" placeholder="请输入数量" value="{{table.Count}}" data-name="Count" onInput="inputToTable"/>
+					<input name="Count" class="input"  maxlength="50" placeholder="请输入数量" value="{{table.Count}}" data-name="Count" onInput="inputToTable"/>
 				</view>
 			</view>
 			<view class="form-row">
 				<view class="form-row-label">
 					<template is="required"></template>单位</view>
 				<view class="form-row-content">
-					<input name="Unit" class="input" placeholder="请输入单位" value="{{table.Unit}}" data-name="Unit" onInput="inputToTable"/>
+					<input name="Unit" class="input"  maxlength="50" placeholder="请输入单位" value="{{table.Unit}}" data-name="Unit" onInput="inputToTable"/>
 				</view>
 			</view>
 			<view class="form-row">

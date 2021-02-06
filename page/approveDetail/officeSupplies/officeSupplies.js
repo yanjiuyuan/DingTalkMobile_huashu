@@ -60,21 +60,36 @@ Page({
         }
         this.aggreSubmit(param);
     },
-    update(e) {
+     update(e) {
         console.log(e.target.targetDataset);
         if (this.data.index == 0 && this.data.nodeid == 3) {
-            let index = this.data.tableParam.size * (this.data.tableParam.now - 1) + e.target.targetDataset.index;
+            let index =
+                this.data.tableParam.size * (this.data.tableParam.now - 1) +
+                e.target.targetDataset.index;
             if (e.target.targetDataset.opt2) {
                 console.log("还原");
+                if (this.data.data[index].IsDelete) {
+                    this.data.totalPrice = parseFloat(this.data.totalPrice) + parseFloat(e.target.targetDataset.row.Count) * parseFloat(e.target.targetDataset.row.ExpectPrice);
+                    this.setData({
+                        totalPrice: this.data.totalPrice.toFixed(2),
+                    })
+                }
                 this.data.data[index].IsDelete = false;
                 this.data.data[index].IsDeletes = "否";
             } else if (!e.target.targetDataset.opt2) {
                 console.log("删除");
+                // debugger;
+                if (!this.data.data[index].IsDelete) {
+                    this.data.totalPrice = parseFloat(this.data.totalPrice) - parseFloat(e.target.targetDataset.row.Count) * parseFloat(e.target.targetDataset.row.ExpectPrice);
+                    this.setData({
+                        totalPrice: this.data.totalPrice.toFixed(2),
+                    })
+                }
                 this.data.data[index].IsDelete = true;
                 this.data.data[index].IsDeletes = "是";
             }
             this.setData({
-                data: this.data.data
+                data: this.data.data,
             });
             this.getData();
         }

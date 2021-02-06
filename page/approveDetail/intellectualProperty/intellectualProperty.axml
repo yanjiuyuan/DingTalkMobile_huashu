@@ -67,7 +67,7 @@
 						<view class="form-row-label">
 							<template is="required"></template>申报单位</view>
 						<view class="form-row-content">
-							<textarea name="Company" class="input" style="min-height:90rpx;padding:0;margin-left:0.15rem;" maxlength="-1" />
+							<textarea name="Company" class="input" value="泉州华数" style="min-height:90rpx;padding:0;margin-left:0.15rem;" maxlength="-1" />
 						</view>
 					</view>
 				</view>

@@ -6,7 +6,7 @@ Page({
     data: {
         ...pub.data,
         addPeopleNodes: [], //额外添加审批人节点数组
-
+        stateIndexs:0,
         table: {},
     },
     submit(e) {

@@ -19,7 +19,7 @@
 								<input name="CodeNumber" class="input" placeholder="物料编码" />
 							</view>
 						</view>
-					</view>
+					</view> 
 					<view class="page-section">
 						<view class="form-row">
 							<view class="form-row-label">预计价格</view>

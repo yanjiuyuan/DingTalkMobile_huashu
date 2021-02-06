@@ -315,7 +315,7 @@ Page({
             this.setData({
                 nodeList: this.data.nodeList,
             });
-        }, 500);
+        }, 1000);
         //选择完项目名称后修改标题
         let newTitle =
             this.data.projectList[e.detail.value].ProjectId +

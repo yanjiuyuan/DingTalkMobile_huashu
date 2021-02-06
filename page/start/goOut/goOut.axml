@@ -14,7 +14,7 @@
 							<view class="form-row-content">
 								<input name="place" class="input" placeholder="外出地点" maxlength="14" />
 							</view>
-						</view>
+						</view> 
 					</view>
 					<view class="buttons">
 						<button type="primary" class="button-size" style="margin-bottom:0;" formType="submit">添加</button>
@@ -63,7 +63,7 @@
 				<view class="form-row-label">
 					<template is="required"></template>外出事由</view>
 				<view class="form-row-content">
-					<textarea auto-height="true" name="Content" class="input" value="{{table.Content}}" data-name="Content" onInput="inputToTable" />
+					<textarea auto-height="true" name="Content" maxlength="120" class="input" value="{{table.Content}}" data-name="Content" onInput="inputToTable" />
 				</view>
 			</view>
 			<view class="form-row">

@@ -30,7 +30,7 @@
               <view class="form-row-label">
                 <template is="required"></template>用途</view>
               <view class="form-row-content">
-                <input name="Purpose" class="input" placeholder="用途" value="{{t.Purpose}}" />
+                <input name="Purpose" class="input" placeholder="用途" maxlength="20" value="{{t.Purpose}}" />
               </view>
             </view>
           </view>
@@ -38,7 +38,7 @@
             <view class="form-row">
               <view class="form-row-label">备注</view>
               <view class="form-row-content">
-                <input name="Remark" class="input" placeholder="备注" value="{{t.Remark}}" />
+                <input name="Remark" class="input" placeholder="备注" maxlength="20" value="{{t.Remark}}" />
               </view>
             </view>
           </view>

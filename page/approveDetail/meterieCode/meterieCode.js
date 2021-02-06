@@ -95,6 +95,19 @@ Page({
                     return;
                 }
             }
+            //判断是否重复物料编码
+            let CodeNumber = this.data.purchaseList.map(value => {
+                return value.CodeNumber
+            });
+            let CodeNumberSet = new Set(CodeNumber);
+            if (CodeNumberSet.size != CodeNumber.length) {
+                dd.alert({
+                    content: `物料编码不可重复，请重新输入！`,
+                    buttonText: promptConf.promptConf.Confirm,
+                });
+                return;
+            }
+
             this.requestJsonData(
                 "POST",
                 "ItemCodeAdd/TableModify",
@@ -127,15 +140,7 @@ Page({
             });
             return;
         }
-        for (let p of this.data.tableData) {
-            if (p.CodeNumber == value.CodeNumber) {
-                dd.alert({
-                    content: `物料编码不可重复，请重新输入！`,
-                    buttonText: promptConf.promptConf.Confirm,
-                });
-                return;
-            }
-        }
+
 
         this.data.tableData[this.data.index].CodeNumber = value.CodeNumber;
         this.data.tableData[this.data.index].FNote = value.FNote;
@@ -150,7 +155,7 @@ Page({
         });
         this.onModalCloseTap2();
     },
-    radioChange: function(e) {
+    radioChange: function (e) {
         this.data.codeType = e.detail.codeType;
     },
     onModalCloseTap2() {
